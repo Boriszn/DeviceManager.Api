@@ -2,3 +2,5 @@
 src/DeviceManagerApi/bin/
 src/DeviceManagerApi/obj/
 /.vs/config/applicationhost.config
+src/DeviceManager.Api/bin/
+src/DeviceManager.Api/obj/
