@@ -1,5 +1,4 @@
 ﻿using System;
-using DeviceManager.Api.Management.Data;
 
 namespace DeviceManager.Api.Data.Management
 {

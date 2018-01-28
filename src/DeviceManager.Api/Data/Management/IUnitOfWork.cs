@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DeviceManager.Api.Management.Data
+namespace DeviceManager.Api.Data.Management
 {
     /// <summary>
     /// Contains functions to manipulate EF transactions

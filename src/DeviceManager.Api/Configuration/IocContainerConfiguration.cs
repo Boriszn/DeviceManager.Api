@@ -1,6 +1,5 @@
 ﻿using DeviceManager.Api.Data;
 using DeviceManager.Api.Data.Management;
-using DeviceManager.Api.Management.Data;
 using DeviceManager.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
