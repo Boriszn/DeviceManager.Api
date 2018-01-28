@@ -26,6 +26,11 @@ namespace DeviceManager.Api.Services
             return deviceRepository.Get(deviceId);
         }
 
+        public Device GetDeviceByTitle(string deviceTitle)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <inheritdoc />
         public void CreateDevice(DeviceViewModel deviceViewModel)
         {
@@ -42,10 +47,15 @@ namespace DeviceManager.Api.Services
         }
 
         /// <inheritdoc />
-        public void UpdateDevice(string deviceId, DeviceViewModel deviceViewModel)
+        public void UpdateDevice(Guid deviceId, DeviceViewModel deviceViewModel)
         {
             // Get device
             Device device = deviceRepository.Get(deviceId);
+
+            if (device == null)
+            {
+                throw new NullReferenceException();
+            }
 
             // Update device properties
             device.DeviceTitle = deviceViewModel.Title;

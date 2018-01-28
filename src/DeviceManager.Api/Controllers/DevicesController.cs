@@ -42,6 +42,23 @@ namespace DeviceManager.Api.Controllers
         }
 
         /// <summary>
+        /// Gets the device by title.
+        /// </summary>
+        /// <param name="deviceTitle">The device title.</param>
+        /// <returns></returns>
+        [HttpGet("{deviceTitle}")]
+        [SwaggerOperation("GetDeviceByTitle")]
+        public IActionResult GetDeviceByTitle([FromRoute]string deviceTitle)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return new BadRequestObjectResult(this.ModelState);
+            }
+
+            return new ObjectResult(deviceService.GetDeviceByTitle(deviceTitle));
+        }
+
+        /// <summary>
         /// Posts the specified device view model.
         /// </summary>
         /// <param name="deviceViewModel">The device view model.</param>
@@ -68,7 +85,7 @@ namespace DeviceManager.Api.Controllers
         /// <returns></returns>
         [HttpPut("{deviceId}")]
         [SwaggerOperation("UpdateDevice")]
-        public IActionResult Put([FromRoute]string deviceId, [FromBody]DeviceViewModel deviceViewModel)
+        public IActionResult Put([FromRoute]Guid deviceId, [FromBody]DeviceViewModel deviceViewModel)
         {
             if (!this.ModelState.IsValid)
             {

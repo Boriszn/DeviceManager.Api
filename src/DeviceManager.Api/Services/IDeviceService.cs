@@ -16,6 +16,13 @@ namespace DeviceManager.Api.Services
         Device GetDeviceById(Guid deviceId);
 
         /// <summary>
+        /// Gets the device by title.
+        /// </summary>
+        /// <param name="deviceTitle">The device title.</param>
+        /// <returns></returns>
+        Device GetDeviceByTitle(string deviceTitle);
+
+        /// <summary>
         /// Creates the device.
         /// </summary>
         /// <param name="deviceViewModel">The device view model.</param>
@@ -26,6 +33,6 @@ namespace DeviceManager.Api.Services
         /// </summary>
         /// <param name="deviceId">The device identifier.</param>
         /// <param name="deviceViewModel">The device view model.</param>
-        void UpdateDevice(string deviceId, DeviceViewModel deviceViewModel);
+        void UpdateDevice(Guid deviceId, DeviceViewModel deviceViewModel);
     }
 }
