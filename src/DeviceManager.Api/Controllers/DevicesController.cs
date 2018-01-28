@@ -46,9 +46,9 @@ namespace DeviceManager.Api.Controllers
         /// </summary>
         /// <param name="deviceTitle">The device title.</param>
         /// <returns></returns>
-        [HttpGet("{deviceTitle}")]
+        [HttpGet("title/{deviceTitle}")]
         [SwaggerOperation("GetDeviceByTitle")]
-        public IActionResult GetDeviceByTitle([FromRoute]string deviceTitle)
+        public IActionResult GetDeviceByTitle(string deviceTitle)
         {
             if (!this.ModelState.IsValid)
             {
