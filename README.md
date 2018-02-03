@@ -1,6 +1,6 @@
 # DeviceManager.Api
 
-Web API Solution demonstrates mutliteant architecture, using Entity Framework, UnityOfWork, Repository patterns
+Web API Solution demonstrates mutliteantcy architecture, using Entity Framework, UnitOfWork, Repository patterns
 
 ## Installation
 
@@ -18,12 +18,10 @@ Web API Solution demonstrates mutliteant architecture, using Entity Framework, U
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
 
-## Hisotry
+## History
 - Init project structure
 - Added logic to work with
 - Add unit/integration test
-
-## Todo
 
 ## License
 
