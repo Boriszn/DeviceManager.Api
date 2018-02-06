@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DeviceManager.Api.Data.Model;
 using DeviceManager.Api.Model;
 
@@ -9,6 +10,12 @@ namespace DeviceManager.Api.Services
     /// </summary>
     public interface IDeviceService
     {
+        /// <summary>
+        /// Gets the list of devices.
+        /// </summary>
+        /// <returns></returns>
+        List<Device> GetDevices();
+
         /// <summary>
         /// Gets the device by identifier.
         /// </summary>
