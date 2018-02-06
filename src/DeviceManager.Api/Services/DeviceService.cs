@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DeviceManager.Api.Data.Management;
 using DeviceManager.Api.Data.Model;
 using DeviceManager.Api.Model;
@@ -21,11 +23,18 @@ namespace DeviceManager.Api.Services
         }
 
         /// <inheritdoc />
+        public List<Device> GetDevices()
+        {
+            return deviceRepository.GetAll().ToList();
+        }
+
+        /// <inheritdoc />
         public Device GetDeviceById(Guid deviceId)
         {
             return deviceRepository.Get(deviceId);
         }
 
+        /// <inheritdoc />
         public Device GetDeviceByTitle(string deviceTitle)
         {
             throw new NotImplementedException();
