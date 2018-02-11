@@ -10,27 +10,28 @@ namespace DeviceManager.Api.Services
     /// <inheritdoc />
     public class DeviceService : IDeviceService
     {
-        private readonly IRepository<Device> deviceRepository;
         private readonly IUnitOfWork unitOfWork;
 
         /// <inheritdoc />
         public DeviceService(
-            IRepository<Device> deviceRepository,
             IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
-            this.deviceRepository = deviceRepository;
         }
 
         /// <inheritdoc />
         public List<Device> GetDevices()
         {
+            var deviceRepository = unitOfWork.GetRepository<Device>();
+
             return deviceRepository.GetAll().ToList();
         }
 
         /// <inheritdoc />
         public Device GetDeviceById(Guid deviceId)
         {
+            var deviceRepository = unitOfWork.GetRepository<Device>();
+
             return deviceRepository.Get(deviceId);
         }
 
@@ -43,6 +44,8 @@ namespace DeviceManager.Api.Services
         /// <inheritdoc />
         public void CreateDevice(DeviceViewModel deviceViewModel)
         {
+            var deviceRepository = unitOfWork.GetRepository<Device>();
+
             // Add new device
             deviceRepository.Add(
                 new Device
@@ -58,6 +61,8 @@ namespace DeviceManager.Api.Services
         /// <inheritdoc />
         public void UpdateDevice(Guid deviceId, DeviceViewModel deviceViewModel)
         {
+            var deviceRepository = unitOfWork.GetRepository<Device>();
+
             // Get device
             Device device = deviceRepository.Get(deviceId);
 
