@@ -7,7 +7,7 @@ Web API Solution demonstrates mutliteantcy architecture, using Entity Framework,
 1. Clone repository
 2. Apply Entity Framework migration. Run: `Update-DataBase`.
     2.1. (For Multitenancy testing) Change `DefaultConnection` to `;Database=DeviceDb-ten2;` in `appsettings.json`. Run EF migration `Update-DataBase`. It will create another database.
-    2.2  Tenants Dabase configuration stored in [DataBaseManager](src\DeviceManager.Api\Data\Management\DataBaseManager.cs)(`tenantConfigurationDictionary`).
+    2.2  Tenants Dabase configuration stored in [DataBaseManager](src/DeviceManager.Api/Data/Management/DataBaseManager.cs)(`tenantConfigurationDictionary`).
 3. Fill up valid database connection string configuration option in `appsettings.json`.
 4. Run UnitTests.
 5. Build / Run.
