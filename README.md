@@ -22,7 +22,7 @@ Web API Solution demonstrates mutliteantcy architecture, using Entity Framework,
 
 ## History
 
-All changes can be easily found in [CHANGELOG](CHANGELOG.md)
+All changes can be easily found in [RELEASENOTES](releasenotes.md)
 
 ## License
 
