@@ -22,6 +22,19 @@ namespace DeviceManager.Api.Controllers
             this.deviceService = deviceService;
         }
 
+        [HttpGet]
+        [SwaggerOperation("GetDevices")]
+        [ValidateActionParameters]
+        public IActionResult Get([FromQuery][Required]string page, [FromQuery][Required]string pageSize)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return new BadRequestObjectResult(this.ModelState);
+            }
+
+            return new ObjectResult(deviceService.GetDevices());
+        }
+
         /// <summary>
         /// Gets the specified device identifier.
         /// </summary>
@@ -31,7 +44,7 @@ namespace DeviceManager.Api.Controllers
         [HttpGet("{deviceId}")]
         [SwaggerOperation("GetDeviceById")]
         [ValidateActionParameters]
-        public IActionResult Get([FromRoute]string deviceId, [Required]string deviceTitle)
+        public IActionResult GetDeviceById([FromRoute][Required]string deviceId)
         {
             if (!this.ModelState.IsValid)
             {

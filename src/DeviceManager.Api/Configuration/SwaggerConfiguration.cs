@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DeviceManager.Api.ActionFilters;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -19,6 +20,7 @@ namespace DeviceManager.Api.Configuration
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Device Api", Version = "v1.0" });
+                c.OperationFilter<TenantHeaderOperationFilter>();
             });
         }
 

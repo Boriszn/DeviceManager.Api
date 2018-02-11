@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DeviceManager.Api.Data.Management
 {
@@ -10,15 +11,42 @@ namespace DeviceManager.Api.Data.Management
         /// <summary>
         /// The DbContext
         /// </summary>
-        private DeviceContext dbContext;
+        private IDbContext dbContext;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
+        /// The repositories
         /// </summary>
-        /// <param name="context">The object context</param>
-        public UnitOfWork(DeviceContext context)
+        private Dictionary<Type, object> repositories;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitOfWork" /> class.
+        /// </summary>
+        /// <param name="contextFactory">The context factory.</param>
+        public UnitOfWork(IContextFactory contextFactory)
         {
-            this.dbContext = context;
+            this.dbContext = contextFactory.DbContext;
+        }
+
+        /// <summary>
+        /// Gets the repository.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <returns></returns>
+        public IRepository<TEntity> GetRepository<TEntity>()
+            where TEntity : class
+        {
+            if (this.repositories == null)
+            {
+                this.repositories = new Dictionary<Type, object>();
+            }
+
+            var type = typeof(TEntity);
+            if (!this.repositories.ContainsKey(type))
+            {
+                this.repositories[type] = new Repository<TEntity>(this.dbContext);
+            }
+
+            return (IRepository<TEntity>)this.repositories[type];
         }
 
         /// <summary>

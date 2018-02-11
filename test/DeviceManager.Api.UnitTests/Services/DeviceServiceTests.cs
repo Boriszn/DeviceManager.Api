@@ -43,8 +43,8 @@ namespace DeviceManager.Api.UnitTests.Services
             // Arrange
             var deviceViewModel = new DeviceViewModel
             {
-                Title = " ",
-                DeviceCode = " ",
+                Title = String.Empty,
+                DeviceCode = String.Empty,
             };
 
             // Act
@@ -137,9 +137,9 @@ namespace DeviceManager.Api.UnitTests.Services
                 .Returns(() => devicesList.AsQueryable());
 
             this.mockUnitOfWork.Setup(x => x.Commit()).Returns(1);
-            
+            this.mockUnitOfWork.Setup(u => u.GetRepository<Device>()).Returns(this.mockRepository.Object);
+
             return new DeviceService(
-                this.mockRepository.Object,
                 this.mockUnitOfWork.Object);
         }
     }

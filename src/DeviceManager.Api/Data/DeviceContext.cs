@@ -6,12 +6,12 @@ namespace DeviceManager.Api.Data
     /// <summary>
     /// The device DB (entity framework's) context
     /// </summary>
-    public class DeviceContext : DbContext
+    public class DeviceContext : DbContext, IDbContext
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="DeviceContext"/> class.
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">The options.</param>
         public DeviceContext(DbContextOptions<DeviceContext> options)
             : base(options)
         {

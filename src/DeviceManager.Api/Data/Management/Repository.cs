@@ -16,7 +16,7 @@ namespace DeviceManager.Api.Data.Management
         /// <summary>
         /// EF data base context
         /// </summary>
-        private readonly DbContext context;
+        private readonly IDbContext context;
 
         /// <summary>
         /// Used to query and save instances of
@@ -27,7 +27,7 @@ namespace DeviceManager.Api.Data.Management
         /// Initializes a new instance of the <see cref="Repository{T}"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public Repository(DeviceContext context)
+        public Repository(IDbContext context)
         {
             this.context = context;
 

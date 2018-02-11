@@ -27,6 +27,8 @@ namespace DeviceManager.Api
         /// <param name="services">The services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigurationOptions.ConfigureService(services, Configuration);
+
             // Add framework services.
             services.AddMvc();
 
@@ -34,6 +36,7 @@ namespace DeviceManager.Api
             SwaggerConfiguration.ConfigureService(services);
 
             // IOC containers / Entity Framework
+            EntityFrameworkConfiguration.ConfigureService(services, Configuration);
             IocContainerConfiguration.ConfigureService(services, Configuration);
         }
 
