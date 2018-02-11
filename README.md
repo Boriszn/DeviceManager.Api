@@ -1,4 +1,4 @@
-# DeviceManager.Api
+# DeviceManager.Api [![Build status](https://ci.appveyor.com/api/projects/status/x1whwie6v68l8200?svg=true)](https://ci.appveyor.com/project/Boriszn/devicemanager-api)
 
 Web API Solution demonstrates mutliteantcy architecture, using Entity Framework, UnitOfWork, Repository patterns
 
