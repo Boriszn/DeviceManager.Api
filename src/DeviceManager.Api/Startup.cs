@@ -1,4 +1,5 @@
-﻿using DeviceManager.Api.Configuration;
+﻿using AutoMapper;
+using DeviceManager.Api.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,7 @@ namespace DeviceManager.Api
 
             // Add framework services.
             services.AddMvc();
+            services.AddAutoMapper();
 
             // Swagger API documentation
             SwaggerConfiguration.ConfigureService(services);
