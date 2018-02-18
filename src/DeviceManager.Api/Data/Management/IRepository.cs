@@ -57,6 +57,14 @@ namespace DeviceManager.Api.Data.Management
         IQueryable<T> GetAll();
 
         /// <summary>
+        /// Gets all. With data pagination.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageCount">The page count.</param>
+        /// <returns></returns>
+        IQueryable<T> GetAll(int page, int pageCount);
+
+        /// <summary>
         /// Gets all and offers to include a related table
         /// </summary>
         /// <param name="include">Te sub.entity to include</param>

@@ -109,6 +109,11 @@ namespace DeviceManager.Api.Data.Management
             {
                 throw new ArgumentNullException(nameof(tenantId));
             }
+
+            if (!Guid.TryParse(tenantId, out Guid tenantGuid))
+            {
+                throw new ArgumentNullException(nameof(tenantId));
+            }
         }
     }
 }

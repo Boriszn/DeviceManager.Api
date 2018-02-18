@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using DeviceManager.Api.Data.Management;
 using DeviceManager.Api.Data.Model;
 using DeviceManager.Api.Model;
@@ -11,20 +12,23 @@ namespace DeviceManager.Api.Services
     public class DeviceService : IDeviceService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
         /// <inheritdoc />
         public DeviceService(
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         /// <inheritdoc />
-        public List<Device> GetDevices()
+        public List<Device> GetDevices(int page, int pageSize)
         {
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
-            return deviceRepository.GetAll().ToList();
+            return deviceRepository.GetAll(page, pageSize).ToList();
         }
 
         /// <inheritdoc />
@@ -46,13 +50,7 @@ namespace DeviceManager.Api.Services
         {
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
-            // Add new device
-            deviceRepository.Add(
-                new Device
-                {
-                    DeviceId = Guid.NewGuid(),
-                    DeviceTitle = deviceViewModel.Title
-                });
+            deviceRepository.Add(mapper.Map<DeviceViewModel, Device>(deviceViewModel));
 
             // Commit changes
             unitOfWork.Commit();
@@ -71,7 +69,6 @@ namespace DeviceManager.Api.Services
                 throw new NullReferenceException();
             }
 
-            // Update device properties
             device.DeviceTitle = deviceViewModel.Title;
 
             deviceRepository.Update(device);
