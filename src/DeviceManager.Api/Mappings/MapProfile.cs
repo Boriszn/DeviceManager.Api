@@ -9,12 +9,12 @@ namespace DeviceManager.Api.Mappings
     /// Contains objects mapping
     /// </summary>
     /// <seealso cref="AutoMapper.Configuration.MapperConfigurationExpression" />
-    public class MappingProfile : MapperConfigurationExpression
+    public class MapsProfile : MapperConfigurationExpression
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MappingProfile"/> class
+        /// Initializes a new instance of the <see cref="MapsProfile"/> class
         /// </summary>
-        public MappingProfile()
+        public MapsProfile()
         {
             // Device ViewModel To Device
             this.CreateMap<DeviceViewModel, Device>()

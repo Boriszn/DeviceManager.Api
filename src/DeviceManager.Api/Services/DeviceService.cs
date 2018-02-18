@@ -24,11 +24,11 @@ namespace DeviceManager.Api.Services
         }
 
         /// <inheritdoc />
-        public List<Device> GetDevices()
+        public List<Device> GetDevices(int page, int pageSize)
         {
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
-            return deviceRepository.GetAll().ToList();
+            return deviceRepository.GetAll(page, pageSize).ToList();
         }
 
         /// <inheritdoc />

@@ -25,14 +25,14 @@ namespace DeviceManager.Api.Controllers
         [HttpGet]
         [SwaggerOperation("GetDevices")]
         [ValidateActionParameters]
-        public IActionResult Get([FromQuery][Required]string page, [FromQuery][Required]string pageSize)
+        public IActionResult Get([FromQuery][Required]int page, [FromQuery][Required]int pageSize)
         {
             if (!this.ModelState.IsValid)
             {
                 return new BadRequestObjectResult(this.ModelState);
             }
 
-            return new ObjectResult(deviceService.GetDevices());
+            return new ObjectResult(deviceService.GetDevices(page, pageSize));
         }
 
         /// <summary>
@@ -78,6 +78,8 @@ namespace DeviceManager.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [SwaggerOperation("CreateDevice")]
+        [SwaggerResponse(204, null, "Device was saved successfuly")]
+        [SwaggerResponse(400, null, "Error in saving the Device")]
         public IActionResult Post([FromBody]DeviceViewModel deviceViewModel)
         {
             if (!this.ModelState.IsValid)

@@ -1,34 +1,34 @@
-using DeviceManager.Api.Data.Management;
 using DeviceManager.Api.Data.Model;
 using DeviceManager.Api.Services;
-using System.Linq;
-using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using DeviceManager.Api.Model;
 using DeviceManager.Api.UnitTests.Utils;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace DeviceManager.Api.UnitTests.Services
 {
     public class DeviceServiceTests : IDisposable
     {
-        private readonly Mock<IRepository<Device>>  mockRepository;
-        private readonly Mock<IUnitOfWork> mockUnitOfWork;
-
         private readonly DeviceService service;
 
         public DeviceServiceTests()
         {
-            var mockRepositoryObjet = new MockRepository(MockBehavior.Strict);
+            // Build Device 
+            Device device = new DeviceBuilder()
+                .WithId("27be25a2-1b69-4476-a90f-f80498f5e2ec")
+                .WithTitle("Raspberry3")
+                .Build();
 
-            mockUnitOfWork = mockRepositoryObjet.Create<IUnitOfWork>();
-            mockRepository = mockRepositoryObjet.Create<IRepository<Device>>();
+            // Build Device list
+            List<Device> devicesList = new List<Device>{ device };
 
-            service = this.CreateService();
+            // Build device service
+            service = new DeviceServiceBuilder()
+                .WithRepositoryMock(devicesList, device)
+                .WithUnitOfWorkSetup()
+                .Build();
         }
 
         public void Dispose()
@@ -60,7 +60,7 @@ namespace DeviceManager.Api.UnitTests.Services
             // Arrange
 
             // Act
-            Action comparison = () => { service.GetDevices(); };
+            Action comparison = () => { service.GetDevices(1,1); };
 
             // Assert
             comparison.Should().NotThrow();
@@ -72,13 +72,12 @@ namespace DeviceManager.Api.UnitTests.Services
             // Arrange
 
             // Act
-            List<Device> devices = service.GetDevices();
+            List<Device> devices = service.GetDevices(1,1);
 
             // Assert
             devices.Should().NotBeNull();
             devices.Should().HaveCount(1);
         }
-
 
         [Fact]
         public void GetDeviceById_WithValidParameters_SholdNotBeNull()
@@ -117,30 +116,6 @@ namespace DeviceManager.Api.UnitTests.Services
 
             // Assert
             action.Should().NotThrow();
-        }
-
-        private DeviceService CreateService()
-        {
-            var device = new DeviceBuilder()
-                .WithId("27be25a2-1b69-4476-a90f-f80498f5e2ec")
-                .WithTitle("Raspberry3")
-                .Build();
-
-            var devicesList = new List<Device>{ device };
-
-            this.mockRepository.Setup(x => x.GetAll()).Returns(devicesList.AsQueryable);
-            this.mockRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(device);
-            this.mockRepository.Setup(x => x.Update(It.IsAny<Device>())).Returns(It.IsAny<EntityState>());
-            this.mockRepository.Setup(x => x.Add(It.IsAny<Device>())).Returns(EntityState.Added);
-
-            this.mockRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Device, bool>>>()))
-                .Returns(() => devicesList.AsQueryable());
-
-            this.mockUnitOfWork.Setup(x => x.Commit()).Returns(1);
-            this.mockUnitOfWork.Setup(u => u.GetRepository<Device>()).Returns(this.mockRepository.Object);
-
-            return new DeviceService(
-                this.mockUnitOfWork.Object);
         }
     }
 }

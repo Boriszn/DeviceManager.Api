@@ -13,8 +13,10 @@ namespace DeviceManager.Api.Services
         /// <summary>
         /// Gets the list of devices.
         /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        List<Device> GetDevices();
+        List<Device> GetDevices(int page, int pageSize);
 
         /// <summary>
         /// Gets the device by identifier.
