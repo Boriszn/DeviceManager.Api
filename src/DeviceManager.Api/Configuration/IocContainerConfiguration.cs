@@ -23,6 +23,7 @@ namespace DeviceManager.Api.Configuration
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddTransient<IDeviceService, DeviceService>();
+            services.AddTransient<IDeviceValidationService, DeviceValidationService>();
 
             services.AddTransient<IDataBaseManager, DataBaseManager>();
             services.AddTransient<IContextFactory, ContextFactory>();

@@ -119,6 +119,7 @@ namespace DeviceManager.Api.UnitTests.Services
         {
             return new DeviceService(
                 this.mockUnitOfWork.Object,
+                It.IsAny<IDeviceValidationService>(),
                 mapper);
         }
     }
