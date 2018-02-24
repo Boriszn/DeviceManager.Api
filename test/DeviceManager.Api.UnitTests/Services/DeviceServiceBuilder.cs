@@ -7,6 +7,7 @@ using DeviceManager.Api.Services;
 using DeviceManager.Api.Data.Management;
 using DeviceManager.Api.Data.Model;
 using DeviceManager.Api.Mappings;
+using DeviceManager.Api.Model;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 
@@ -18,10 +19,13 @@ namespace DeviceManager.Api.UnitTests.Services
         private readonly Mock<IUnitOfWork> mockUnitOfWork;
         private readonly MapperConfiguration mapperConfiguration;
         private readonly Mapper mapper;
+        private Mock<IDeviceValidationService> mockDeviceValidationService;
 
         public DeviceServiceBuilder()
         {
             var mockRepositoryObjet = new MockRepository(MockBehavior.Strict);
+
+            this.mockDeviceValidationService = mockRepositoryObjet.Create<IDeviceValidationService>();
 
             mockUnitOfWork = mockRepositoryObjet.Create<IUnitOfWork>();
             mockRepository = mockRepositoryObjet.Create<IRepository<Device>>();
@@ -111,6 +115,15 @@ namespace DeviceManager.Api.UnitTests.Services
             return this;
         }
 
+        public DeviceServiceBuilder WithValidationMock()
+        {
+            this.mockDeviceValidationService
+                .Setup(x => x.Validate(It.IsAny<DeviceViewModel>()))
+                .Returns(new DeviceValidationService());
+
+            return this;
+        }
+
         /// <summary>
         /// Builds this instance.
         /// </summary>
@@ -119,7 +132,7 @@ namespace DeviceManager.Api.UnitTests.Services
         {
             return new DeviceService(
                 this.mockUnitOfWork.Object,
-                It.IsAny<IDeviceValidationService>(),
+                this.mockDeviceValidationService.Object,
                 mapper);
         }
     }
