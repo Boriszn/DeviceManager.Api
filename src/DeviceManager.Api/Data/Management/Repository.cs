@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeviceManager.Api.Data.Management
@@ -74,6 +75,13 @@ namespace DeviceManager.Api.Data.Management
         public IQueryable<T> GetAll()
         {
             return this.dbSet;
+        }
+
+        public IQueryable<T> GetAll(int page, int pageCount)
+        {
+            var pageSize = (page - 1) * pageCount;
+
+            return this.dbSet.Skip(pageSize).Take(pageCount);
         }
 
         /// <inheritdoc />

@@ -2,6 +2,9 @@
 
 Web API Solution demonstrates mutliteantcy architecture, using Entity Framework, UnitOfWork, Repository patterns
 
+![alt text](https://github.com/Boriszn/DeviceManager.Api/blob/feature/ISS-1-Add-Automapper/assets/arhitecture-diag.png "Logo Title Text 1")
+
+
 ## Installation
 
 1. Clone repository

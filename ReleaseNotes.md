@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## 1.0.1 - 24.02.2018
+
+### Added
+- [ISS-1] Add automapper
+- [RD-3] Commit(and fix) unit tests for; Services (Business logic layer) Web Api (wep api tests)
+
 ## 1.0.0 - 11.02.2018
 
 ### Added
