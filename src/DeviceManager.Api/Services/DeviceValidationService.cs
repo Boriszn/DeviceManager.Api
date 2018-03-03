@@ -8,6 +8,18 @@ namespace DeviceManager.Api.Services
     /// <inheritdoc />
     public class DeviceValidationService : IDeviceValidationService
     {
+        private readonly IDeviceViewModelValidationRules deviceViewModelValidationRules;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeviceValidationService"/> class.
+        /// </summary>
+        /// <param name="deviceViewModelValidationRules">The device view model validation rules.</param>
+        public DeviceValidationService(
+            IDeviceViewModelValidationRules deviceViewModelValidationRules)
+        {
+            this.deviceViewModelValidationRules = deviceViewModelValidationRules;
+        }
+
         /// <summary>
         /// Validates the specified device view model.
         /// </summary>
@@ -16,7 +28,7 @@ namespace DeviceManager.Api.Services
         /// <exception cref="ValidationException"></exception>
         public DeviceValidationService Validate(DeviceViewModel deviceViewModel)
         {
-            var validationResult = new DeviceViewModelValidationRules().Validate(deviceViewModel);
+            var validationResult = deviceViewModelValidationRules.Validate(deviceViewModel);
 
             if (!validationResult.IsValid)
             {
@@ -36,7 +48,7 @@ namespace DeviceManager.Api.Services
         {
             if (deviceId == Guid.Empty)
             {
-                throw new ValidationException("Shuld not be empty");
+                throw new ValidationException("Should not be empty");
             }
 
             return this;

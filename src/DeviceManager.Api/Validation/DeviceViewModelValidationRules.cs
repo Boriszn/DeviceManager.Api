@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace DeviceManager.Api.Validation
 {
-    public class DeviceViewModelValidationRules : AbstractValidator<DeviceViewModel>
+    public class DeviceViewModelValidationRules : AbstractValidator<DeviceViewModel>, IDeviceViewModelValidationRules
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DeviceViewModelValidationRules"/> class.
@@ -15,16 +15,13 @@ namespace DeviceManager.Api.Validation
         {
             RuleFor(device => device.DeviceCode)
                 .NotEmpty()
-                .Length(5, 10)
-                .WithMessage("DeviceCode should be min 5 and max 10 character");
+                .Length(5, 10);
 
             RuleFor(device => device.DeviceCode)
-                .NotEmpty()
-                .WithMessage("DeviceCode should not be null");
+                .NotEmpty();
 
             RuleFor(device => device.Title)
-                .NotEmpty()
-                .WithMessage("Device title should not be null");
+                .NotEmpty();
         }
     }
 }
