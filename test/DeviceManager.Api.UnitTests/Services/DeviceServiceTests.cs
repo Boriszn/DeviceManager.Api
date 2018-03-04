@@ -27,6 +27,7 @@ namespace DeviceManager.Api.UnitTests.Services
             // Build device service
             service = new DeviceServiceBuilder()
                 .WithRepositoryMock(devicesList, device)
+                .WithValidationMock()
                 .WithUnitOfWorkSetup()
                 .Build();
         }

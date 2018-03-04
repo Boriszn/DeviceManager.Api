@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using DeviceManager.Api.Configuration;
+using DeviceManager.Api.Middlewares;
+using DeviceManager.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +12,10 @@ namespace DeviceManager.Api
 {
     public class Startup
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// </summary>
+        /// <param name="env">The env.</param>
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -53,6 +59,7 @@ namespace DeviceManager.Api
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
 
             //Cunfigure the Swagger API documentation

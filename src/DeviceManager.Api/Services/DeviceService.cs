@@ -13,13 +13,16 @@ namespace DeviceManager.Api.Services
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IDeviceValidationService deviceValidationService;
 
         /// <inheritdoc />
         public DeviceService(
             IUnitOfWork unitOfWork,
+            IDeviceValidationService deviceValidationService,
             IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.deviceValidationService = deviceValidationService;
             this.mapper = mapper;
         }
 
@@ -48,6 +51,10 @@ namespace DeviceManager.Api.Services
         /// <inheritdoc />
         public void CreateDevice(DeviceViewModel deviceViewModel)
         {
+            // Validate input
+            deviceValidationService
+                .Validate(deviceViewModel);
+
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
             deviceRepository.Add(mapper.Map<DeviceViewModel, Device>(deviceViewModel));
@@ -59,6 +66,12 @@ namespace DeviceManager.Api.Services
         /// <inheritdoc />
         public void UpdateDevice(Guid deviceId, DeviceViewModel deviceViewModel)
         {
+            // Validate input
+            deviceValidationService
+                .Validate(deviceViewModel)
+                .ValidateDeviceId(deviceId);
+
+            // Construct repository
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
             // Get device
