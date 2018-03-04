@@ -47,11 +47,17 @@ namespace DeviceManager.Api.Middlewares
 
         private static int ConfigurateExceptionTypes(Exception exception)
         {
-            int httpStatusCode = (int) HttpStatusCode.InternalServerError;
+            int httpStatusCode;
 
-            if (exception is ValidationException)
+            // Exception type To Http Status configuration 
+            switch (exception)
             {
-                httpStatusCode = (int) HttpStatusCode.BadRequest;
+                case var _ when exception is ValidationException:
+                    httpStatusCode = (int) HttpStatusCode.BadRequest;
+                   break;
+                default:
+                     httpStatusCode = (int) HttpStatusCode.InternalServerError;
+                  break;
             }
 
             return httpStatusCode;
