@@ -8,6 +8,7 @@ using DeviceManager.Api.Data.Management;
 using DeviceManager.Api.Data.Model;
 using DeviceManager.Api.Mappings;
 using DeviceManager.Api.Model;
+using DeviceManager.Api.Validation;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 
@@ -119,7 +120,7 @@ namespace DeviceManager.Api.UnitTests.Services
         {
             this.mockDeviceValidationService
                 .Setup(x => x.Validate(It.IsAny<DeviceViewModel>()))
-                .Returns(new DeviceValidationService());
+                .Returns(new DeviceValidationService(new DeviceViewModelValidationRules()));
 
             return this;
         }
