@@ -1,7 +1,7 @@
 using System;
 using DeviceManager.Api.Data.Model;
 
-namespace DeviceManager.Api.UnitTests.Utils
+namespace DeviceManager.Api.UnitTests.Builders
 {
     public class DeviceBuilder
     {
