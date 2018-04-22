@@ -5,11 +5,11 @@ using DeviceManager.Api.UnitTests.Api.Server;
 namespace DeviceManager.Api.UnitTests.Builders
 {
     /// <summary>
-    /// 
+    /// Fluent builder for Device API
     /// </summary>
     public class DevicesApiBuilder
     {
-        private readonly TestContext testContext;
+        private readonly TestContextFactory testContextFactory;
 
         private string query;
         public HttpResponseMessage HttpResponseMessage;
@@ -19,7 +19,7 @@ namespace DeviceManager.Api.UnitTests.Builders
         /// </summary>
         public DevicesApiBuilder()
         {
-            testContext = new TestContext();
+            testContextFactory = new TestContextFactory();
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace DeviceManager.Api.UnitTests.Builders
         /// <returns></returns>
         public DevicesApiBuilder WithTenantId(string tenantId)
         {
-            testContext.Client.DefaultRequestHeaders.Add("tenantid", tenantId );
+            testContextFactory.Client.DefaultRequestHeaders.Add("tenantid", tenantId );
 
             return this;
         }
@@ -54,7 +54,7 @@ namespace DeviceManager.Api.UnitTests.Builders
         /// <returns></returns>
         public async Task<DevicesApiBuilder> Get()
         {
-            HttpResponseMessage = await testContext.Client.GetAsync(query);
+            HttpResponseMessage = await testContextFactory.Client.GetAsync(query);
             return this;
         }
     }
