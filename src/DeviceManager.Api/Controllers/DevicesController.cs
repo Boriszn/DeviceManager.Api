@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DeviceManager.Api.Controllers
 {
-    [Route("api/devices")]
+    [Route("api/v{version:apiVersion}/devices")]
     public class DevicesController : Controller
     {
         private readonly IDeviceService deviceService;

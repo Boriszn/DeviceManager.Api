@@ -46,6 +46,7 @@ namespace DeviceManager.Api
             // IOC containers / Entity Framework
             EntityFrameworkConfiguration.ConfigureService(services, Configuration);
             IocContainerConfiguration.ConfigureService(services, Configuration);
+            ApiVersioningConfiguration.ConfigureService(services);
         }
 
         /// <summary>
