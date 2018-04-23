@@ -11,7 +11,7 @@ using Xunit;
 
 namespace DeviceManager.Api.UnitTests.Api
 {
-    [Category("Integration")]
+    [Trait("Category", "Integration")]
     public class DevicesApiTests
     {
         [Fact]
