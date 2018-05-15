@@ -1,9 +1,8 @@
-# DeviceManager.Api [![Build status](https://ci.appveyor.com/api/projects/status/x1whwie6v68l8200?svg=true)](https://ci.appveyor.com/project/Boriszn/devicemanager-api)
+# DeviceManager.Api [![Build status](https://ci.appveyor.com/api/projects/status/x1whwie6v68l8200?svg=true)](https://ci.appveyor.com/project/Boriszn/devicemanager-api) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/DeviceManager-Api/)
 
 Web API Solution demonstrates mutliteantcy architecture, using Entity Framework, UnitOfWork, Repository patterns
 
 ![alt text](https://github.com/Boriszn/DeviceManager.Api/blob/feature/ISS-1-Add-Automapper/assets/arhitecture-diag.png "Logo Title Text 1")
-
 
 ## Installation
 
