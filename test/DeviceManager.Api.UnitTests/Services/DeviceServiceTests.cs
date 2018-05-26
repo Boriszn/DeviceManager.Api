@@ -3,6 +3,7 @@ using DeviceManager.Api.Services;
 using System;
 using System.Collections.Generic;
 using DeviceManager.Api.Model;
+using DeviceManager.Api.UnitTests.Builders;
 using DeviceManager.Api.UnitTests.Utils;
 using FluentAssertions;
 using Xunit;
@@ -27,6 +28,7 @@ namespace DeviceManager.Api.UnitTests.Services
             // Build device service
             service = new DeviceServiceBuilder()
                 .WithRepositoryMock(devicesList, device)
+                .WithValidationMock()
                 .WithUnitOfWorkSetup()
                 .Build();
         }
