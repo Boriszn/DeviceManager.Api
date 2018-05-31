@@ -4,15 +4,20 @@ Web API Solution demonstrates mutliteantcy architecture, using Entity Framework,
 
 ![alt text](https://github.com/Boriszn/DeviceManager.Api/blob/feature/ISS-1-Add-Automapper/assets/arhitecture-diag.png "Logo Title Text 1")
 
+## Project
+
+Todo list, accomplished tasks, can be [found Here.](https://github.com/Boriszn/DeviceManager.Api/projects/1)
+
 ## Installation
 
 1. Clone repository
 2. Apply Entity Framework migration. Run: `Update-DataBase`.
-* (For Multitenancy testing) Change `DefaultConnection` to `;Database=DeviceDb-ten2;` in `appsettings.json`. Run EF migration `Update-DataBase`. It will create another database. 
+* (For Multitenancy testing) Change `DefaultConnection` to `;Database=DeviceDb-ten2;` in `appsettings.json`. Run EF migration `Update-DataBase`. It will create another database.
 * **Tenants Dabase configuration stored in [DataBaseManager](src/DeviceManager.Api/Data/Management/DataBaseManager.cs) (`tenantConfigurationDictionary`)**.
 3. Fill up valid database connection string configuration option in `appsettings.json`.
 4. Run UnitTests.
-5. Build / Run.
+5. (Optional) Run API integration tests
+6. Build / Run.
 
 ## Contributing
 
