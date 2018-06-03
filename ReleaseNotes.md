@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
 ## 1.0.2
 
+- [RD-6] Add Fluent API integration tests
 - [RD-4] Add Fluent Validation
 
 ## 1.0.1 - 24.02.2018

@@ -38,6 +38,8 @@ namespace DeviceManager.Api
 
             // Add framework services.
             services.AddMvc();
+
+            Mapper.Reset();
             services.AddAutoMapper();
 
             // Swagger API documentation
