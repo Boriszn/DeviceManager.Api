@@ -7,6 +7,9 @@ using Xunit;
 
 namespace DeviceManager.Api.UnitTests.Api
 {
+    /// <summary>
+    /// Intergration tests for Device API controller
+    /// </summary>
     [Trait("Category", "Integration")]
     public class DevicesApiTests
     {
@@ -64,7 +67,9 @@ namespace DeviceManager.Api.UnitTests.Api
                 .Should().Be(HttpStatusCode.InternalServerError);
         }
 
-        [Fact]
+        [Fact ( 
+            Skip = "The tests will add a new item to real DB, thus should be run manualy"
+            )]
         public async Task PostDevice_WithDeviceModel_ReturnsOkResult()
         {
             // Arrange and Act

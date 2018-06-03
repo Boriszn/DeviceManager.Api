@@ -17,8 +17,10 @@ namespace DeviceManager.Api.UnitTests.Builders
         private string query;
         private string deviceViewModelData;
 
+        /// <summary>
+        /// The HTTP response message
+        /// </summary>
         public HttpResponseMessage HttpResponseMessage;
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DevicesApiBuilder"/> class.
