@@ -40,7 +40,8 @@ namespace DeviceManager.Api
             services.AddMvc();
 
             Mapper.Reset();
-            services.AddAutoMapper();
+            // https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection/issues/28
+            services.AddAutoMapper(typeof(Startup));
 
             // Swagger API documentation
             SwaggerConfiguration.ConfigureService(services);
@@ -61,8 +62,10 @@ namespace DeviceManager.Api
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            loggerFactory.AddFile(Configuration.GetSection("Logging"));
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
+            app.UseStaticFiles();
             app.UseMvc();
 
             //Cunfigure the Swagger API documentation
