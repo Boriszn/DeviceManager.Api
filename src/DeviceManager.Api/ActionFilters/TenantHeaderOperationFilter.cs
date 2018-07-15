@@ -24,7 +24,6 @@ namespace DeviceManager.Api.ActionFilters
 
             operation.Parameters.Add(new NonBodyParameter
             {
-
                 Name = "tenantid",
                 In = "header",
                 Description = "tenantid",
