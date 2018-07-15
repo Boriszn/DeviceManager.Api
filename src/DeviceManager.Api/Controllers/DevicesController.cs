@@ -22,16 +22,17 @@ namespace DeviceManager.Api.Controllers
             this.deviceService = deviceService;
         }
 
+        /// <summary>
+        /// Gets the specified page.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
         [HttpGet]
         [SwaggerOperation("GetDevices")]
         [ValidateActionParameters]
-        public IActionResult Get([FromQuery][Required]int page, [FromQuery][Required]int pageSize)
+        public IActionResult Get([FromQuery, Required]int page, [FromQuery, Required]int pageSize)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return new BadRequestObjectResult(this.ModelState);
-            }
-
             return new ObjectResult(deviceService.GetDevices(page, pageSize));
         }
 
@@ -46,11 +47,6 @@ namespace DeviceManager.Api.Controllers
         [ValidateActionParameters]
         public IActionResult GetDeviceById([FromRoute][Required]string deviceId)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return new BadRequestObjectResult(this.ModelState);
-            }
-
             return new ObjectResult(deviceService.GetDeviceById(Guid.Parse(deviceId)));
         }
 
@@ -63,11 +59,6 @@ namespace DeviceManager.Api.Controllers
         [SwaggerOperation("GetDeviceByTitle")]
         public IActionResult GetDeviceByTitle(string deviceTitle)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return new BadRequestObjectResult(this.ModelState);
-            }
-
             return new ObjectResult(deviceService.GetDeviceByTitle(deviceTitle));
         }
 
@@ -82,11 +73,6 @@ namespace DeviceManager.Api.Controllers
         [SwaggerResponse(400, null, "Error in saving the Device")]
         public IActionResult Post([FromBody]DeviceViewModel deviceViewModel)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return new BadRequestObjectResult(this.ModelState);
-            }
-
             deviceService.CreateDevice(deviceViewModel);
 
             return new OkResult();
@@ -102,11 +88,6 @@ namespace DeviceManager.Api.Controllers
         [SwaggerOperation("UpdateDevice")]
         public IActionResult Put([FromRoute]Guid deviceId, [FromBody]DeviceViewModel deviceViewModel)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return new BadRequestObjectResult(this.ModelState);
-            }
-
             deviceService.UpdateDevice(deviceId, deviceViewModel);
 
             return new OkResult();
