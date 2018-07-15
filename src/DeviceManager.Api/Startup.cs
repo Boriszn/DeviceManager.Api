@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DeviceManager.Api.ActionFilters;
 using DeviceManager.Api.Configuration;
 using DeviceManager.Api.Middlewares;
 using DeviceManager.Api.Services;
@@ -37,7 +38,11 @@ namespace DeviceManager.Api
             ConfigurationOptions.ConfigureService(services, Configuration);
 
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(
+                options =>
+                {
+                    options.Filters.Add(typeof(ValidateModelStateAttribute));
+                });
 
             Mapper.Reset();
             // https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection/issues/28
@@ -62,12 +67,13 @@ namespace DeviceManager.Api
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            loggerFactory.AddFile(Configuration.GetSection("Logging"));
+            // loggerFactory.AddFile(Configuration.GetSection("Logging"));
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
+
             app.UseStaticFiles();
             app.UseMvc();
-
+            
             //Cunfigure the Swagger API documentation
             SwaggerConfiguration.Configure(app);
         }

@@ -40,7 +40,9 @@ namespace DeviceManager.Api.Middlewares
                 var httpStatusCode = ConfigurateExceptionTypes(exception);
 
                 context.Response.StatusCode = httpStatusCode;
-                await context.Response.WriteAsync(exception.Message);
+                //TODO: [Temp fix] Rebuild this later to proper JSON error object serialization 
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync("{error: "+ exception.Message + "}");
                 context.Response.Headers.Clear();
             }
         }
@@ -56,7 +58,7 @@ namespace DeviceManager.Api.Middlewares
                     httpStatusCode = (int) HttpStatusCode.BadRequest;
                    break;
                 default:
-                     httpStatusCode = (int) HttpStatusCode.InternalServerError;
+                    httpStatusCode = (int) HttpStatusCode.InternalServerError;
                   break;
             }
 

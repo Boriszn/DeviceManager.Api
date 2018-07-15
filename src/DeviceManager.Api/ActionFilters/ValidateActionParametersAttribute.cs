@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -40,6 +41,8 @@ namespace DeviceManager.Api.ActionFilters
                     }
                 }
             }
+
+            context.Result = new BadRequestObjectResult(context.ModelState);
         }
     }
 }

@@ -109,6 +109,11 @@ namespace DeviceManager.Api.Data.Management
             return this.dbSet.Any(predicate);
         }
 
+        public IQueryable<T> FromSql(string sqlQuery)
+        {
+            return this.dbSet.FromSql(sqlQuery);
+        }
+
         /// <inheritdoc />
         public EntityState Delete(T entity)
         {
