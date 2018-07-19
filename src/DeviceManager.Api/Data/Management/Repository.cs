@@ -109,6 +109,7 @@ namespace DeviceManager.Api.Data.Management
             return this.dbSet.Any(predicate);
         }
 
+        /// <inheritdoc />
         public IQueryable<T> FromSql(string sqlQuery)
         {
             return this.dbSet.FromSql(sqlQuery);

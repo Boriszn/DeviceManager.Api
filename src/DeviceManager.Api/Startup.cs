@@ -11,6 +11,9 @@ using Microsoft.Extensions.Logging;
 
 namespace DeviceManager.Api
 {
+    /// <summary>
+    /// Configuration class for dotnet core application
+    /// </summary>
     public class Startup
     {
         /// <summary>
@@ -26,7 +29,11 @@ namespace DeviceManager.Api
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-
+        
+        /// <summary>
+        /// Instance of application configuration
+        /// </summary>
+        /// <value></value>
         public IConfigurationRoot Configuration { get; }
 
         /// <summary>
@@ -43,6 +50,9 @@ namespace DeviceManager.Api
                 {
                     options.Filters.Add(typeof(ValidateModelStateAttribute));
                 });
+            // Remove commented code and above semicolon 
+            // if the assembly of the API Controllers is different than project which contains Startup class 
+            //.AddApplicationPart(typeof(BaseController<>).Assembly);
 
             Mapper.Reset();
             // https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection/issues/28
@@ -72,10 +82,11 @@ namespace DeviceManager.Api
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseStaticFiles();
-            app.UseMvc();
-            
+
             //Cunfigure the Swagger API documentation
             SwaggerConfiguration.Configure(app);
+
+            app.UseMvc();
         }
     }
 }

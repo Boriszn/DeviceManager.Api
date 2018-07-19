@@ -4,6 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DeviceManager.Api.Configuration
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ConfigurationOptions
     {
         /// <summary>

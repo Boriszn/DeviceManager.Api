@@ -11,6 +11,10 @@ namespace DeviceManager.Api.Migrations
     [Migration("20180121165138_DatabaseInitialise")]
     partial class DatabaseInitialise
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder

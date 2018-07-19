@@ -3,8 +3,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DeviceManager.Api.Migrations
 {
+    /// <summary>
+    /// migration data
+    /// </summary>
     public partial class DatabaseInitialise : Migration
     {
+       
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -20,6 +25,7 @@ namespace DeviceManager.Api.Migrations
                 });
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

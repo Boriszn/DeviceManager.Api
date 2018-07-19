@@ -8,8 +8,11 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DeviceManager.Api.Controllers
 {
+    /// <summary>
+    /// CRUD operations of the Device 
+    /// </summary>
     [Route("api/v{version:apiVersion}/devices")]
-    public class DevicesController : Controller
+    public class DevicesController : BaseController<DeviceViewModel>
     {
         private readonly IDeviceService deviceService;
 
@@ -40,7 +43,6 @@ namespace DeviceManager.Api.Controllers
         /// Gets the specified device identifier.
         /// </summary>
         /// <param name="deviceId">The device identifier.</param>
-        /// <param name="deviceTitle">Title of the device.</param>
         /// <returns></returns>
         [HttpGet("{deviceId}")]
         [SwaggerOperation("GetDeviceById")]
