@@ -42,7 +42,10 @@ namespace DeviceManager.Api.ActionFilters
                 }
             }
 
-            context.Result = new BadRequestObjectResult(context.ModelState);
+            if (context.ModelState.ErrorCount != 0)
+            {
+                context.Result = new BadRequestObjectResult(context.ModelState);
+            }
         }
     }
 }
