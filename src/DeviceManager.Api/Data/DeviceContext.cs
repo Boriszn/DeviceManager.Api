@@ -21,7 +21,11 @@ namespace DeviceManager.Api.Data
         /// Get or sets the devices data model
         /// </summary>
         public DbSet<Device> Devices { get; set; } 
-
+        
+        /// <summary>
+        /// Relation between tables.
+        /// </summary>
+        /// <param name="modelBuilder">Entity framework model builder before creating database</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Device>()

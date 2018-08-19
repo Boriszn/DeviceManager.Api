@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DeviceManager.Api.Configuration
 {
+    /// <summary>
+    /// Configurations related to entity framework
+    /// </summary>
     public static class EntityFrameworkConfiguration
     {
         /// <summary>
