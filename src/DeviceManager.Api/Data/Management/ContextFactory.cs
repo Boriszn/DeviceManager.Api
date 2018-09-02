@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Data.Common;
 using System.Data.SqlClient;
 using DeviceManager.Api.Configuration.Settings;
+using DeviceManager.Api.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -14,8 +16,8 @@ namespace DeviceManager.Api.Data.Management
     /// <seealso cref="IContextFactory"/>
     public class ContextFactory : IContextFactory
     {
-        private const string TenantIdFieldName = "tenantid";
-        private const string DatabaseFieldKeyword = "Database";
+        private const string TenantIdFieldName = Constants.TenantId;
+        private const string DatabaseFieldKeyword = Constants.Database;
 
         private readonly HttpContext httpContext;
         private readonly IOptions<ConnectionSettings> connectionOptions;
@@ -71,20 +73,49 @@ namespace DeviceManager.Api.Data.Management
             ValidateDefaultConnection();
 
             // 1. Create Connection String Builder using Default connection string
-            var sqlConnectionBuilder = new SqlConnectionStringBuilder(this.connectionOptions.Value.DefaultConnection);
+            // var sqlConnectionBuilder = new SqlConnectionStringBuilder(this.connectionOptions.Value.DefaultConnection);
+            var connectionBuilder = GetConnectionBuilder();
 
             // 2. Remove old Database Name from connection string
-            sqlConnectionBuilder.Remove(DatabaseFieldKeyword);
+            connectionBuilder.Remove(DatabaseFieldKeyword);
 
             // 3. Obtain Database name from DataBaseManager and Add new DB name to 
-            sqlConnectionBuilder.Add(DatabaseFieldKeyword, this.dataBaseManager.GetDataBaseName(tenantId));
+            connectionBuilder.Add(DatabaseFieldKeyword, this.dataBaseManager.GetDataBaseName(tenantId));
 
             // 4. Create DbContextOptionsBuilder with new Database name
             var contextOptionsBuilder = new DbContextOptionsBuilder<DeviceContext>();
 
-            contextOptionsBuilder.UseSqlServer(sqlConnectionBuilder.ConnectionString);
+            //contextOptionsBuilder.UseSqlServer(sqlConnectionBuilder.ConnectionString);
+            SetConnectionString(contextOptionsBuilder, connectionBuilder.ConnectionString);
 
             return contextOptionsBuilder;
+        }
+
+        /// <summary>
+        /// Get Connection string builder instance based on the database type
+        /// </summary>
+        /// <returns></returns>
+        private DbConnectionStringBuilder GetConnectionBuilder()
+        {
+            if (connectionOptions.Value.UseNoSql)
+                return new Npgsql.NpgsqlConnectionStringBuilder(this.connectionOptions.Value.DefaultConnection);
+            else
+                return new SqlConnectionStringBuilder(this.connectionOptions.Value.DefaultConnection);
+        }
+
+        /// <summary>
+        /// Sets new connection string based on the database type
+        /// </summary>
+        /// <typeparam name="TContext"></typeparam>
+        /// <param name="contextOptionsBuilder"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        private DbContextOptionsBuilder<TContext> SetConnectionString<TContext>(DbContextOptionsBuilder<TContext> contextOptionsBuilder, string connectionString) where TContext : DbContext
+        {
+            if (connectionOptions.Value.UseNoSql)
+                return contextOptionsBuilder.UseNpgsql(connectionString);
+            else
+                return contextOptionsBuilder.UseSqlServer(connectionString);
         }
 
         private void ValidateDefaultConnection()

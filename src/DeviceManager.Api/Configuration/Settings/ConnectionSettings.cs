@@ -6,6 +6,11 @@
     public class ConnectionSettings
     {
         /// <summary>
+        /// Gets or sets the database type (No sql or Sql express)
+        /// </summary>
+        public bool UseNoSql { get; set; }
+
+        /// <summary>
         /// Gets or sets the default connection.
         /// </summary>
         /// <value>

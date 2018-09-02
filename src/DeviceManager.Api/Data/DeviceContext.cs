@@ -15,6 +15,9 @@ namespace DeviceManager.Api.Data
         public DeviceContext(DbContextOptions<DeviceContext> options)
             : base(options)
         {
+            // TODO: Comment below this if you are running migrations commands
+            // TODO: uncomment below line of you are running the application for the first time
+            //this.Database.EnsureCreated();
         }
 
         /// <summary>
