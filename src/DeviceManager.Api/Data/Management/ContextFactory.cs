@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Data.Common;
-using System.Data.SqlClient;
+using DeviceManager.Api.Configuration.DatabaseTypes;
 using DeviceManager.Api.Configuration.Settings;
 using DeviceManager.Api.Helpers;
 using Microsoft.AspNetCore.Http;
@@ -20,9 +19,12 @@ namespace DeviceManager.Api.Data.Management
         private const string DatabaseFieldKeyword = Constants.Database;
 
         private readonly HttpContext httpContext;
+
         private readonly IOptions<ConnectionSettings> connectionOptions;
 
         private readonly IDataBaseManager dataBaseManager;
+
+        private readonly IDatabaseType databaseType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContextFactory"/> class.
@@ -30,14 +32,18 @@ namespace DeviceManager.Api.Data.Management
         /// <param name="httpContentAccessor">The HTTP content accessor.</param>
         /// <param name="connectionOptions">The connection options.</param>
         /// <param name="dataBaseManager">The data base manager.</param>
+        /// <param name="databaseType"></param>
         public ContextFactory(
             IHttpContextAccessor httpContentAccessor,
             IOptions<ConnectionSettings> connectionOptions,
-            IDataBaseManager dataBaseManager)
+            IDataBaseManager dataBaseManager,
+            IDatabaseType databaseType
+            )
         {
             this.httpContext = httpContentAccessor.HttpContext;
             this.connectionOptions = connectionOptions;
             this.dataBaseManager = dataBaseManager;
+            this.databaseType = databaseType;
         }
 
         /// <inheritdoc />
@@ -73,8 +79,7 @@ namespace DeviceManager.Api.Data.Management
             ValidateDefaultConnection();
 
             // 1. Create Connection String Builder using Default connection string
-            // var sqlConnectionBuilder = new SqlConnectionStringBuilder(this.connectionOptions.Value.DefaultConnection);
-            var connectionBuilder = GetConnectionBuilder();
+            var connectionBuilder = databaseType.GetConnectionBuilder(connectionOptions.Value.DefaultConnection);
 
             // 2. Remove old Database Name from connection string
             connectionBuilder.Remove(DatabaseFieldKeyword);
@@ -84,38 +89,10 @@ namespace DeviceManager.Api.Data.Management
 
             // 4. Create DbContextOptionsBuilder with new Database name
             var contextOptionsBuilder = new DbContextOptionsBuilder<DeviceContext>();
-
-            //contextOptionsBuilder.UseSqlServer(sqlConnectionBuilder.ConnectionString);
-            SetConnectionString(contextOptionsBuilder, connectionBuilder.ConnectionString);
+            
+            databaseType.SetConnectionString(contextOptionsBuilder, connectionBuilder.ConnectionString);
 
             return contextOptionsBuilder;
-        }
-
-        /// <summary>
-        /// Get Connection string builder instance based on the database type
-        /// </summary>
-        /// <returns></returns>
-        private DbConnectionStringBuilder GetConnectionBuilder()
-        {
-            if (connectionOptions.Value.UseNoSql)
-                return new Npgsql.NpgsqlConnectionStringBuilder(this.connectionOptions.Value.DefaultConnection);
-            else
-                return new SqlConnectionStringBuilder(this.connectionOptions.Value.DefaultConnection);
-        }
-
-        /// <summary>
-        /// Sets new connection string based on the database type
-        /// </summary>
-        /// <typeparam name="TContext"></typeparam>
-        /// <param name="contextOptionsBuilder"></param>
-        /// <param name="connectionString"></param>
-        /// <returns></returns>
-        private DbContextOptionsBuilder<TContext> SetConnectionString<TContext>(DbContextOptionsBuilder<TContext> contextOptionsBuilder, string connectionString) where TContext : DbContext
-        {
-            if (connectionOptions.Value.UseNoSql)
-                return contextOptionsBuilder.UseNpgsql(connectionString);
-            else
-                return contextOptionsBuilder.UseSqlServer(connectionString);
         }
 
         private void ValidateDefaultConnection()

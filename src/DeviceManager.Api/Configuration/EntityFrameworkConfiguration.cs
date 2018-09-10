@@ -1,7 +1,9 @@
-﻿using DeviceManager.Api.Configuration.Settings;
+﻿using System;
+using System.Linq;
+using DeviceManager.Api.Configuration.DatabaseTypes;
+using DeviceManager.Api.Configuration.Settings;
 using DeviceManager.Api.Data;
 using DeviceManager.Api.Helpers;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,23 +28,19 @@ namespace DeviceManager.Api.Configuration
             // Database connection settings
             var connectionOptions = services.BuildServiceProvider().GetRequiredService<IOptions<ConnectionSettings>>();
 
+            RegisterDatabaseType(services, connectionOptions);
+
+            var databaseTypeInstance = services.BuildServiceProvider().GetRequiredService<IDatabaseType>();
+
+            databaseTypeInstance.EnableDatabase(services, connectionOptions);
+
             // Entity framework configuration
-            services.AddEntityFrameworkNpgsql().AddDbContext<DeviceContext>(options =>
-                GetContextBuilder(options, connectionOptions, connectionString));
+            // services.AddDbContext<DeviceContext>(options =>
+            //     GetContextBuilder(options, connectionOptions, connectionString));
+            services.AddDbContext<DeviceContext>(options => databaseTypeInstance.GetContextBuilder(options, connectionOptions, connectionString));
 
             services.AddScoped<IDbContext, DeviceContext>();
         }
-
-        /// <summary>
-        /// Based on the database context builder instance is created
-        /// </summary>
-        /// <param name="optionsBuilder">Context builder</param>
-        /// <param name="connectionOptions">Configured connection settings</param>
-        /// <param name="connectionString">Configured connection string</param>
-        /// <returns>Context builder with configured database settings</returns>
-        private static DbContextOptionsBuilder GetContextBuilder(DbContextOptionsBuilder optionsBuilder, IOptions<ConnectionSettings> connectionOptions, string connectionString)
-        =>
-            connectionOptions.Value.UseNoSql ? optionsBuilder.UseNpgsql(connectionString, b => GetMigrationInformation(b)) : optionsBuilder.UseSqlServer(connectionString, b => GetMigrationInformation(b));
 
         /// <summary>
         ///  Configures the assembly where migrations are maintained for this context.
@@ -53,12 +51,29 @@ namespace DeviceManager.Api.Configuration
         /// <typeparam name="TExtension"></typeparam>
         /// <param name="builder"></param>
         /// <returns>Migrations configured builder</returns>
-        private static TBuilder GetMigrationInformation<TBuilder, TExtension>(RelationalDbContextOptionsBuilder<TBuilder, TExtension> builder)
+        public static TBuilder GetMigrationInformation<TBuilder, TExtension>(RelationalDbContextOptionsBuilder<TBuilder, TExtension> builder)
              where TBuilder : RelationalDbContextOptionsBuilder<TBuilder, TExtension>
             where TExtension : RelationalOptionsExtension, new()
         {
-            
+
             return builder.MigrationsAssembly(typeof(DeviceContext).Assembly.GetName().Name);
         }
+
+        /// <summary>
+        /// Inject database settings instance based on the connection string
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="connectionOptions"></param>
+        private static void RegisterDatabaseType(IServiceCollection services, IOptions<ConnectionSettings> connectionOptions)
+        {
+            var databaseInterfaceType = typeof(IDatabaseType);
+            var instanceType = connectionOptions.Value.DatabaseType.ToString();
+            var instance = databaseInterfaceType.Assembly.GetTypes().FirstOrDefault(x =>
+             databaseInterfaceType.IsAssignableFrom(x)
+             &&
+             string.Equals(instanceType, x.Name, StringComparison.OrdinalIgnoreCase));
+            services.AddSingleton<IDatabaseType>((IDatabaseType)Activator.CreateInstance(instance));
+        }
+
     }
 }

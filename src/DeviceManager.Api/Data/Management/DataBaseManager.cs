@@ -1,3 +1,4 @@
+using DeviceManager.Api.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -16,10 +17,10 @@ namespace DeviceManager.Api.Data.Management
         private readonly Dictionary<Guid, string> tenantConfigurationDictionary = new Dictionary<Guid, string>
         {
             {
-                Guid.Parse("b0ed668d-7ef2-4a23-a333-94ad278f45d7"), "DeviceDb"
+                Guid.Parse(Constants.Tenant1Guid), Constants.DeviceDb
             },
             {
-                Guid.Parse("e7e73238-662f-4da2-b3a5-89f4abb87969"), "DeviceDb-ten2"
+                Guid.Parse(Constants.Tenant2Guid), Constants.DeviceDbTenant2
             }
         };
 

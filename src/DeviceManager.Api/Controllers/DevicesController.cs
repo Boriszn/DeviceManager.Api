@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using DeviceManager.Api.ActionFilters;
 using DeviceManager.Api.Model;
 using DeviceManager.Api.Services;
@@ -50,6 +51,19 @@ namespace DeviceManager.Api.Controllers
         public IActionResult GetDeviceById([FromRoute][Required]string deviceId)
         {
             return new ObjectResult(deviceService.GetDeviceById(Guid.Parse(deviceId)));
+        }
+
+        /// <summary>
+        /// Gets the specified device identifier in async await pattern.
+        /// </summary>
+        /// <param name="deviceId">The device identifier.</param>
+        /// <returns></returns>
+        [HttpGet("async/{deviceId}")]
+        [SwaggerOperation(nameof(GetDeviceByIdAsync))]
+        [ValidateActionParameters]
+        public async Task<IActionResult> GetDeviceByIdAsync([FromRoute][Required]string deviceId)
+        {
+            return new ObjectResult(await deviceService.GetDeviceByIdAsync(Guid.Parse(deviceId)));
         }
 
         /// <summary>
