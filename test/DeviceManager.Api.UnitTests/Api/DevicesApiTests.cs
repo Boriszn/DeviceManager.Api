@@ -89,7 +89,7 @@ namespace DeviceManager.Api.UnitTests.Api
         }
 
         [Fact ( 
-            //Skip = "The tests will add a new item to real DB, thus should be run manualy"
+            Skip = "The tests will add a new item to real DB, thus should be run manualy"
             )]
         public async Task PostDevice_WithDeviceModel_ReturnsOkResult()
         {
