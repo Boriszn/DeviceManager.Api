@@ -58,6 +58,13 @@ namespace DeviceManager.Api.UnitTests.Builders
             return this;
         }
 
+        public DevicesApiBuilder QueryWithDeviceIdAsync(string deviceId, string version)
+        {
+            query = $"api/v{version}/devices/async/{deviceId}";
+
+            return this;
+        }
+
         public DevicesApiBuilder QueryWithTitle(string deviceTitle, string version)
         {
             query = $"api/v{version}/devices/title/{deviceTitle}";
