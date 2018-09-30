@@ -22,7 +22,11 @@ Todo list, accomplished tasks, can be [found Here.](https://github.com/Boriszn/D
 ## Database Connection
 
 `DatabaseType` field is used to specify the database type the application should connect.
-Currently, the framework contains connection information for `MsSql` and `Postgres`. The value of `DatabaseType` should come from `DatabaseType` enum (src\DeviceManager.Api\Configuration\Settings) and should match the class name inside (src\DeviceManager.Api\Configuration\DatabaseTypes) and implement `IDatabaseType` interface.
+Currently, the framework contains connection information for:
+- _MsSql_ (MS SQL Server, Sql Express)
+- _Postgres_ NoSql ([Additional info can be found here](http://www.npgsql.org/efcore/))
+
+The value of `DatabaseType` should come from `DatabaseType` enum (src\DeviceManager.Api\Configuration\Settings) and should match the class name inside (src\DeviceManager.Api\Configuration\DatabaseTypes) and implement `IDatabaseType` interface.
 
 To add a new database type, just add a class implementing `IDatabaseType` and add the same name inside `DatabaseType` and change connection string in the `DefaultConnection` property and `DatabaseType` to new database type.
 
