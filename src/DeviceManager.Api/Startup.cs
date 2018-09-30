@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DeviceManager.Api.ActionFilters;
 using DeviceManager.Api.Configuration;
 using DeviceManager.Api.Middlewares;
 using DeviceManager.Api.Services;
@@ -10,6 +11,9 @@ using Microsoft.Extensions.Logging;
 
 namespace DeviceManager.Api
 {
+    /// <summary>
+    /// Configuration class for dotnet core application
+    /// </summary>
     public class Startup
     {
         /// <summary>
@@ -25,7 +29,11 @@ namespace DeviceManager.Api
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-
+        
+        /// <summary>
+        /// Instance of application configuration
+        /// </summary>
+        /// <value></value>
         public IConfigurationRoot Configuration { get; }
 
         /// <summary>
@@ -37,8 +45,18 @@ namespace DeviceManager.Api
             ConfigurationOptions.ConfigureService(services, Configuration);
 
             // Add framework services.
-            services.AddMvc();
-            services.AddAutoMapper();
+            services.AddMvc(
+                options =>
+                {
+                    options.Filters.Add(typeof(ValidateModelStateAttribute));
+                });
+            // Remove commented code and above semicolon 
+            // if the assembly of the API Controllers is different than project which contains Startup class 
+            //.AddApplicationPart(typeof(BaseController<>).Assembly);
+
+            Mapper.Reset();
+            // https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection/issues/28
+            services.AddAutoMapper(typeof(Startup));
 
             // Swagger API documentation
             SwaggerConfiguration.ConfigureService(services);
@@ -59,12 +77,16 @@ namespace DeviceManager.Api
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            // loggerFactory.AddFile(Configuration.GetSection("Logging"));
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
-            app.UseMvc();
+
+            app.UseStaticFiles();
 
             //Cunfigure the Swagger API documentation
             SwaggerConfiguration.Configure(app);
+
+            app.UseMvc();
         }
     }
 }

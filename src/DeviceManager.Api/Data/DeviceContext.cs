@@ -15,13 +15,20 @@ namespace DeviceManager.Api.Data
         public DeviceContext(DbContextOptions<DeviceContext> options)
             : base(options)
         {
+            // TODO: Comment below this if you are running migrations commands
+            // TODO: uncomment below line of you are running the application for the first time
+            //this.Database.EnsureCreated();
         }
 
         /// <summary>
         /// Get or sets the devices data model
         /// </summary>
         public DbSet<Device> Devices { get; set; } 
-
+        
+        /// <summary>
+        /// Relation between tables.
+        /// </summary>
+        /// <param name="modelBuilder">Entity framework model builder before creating database</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Device>()

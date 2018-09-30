@@ -77,6 +77,7 @@ namespace DeviceManager.Api.Data.Management
             return this.dbSet;
         }
 
+        /// <inheritdoc />
         public IQueryable<T> GetAll(int page, int pageCount)
         {
             var pageSize = (page - 1) * pageCount;
@@ -106,6 +107,12 @@ namespace DeviceManager.Api.Data.Management
         public bool Exists(Expression<Func<T, bool>> predicate)
         {
             return this.dbSet.Any(predicate);
+        }
+
+        /// <inheritdoc />
+        public IQueryable<T> FromSql(string sqlQuery)
+        {
+            return this.dbSet.FromSql(sqlQuery);
         }
 
         /// <inheritdoc />

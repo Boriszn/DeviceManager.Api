@@ -1,5 +1,8 @@
 namespace DeviceManager.Api.Data.Management
 {
+    /// <summary>
+    /// Context factory interface
+    /// </summary>
     public interface IContextFactory
     {
         /// <summary>

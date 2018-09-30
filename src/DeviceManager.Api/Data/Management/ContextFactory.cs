@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Data.SqlClient;
+using DeviceManager.Api.Configuration.DatabaseTypes;
 using DeviceManager.Api.Configuration.Settings;
+using DeviceManager.Api.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -14,13 +15,16 @@ namespace DeviceManager.Api.Data.Management
     /// <seealso cref="IContextFactory"/>
     public class ContextFactory : IContextFactory
     {
-        private const string TenantIdFieldName = "tenantid";
-        private const string DatabaseFieldKeyword = "Database";
+        private const string TenantIdFieldName = Constants.TenantId;
+        private const string DatabaseFieldKeyword = Constants.Database;
 
         private readonly HttpContext httpContext;
+
         private readonly IOptions<ConnectionSettings> connectionOptions;
 
         private readonly IDataBaseManager dataBaseManager;
+
+        private readonly IDatabaseType databaseType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContextFactory"/> class.
@@ -28,14 +32,18 @@ namespace DeviceManager.Api.Data.Management
         /// <param name="httpContentAccessor">The HTTP content accessor.</param>
         /// <param name="connectionOptions">The connection options.</param>
         /// <param name="dataBaseManager">The data base manager.</param>
+        /// <param name="databaseType"></param>
         public ContextFactory(
             IHttpContextAccessor httpContentAccessor,
             IOptions<ConnectionSettings> connectionOptions,
-            IDataBaseManager dataBaseManager)
+            IDataBaseManager dataBaseManager,
+            IDatabaseType databaseType
+            )
         {
             this.httpContext = httpContentAccessor.HttpContext;
             this.connectionOptions = connectionOptions;
             this.dataBaseManager = dataBaseManager;
+            this.databaseType = databaseType;
         }
 
         /// <inheritdoc />
@@ -71,18 +79,18 @@ namespace DeviceManager.Api.Data.Management
             ValidateDefaultConnection();
 
             // 1. Create Connection String Builder using Default connection string
-            var sqlConnectionBuilder = new SqlConnectionStringBuilder(this.connectionOptions.Value.DefaultConnection);
+            var connectionBuilder = databaseType.GetConnectionBuilder(connectionOptions.Value.DefaultConnection);
 
             // 2. Remove old Database Name from connection string
-            sqlConnectionBuilder.Remove(DatabaseFieldKeyword);
+            connectionBuilder.Remove(DatabaseFieldKeyword);
 
             // 3. Obtain Database name from DataBaseManager and Add new DB name to 
-            sqlConnectionBuilder.Add(DatabaseFieldKeyword, this.dataBaseManager.GetDataBaseName(tenantId));
+            connectionBuilder.Add(DatabaseFieldKeyword, this.dataBaseManager.GetDataBaseName(tenantId));
 
             // 4. Create DbContextOptionsBuilder with new Database name
             var contextOptionsBuilder = new DbContextOptionsBuilder<DeviceContext>();
-
-            contextOptionsBuilder.UseSqlServer(sqlConnectionBuilder.ConnectionString);
+            
+            databaseType.SetConnectionString(contextOptionsBuilder, connectionBuilder.ConnectionString);
 
             return contextOptionsBuilder;
         }

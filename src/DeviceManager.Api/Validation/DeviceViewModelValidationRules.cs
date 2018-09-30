@@ -3,6 +3,9 @@ using FluentValidation;
 
 namespace DeviceManager.Api.Validation
 {
+    /// <summary>
+    /// Validation rules related to Device controller
+    /// </summary>
     public class DeviceViewModelValidationRules : AbstractValidator<DeviceViewModel>, IDeviceViewModelValidationRules
     {
         /// <summary>

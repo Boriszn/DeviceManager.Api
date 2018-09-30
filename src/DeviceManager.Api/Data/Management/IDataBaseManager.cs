@@ -1,5 +1,8 @@
 namespace DeviceManager.Api.Data.Management
 {
+    /// <summary>
+    /// Multitenant database manager
+    /// </summary>
     public interface IDataBaseManager
     {
         /// <summary>

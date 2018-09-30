@@ -26,7 +26,7 @@ namespace DeviceManager.Api.Services
         /// <param name="deviceViewModel">The device view model.</param>
         /// <returns></returns>
         /// <exception cref="ValidationException"></exception>
-        public DeviceValidationService Validate(DeviceViewModel deviceViewModel)
+        public IDeviceValidationService Validate(DeviceViewModel deviceViewModel)
         {
             var validationResult = deviceViewModelValidationRules.Validate(deviceViewModel);
 
@@ -44,7 +44,7 @@ namespace DeviceManager.Api.Services
         /// <param name="deviceId">The device identifier.</param>
         /// <returns></returns>
         /// <exception cref="ValidationException">Shuld not be empty</exception>
-        public DeviceValidationService ValidateDeviceId(Guid deviceId)
+        public IDeviceValidationService ValidateDeviceId(Guid deviceId)
         {
             if (deviceId == Guid.Empty)
             {

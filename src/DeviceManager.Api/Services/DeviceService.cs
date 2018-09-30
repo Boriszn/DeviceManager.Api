@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using DeviceManager.Api.Data.Management;
 using DeviceManager.Api.Data.Model;
@@ -40,6 +41,14 @@ namespace DeviceManager.Api.Services
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
             return deviceRepository.Get(deviceId);
+        }
+
+        /// <inheritdoc />
+        public async Task<Device> GetDeviceByIdAsync(Guid deviceId)
+        {
+            var deviceRepository = unitOfWork.GetRepository<Device>();
+
+            return await deviceRepository.GetAsync(deviceId);
         }
 
         /// <inheritdoc />
