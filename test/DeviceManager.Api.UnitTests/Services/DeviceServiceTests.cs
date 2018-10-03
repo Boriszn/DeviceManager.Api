@@ -40,7 +40,7 @@ namespace DeviceManager.Api.UnitTests.Services
         }
 
         [Fact]
-        public void CreateDevie_WithValidParameters_SholdNotTrowAnyExceptions()
+        public void CreateDevice_WithValidParameters_SholdNotTrowAnyExceptions()
         {
             // Arrange
             var deviceViewModel = new DeviceViewModel
