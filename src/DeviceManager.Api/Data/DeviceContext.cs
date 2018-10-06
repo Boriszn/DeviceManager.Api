@@ -23,8 +23,8 @@ namespace DeviceManager.Api.Data
         /// <summary>
         /// Get or sets the devices data model
         /// </summary>
-        public DbSet<Device> Devices { get; set; } 
-        
+        public DbSet<Device> Devices { get; set; }
+
         /// <summary>
         /// Relation between tables.
         /// </summary>
@@ -33,6 +33,13 @@ namespace DeviceManager.Api.Data
         {
             modelBuilder.Entity<Device>()
                 .HasKey(contact => new { contact.DeviceId });
+
+            // No need to define the relation explicitly as long as conventions are followed.
+
+            //modelBuilder.Entity<Device>()
+            //    .HasOne(device => device.DeviceGroup)
+            //    .WithMany(group => group.Devices)
+            //    .HasForeignKey(device => device.DeviceGroupId);
         }
     }
 }

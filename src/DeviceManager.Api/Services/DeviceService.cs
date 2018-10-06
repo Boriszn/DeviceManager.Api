@@ -32,7 +32,7 @@ namespace DeviceManager.Api.Services
         {
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
-            return deviceRepository.GetAll(page, pageSize).ToList();
+            return deviceRepository.GetAll(page, pageSize, x => x.DeviceGroup).ToList();
         }
 
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace DeviceManager.Api.Services
         {
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
-            return deviceRepository.Get(deviceId);
+            return deviceRepository.Get(deviceId, device => device.DeviceGroup);
         }
 
         /// <inheritdoc />
@@ -48,7 +48,7 @@ namespace DeviceManager.Api.Services
         {
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
-            return await deviceRepository.GetAsync(deviceId);
+            return await deviceRepository.GetAsync(deviceId, device => device.DeviceGroup);
         }
 
         /// <inheritdoc />

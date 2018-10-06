@@ -21,12 +21,32 @@ namespace DeviceManager.Api.Data.Management
         T Get<TKey>(TKey id);
 
         /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TProperty">Child entity</typeparam>
+        /// <param name="id">The identifier.</param>
+        /// <param name="navigationPropertyPath">Child property to include</param>
+        /// <returns>Entity</returns>
+        T Get<TKey, TProperty>(TKey id, Expression<Func<T, TProperty>> navigationPropertyPath) where TProperty : class;
+
+        /// <summary>
         /// Gets the specified identifier. Asynchronous version.
         /// </summary>
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="id">The identifier.</param>
         /// <returns>Task Entity</returns>
         Task<T> GetAsync<TKey>(TKey id);
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TProperty">Child entity</typeparam>
+        /// <param name="id">The identifier.</param>
+        /// <param name="navigationPropertyPath">Child property to include</param>
+        /// <returns>Entity</returns>
+        Task<T> GetAsync<TKey, TProperty>(TKey id, Expression<Func<T, TProperty>> navigationPropertyPath) where TProperty : class;
 
         /// <summary>
         /// Gets an entity by the keys specified in <paramref name="keyValues"/>
@@ -63,6 +83,15 @@ namespace DeviceManager.Api.Data.Management
         /// <param name="pageCount">The page count.</param>
         /// <returns></returns>
         IQueryable<T> GetAll(int page, int pageCount);
+
+        /// <summary>
+        /// Gets all. With data pagination.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageCount">The page count.</param>
+        /// <param name="navigationPropertyPath">Child entity to include</param>
+        /// <returns></returns>
+        IQueryable<T> GetAll<TProperty>(int page, int pageCount, Expression<Func<T, TProperty>> navigationPropertyPath);
 
         /// <summary>
         /// Gets all and offers to include a related table

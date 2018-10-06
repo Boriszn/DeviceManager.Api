@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeviceManager.Api.Data.Management
@@ -47,11 +46,29 @@ namespace DeviceManager.Api.Data.Management
             return this.dbSet.Find(id);
         }
 
+        /// <inheritdoc/>
+        public T Get<TKey, TProperty>(TKey id, Expression<Func<T, TProperty>> navigationPropertyPath) where TProperty : class
+        {
+            var entity = this.dbSet.Find(id);
+            if (entity == null) return null;
+            this.context.Entry(entity).Reference(navigationPropertyPath).Load();
+            return entity;
+        }
+
         /// <inheritdoc />
         public async Task<T> GetAsync<TKey>(TKey id)
         {
             return await this.dbSet.FindAsync(id);
         }
+
+        /// <inheritdoc />
+        public async Task<T> GetAsync<TKey, TProperty>(TKey id, Expression<Func<T, TProperty>> navigationPropertyPath) where TProperty : class
+        {
+            var entity = await this.dbSet.FindAsync(id);
+            if (entity == null) return null;
+            await this.context.Entry(entity).Reference(navigationPropertyPath).LoadAsync();
+            return entity;
+       }
 
         /// <inheritdoc />
         public T Get(params object[] keyValues)
@@ -83,6 +100,14 @@ namespace DeviceManager.Api.Data.Management
             var pageSize = (page - 1) * pageCount;
 
             return this.dbSet.Skip(pageSize).Take(pageCount);
+        }
+
+        /// <inheritdoc />
+        public IQueryable<T> GetAll<TProperty>(int page, int pageCount, Expression<Func<T, TProperty>> navigationPropertyPath)
+        {
+            var pageSize = (page - 1) * pageCount;
+
+            return this.dbSet.Include(navigationPropertyPath).Skip(pageSize).Take(pageCount);
         }
 
         /// <inheritdoc />

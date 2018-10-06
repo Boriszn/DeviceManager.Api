@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DeviceManager.Api.Model
 {
@@ -24,5 +23,15 @@ namespace DeviceManager.Api.Model
         /// The device code.
         /// </value>
         public string DeviceCode { get; set; }
+
+        /// <summary>
+        /// Optional details
+        /// </summary>
+        public string Company { get; set; }
+
+        /// <summary>
+        /// Operating system of the device
+        /// </summary>
+        public string OperatingSystem { get; set; }
     }
 }
