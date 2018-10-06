@@ -8,9 +8,9 @@ namespace DeviceManager.Api.Configuration.Settings
     public enum DatabaseType 
     {
         /// <summary>
-        /// Sql express Database type
+        /// MsSql Database type
         /// </summary>
-        SqlExpress = 0,
+        MsSql = 0,
 
         /// <summary>
         /// Postgres Database type

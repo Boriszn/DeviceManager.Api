@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using DeviceManager.Api.Model;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace DeviceManager.Api.Middlewares
 {
@@ -11,6 +13,7 @@ namespace DeviceManager.Api.Middlewares
     /// </summary>
     public class ExceptionHandlerMiddleware
     {
+        private const string JsonContentType = "application/json";
         private readonly RequestDelegate request;
 
         /// <summary>
@@ -39,14 +42,26 @@ namespace DeviceManager.Api.Middlewares
             {
                 var httpStatusCode = ConfigurateExceptionTypes(exception);
 
+                // set http status code and content type
                 context.Response.StatusCode = httpStatusCode;
-                //TODO: [Temp fix] Rebuild this later to proper JSON error object serialization 
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync("{error: "+ exception.Message + "}");
+                context.Response.ContentType = JsonContentType;
+
+                // writes / returns error model to the response
+                await context.Response.WriteAsync(
+                    JsonConvert.SerializeObject(new ErrorModelViewModel
+                    {
+                        Message = exception.Message
+                    }));
+
                 context.Response.Headers.Clear();
             }
         }
 
+        /// <summary>
+        /// Configurates/maps exception to the proper HTTP error Type
+        /// </summary>
+        /// <param name="exception">The exception.</param>
+        /// <returns></returns>
         private static int ConfigurateExceptionTypes(Exception exception)
         {
             int httpStatusCode;

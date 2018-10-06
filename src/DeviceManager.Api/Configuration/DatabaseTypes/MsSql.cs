@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 namespace DeviceManager.Api.Configuration.DatabaseTypes
 {
     /// <inherit/>
-    public class SqlExpress : IDatabaseType
+    public class MsSql : IDatabaseType
     {
         /// <inherit/>
         public IServiceCollection EnableDatabase(IServiceCollection services, IOptions<ConnectionSettings> connectionOptions)
