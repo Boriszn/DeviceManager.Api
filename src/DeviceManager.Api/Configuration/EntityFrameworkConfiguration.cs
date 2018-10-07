@@ -35,9 +35,8 @@ namespace DeviceManager.Api.Configuration
             databaseTypeInstance.EnableDatabase(services, connectionOptions);
 
             // Entity framework configuration
-            // services.AddDbContext<DeviceContext>(options =>
-            //     GetContextBuilder(options, connectionOptions, connectionString));
-            services.AddDbContext<DeviceContext>(options => databaseTypeInstance.GetContextBuilder(options, connectionOptions, connectionString));
+            services.AddDbContext<DeviceContext>(options => 
+                databaseTypeInstance.GetContextBuilder(options, connectionOptions, connectionString));
 
             services.AddScoped<IDbContext, DeviceContext>();
         }

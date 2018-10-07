@@ -1,6 +1,9 @@
-# DeviceManager.Api [![Build status](https://ci.appveyor.com/api/projects/status/x1whwie6v68l8200?svg=true)](https://ci.appveyor.com/project/Boriszn/devicemanager-api) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/DeviceManager-Api/)
 
-Web API Solution demonstrates mutliteantcy architecture, using Entity Framework, UnitOfWork, Repository patterns
+![alt text](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/logos/device-manager-main-logo.png "The main logo")
+
+Web API Solution demonstrates mutliteantcy architecture, using Entity Framework, UnitOfWork,Repository patterns
+
+# [![Build status](https://ci.appveyor.com/api/projects/status/x1whwie6v68l8200?svg=true)](https://ci.appveyor.com/project/Boriszn/devicemanager-api) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/DeviceManager-Api/)
 
 ![alt text](https://github.com/Boriszn/DeviceManager.Api/blob/feature/ISS-1-Add-Automapper/assets/arhitecture-diag.png "Logo Title Text 1")
 
@@ -20,8 +23,13 @@ Todo list, accomplished tasks, can be [found Here.](https://github.com/Boriszn/D
 6. Build / Run.
 
 ## Database Connection
+
 `DatabaseType` field is used to specify the database type the application should connect.
-Currently, the framework contains connection information for `SqlExpress` and `Postgres`. The value of `DatabaseType` should come from `DatabaseType` enum (src\DeviceManager.Api\Configuration\Settings) and should match the class name inside (src\DeviceManager.Api\Configuration\DatabaseTypes) and implement `IDatabaseType` interface.
+Currently, the framework contains connection information for:
+- _MsSql_ (MS SQL Server, Sql Express)
+- _Postgres_ NoSql ([Additional info can be found here](http://www.npgsql.org/efcore/))
+
+The value of `DatabaseType` should come from `DatabaseType` enum (src\DeviceManager.Api\Configuration\Settings) and should match the class name inside (src\DeviceManager.Api\Configuration\DatabaseTypes) and implement `IDatabaseType` interface.
 
 To add a new database type, just add a class implementing `IDatabaseType` and add the same name inside `DatabaseType` and change connection string in the `DefaultConnection` property and `DatabaseType` to new database type.
 
