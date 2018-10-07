@@ -47,8 +47,26 @@ namespace DeviceManager.Api.UnitTests.Services
             // 'GetAll' repository mock
             this.mockRepository.Setup(x => x.GetAll(1, 1)).Returns(devicesList.AsQueryable);
 
+            // 'GetAll' repository mock
+            this.mockRepository.Setup(x => x.GetAll(1, 1, It.IsAny<Expression<Func<Device, DeviceGroup>>>())).Returns(devicesList.AsQueryable);
+
             // 'Get' repository mock
             this.mockRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(device);
+
+            // 'Get' repository mock
+            this.mockRepository.Setup(x => x.Get(It.IsAny<Guid>(), It.IsAny<Expression<Func<Device, DeviceGroup>>>())).Returns(device);
+
+            // 'Get' repository mock
+            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).Returns(async () =>
+            {
+                return device;
+            });
+
+            // 'Get' repository mock
+            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>(), It.IsAny<Expression<Func<Device, DeviceGroup>>>())).Returns(async () =>
+            {
+                return device;
+            });
 
             // 'Update' repository mock
             this.mockRepository.Setup(x => x.Update(It.IsAny<Device>())).Returns(It.IsAny<EntityState>());
@@ -58,7 +76,7 @@ namespace DeviceManager.Api.UnitTests.Services
 
             // 'FindBy' repository mock
             this.mockRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Device, bool>>>()))
-                .Returns(() => 
+                .Returns(() =>
                     devicesList.AsQueryable());
 
             return this;
