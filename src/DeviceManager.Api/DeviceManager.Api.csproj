@@ -6,6 +6,7 @@
     <RootNamespace>DeviceManager.Api</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DockerTargetOS>Windows</DockerTargetOS>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>

@@ -8,3 +8,7 @@ test/DeviceManager.Api.UnitTests/bin/
 test/DeviceManager.Api.UnitTests/obj/
 .vs/
 /src/DeviceManager.Api/Logs
+obj/
+bin/
+src/DeviceManager.Api/Properties/PublishProfiles/registry.hub.docker.com_boriszn.pubxml
+src/DeviceManager.Api/Properties/PublishProfiles/registry.hub.docker.com_boriszn.pubxml.user
