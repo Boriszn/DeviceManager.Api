@@ -7,8 +7,6 @@ Web API Solution demonstrates mutliteantcy architecture, using Entity Framework,
 
 ![alt text](https://github.com/Boriszn/DeviceManager.Api/blob/feature/ISS-1-Add-Automapper/assets/arhitecture-diag.png "Logo Title Text 1")
 
-docker pull boriszn/devicemanagerapi
-
 ## Project
 
 Todo list, accomplished tasks, can be [found Here.](https://github.com/Boriszn/DeviceManager.Api/projects/1)
