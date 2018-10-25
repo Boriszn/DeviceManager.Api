@@ -29,8 +29,8 @@ namespace DeviceManager.Api.Controllers
         /// Ping method to test the status of the service
         /// </summary>
         /// <returns>Based on the ui culture hello message is picked from the shared resource file and sent back</returns>
-        [HttpGet(nameof(Hello))]
-        [SwaggerOperation(nameof(Hello))]
-        public IActionResult Hello() => Json(sharedLocalizer[Constants.Hello].Value);
+        [HttpGet(nameof(Ping))]
+        [SwaggerOperation(nameof(Ping))]
+        public IActionResult Ping() => Json(sharedLocalizer[Constants.Hello].Value);
     }
 }

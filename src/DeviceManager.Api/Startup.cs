@@ -81,8 +81,10 @@ namespace DeviceManager.Api
         {
             loggerFactory.AddConsole(Configuration.GetSection(Constants.Logging));
             loggerFactory.AddDebug();
-            // loggerFactory.AddFile(Configuration.GetSection("Logging"));
+#if RELEASE
 
+            loggerFactory.AddFile(Configuration.GetSection("Logging"));
+#endif
             // Localization support
             LocalizationConfiguration.Configure(app);
 

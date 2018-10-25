@@ -31,15 +31,13 @@ namespace DeviceManager.Api.Configuration
         public static void Configure(IApplicationBuilder app)
         {
             var appSettings = app.ApplicationServices.GetService<IOptions<AppSettings>>();
-
-            //
             if (appSettings == null) return;
 
-            //
+            // Set default culture and supported cultures
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture(appSettings.Value.DefaultCulture),
-                SupportedCultures = GenericHelper.GetCultureInfos(appSettings.Value.SupportedUiCultures),
+                SupportedCultures = GenericHelper.GetCultureInfos(appSettings.Value.SupportedCultures),
                 SupportedUICultures = GenericHelper.GetCultureInfos(appSettings.Value.SupportedUiCultures)
             });
         }

@@ -28,31 +28,37 @@ namespace DeviceManager.Api.Services
         }
 
         /// <inheritdoc />
-        public List<Device> GetDevices(int page, int pageSize)
+        public List<DeviceViewModel> GetDevices(int page, int pageSize)
         {
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
-            return deviceRepository.GetAll(page, pageSize, x => x.DeviceGroup).ToList();
+            var devices = deviceRepository.GetAll(page, pageSize, x => x.DeviceGroup).ToList();
+
+            return mapper.Map<List<DeviceViewModel>>(devices);
         }
 
         /// <inheritdoc />
-        public Device GetDeviceById(Guid deviceId)
+        public DeviceViewModel GetDeviceById(Guid deviceId)
         {
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
-            return deviceRepository.Get(deviceId, device => device.DeviceGroup);
+            var deviceData = deviceRepository.Get(deviceId, device => device.DeviceGroup);
+
+            return mapper.Map<DeviceViewModel>(deviceData);
         }
 
         /// <inheritdoc />
-        public async Task<Device> GetDeviceByIdAsync(Guid deviceId)
+        public async Task<DeviceViewModel> GetDeviceByIdAsync(Guid deviceId)
         {
             var deviceRepository = unitOfWork.GetRepository<Device>();
 
-            return await deviceRepository.GetAsync(deviceId, device => device.DeviceGroup);
+            var deviceData = await deviceRepository.GetAsync(deviceId, device => device.DeviceGroup);
+
+            return mapper.Map<DeviceViewModel>(deviceData);
         }
 
         /// <inheritdoc />
-        public Device GetDeviceByTitle(string deviceTitle)
+        public DeviceViewModel GetDeviceByTitle(string deviceTitle)
         {
             throw new NotImplementedException();
         }

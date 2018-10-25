@@ -26,6 +26,11 @@ namespace DeviceManager.Api.Data.Model
         public string DeviceTitle { get; set; }
 
         /// <summary>
+        /// Device code
+        /// </summary>
+        public string DeviceCode { get; set; }
+
+        /// <summary>
         /// Device group id
         /// </summary>
         public Guid DeviceGroupId { get; set; }

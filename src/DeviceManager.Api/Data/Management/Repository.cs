@@ -50,7 +50,9 @@ namespace DeviceManager.Api.Data.Management
         public T Get<TKey, TProperty>(TKey id, Expression<Func<T, TProperty>> navigationPropertyPath) where TProperty : class
         {
             var entity = this.dbSet.Find(id);
-            if (entity == null) return null;
+
+            if (entity == null)
+                return null;
             this.context.Entry(entity).Reference(navigationPropertyPath).Load();
             return entity;
         }
