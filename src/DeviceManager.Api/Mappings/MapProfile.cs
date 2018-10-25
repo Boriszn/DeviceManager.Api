@@ -31,6 +31,7 @@ namespace DeviceManager.Api.Mappings
 
             // Maps Device to Device ViewModel
             this.CreateMap<Device, DeviceViewModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.DeviceId))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.DeviceTitle))
                 .ForMember(dest => dest.DeviceCode, opt => opt.MapFrom(src => src.DeviceCode))
                 .AfterMap((src, dest, context) => context.Mapper.Map(src.DeviceGroup, dest));

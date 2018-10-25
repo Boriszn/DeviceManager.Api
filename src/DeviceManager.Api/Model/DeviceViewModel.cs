@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DeviceManager.Api.Helpers;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DeviceManager.Api.Model
 {
@@ -7,6 +9,12 @@ namespace DeviceManager.Api.Model
     /// </summary>
     public class DeviceViewModel
     {
+        /// <summary>
+        /// Device id
+        /// </summary>
+        [SwaggerExclude]
+        public Guid Id { get; set; }
+
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
