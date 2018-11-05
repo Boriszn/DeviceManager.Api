@@ -16,6 +16,7 @@ namespace DeviceManager.Api.Data.Management
     public class ContextFactory : IContextFactory
     {
         private const string TenantIdFieldName = Constants.TenantId;
+
         private const string DatabaseFieldKeyword = Constants.Database;
 
         private readonly HttpContext httpContext;
@@ -33,12 +34,10 @@ namespace DeviceManager.Api.Data.Management
         /// <param name="connectionOptions">The connection options.</param>
         /// <param name="dataBaseManager">The data base manager.</param>
         /// <param name="databaseType"></param>
-        public ContextFactory(
-            IHttpContextAccessor httpContentAccessor,
+        public ContextFactory(IHttpContextAccessor httpContentAccessor,
             IOptions<ConnectionSettings> connectionOptions,
             IDataBaseManager dataBaseManager,
-            IDatabaseType databaseType
-            )
+            IDatabaseType databaseType)
         {
             this.httpContext = httpContentAccessor.HttpContext;
             this.connectionOptions = connectionOptions;
@@ -89,7 +88,7 @@ namespace DeviceManager.Api.Data.Management
 
             // 4. Create DbContextOptionsBuilder with new Database name
             var contextOptionsBuilder = new DbContextOptionsBuilder<DeviceContext>();
-            
+
             databaseType.SetConnectionString(contextOptionsBuilder, connectionBuilder.ConnectionString);
 
             return contextOptionsBuilder;
