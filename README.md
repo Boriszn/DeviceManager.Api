@@ -42,6 +42,13 @@ Check `Ping` action in [BaseController](src/DeviceManager.Api/Controllers/BaseCo
 
 **Note:** If only one of `culture` or `ui-culture` is sent in the query parameter then `dotnetcore` uses same value for the other one.
 
+## Data Seeding
+To seed database with initial data update `SeedData` method in [DataSeeder](src/DeviceManager.Api/Data/DataSeed/DataSeeder.cs) class. 
+
+There can be multiple data seeding classes. To create a new data seeding class
+1. Create a new data seeding class in the same folder inheriting from [IDataSeeder](src/DeviceManager.Api/Data/DataSeed/IDataSeeder.cs) interface.
+2. Register new class in the [IocContainerConfiguration](src/DeviceManager.Api/Configuration/IocContainerConfiguration.cs) class by replacing `DataSeeder` with new class name.
+
 ## Contributing
 
 1. Fork it!

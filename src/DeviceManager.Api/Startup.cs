@@ -50,13 +50,12 @@ namespace DeviceManager.Api
                 {
                     options.Filters.Add(typeof(ValidateModelStateAttribute));
                 });
-
-            // Localization support
-            LocalizationConfiguration.ConfigureService(services);
-
             // Remove commented code and above semicolon 
             // if the assembly of the API Controllers is different than project which contains Startup class 
             //.AddApplicationPart(typeof(BaseController<>).Assembly);
+
+            // Localization support
+            LocalizationConfiguration.ConfigureService(services);
 
             Mapper.Reset();
             // https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection/issues/28

@@ -53,7 +53,8 @@ namespace DeviceManager.Api.Middlewares
                         Message = exception.Message
                     }));
 
-                context.Response.Headers.Clear();
+                // This is throwing readonly exception
+                //context.Response.Headers.Clear();
             }
         }
 
