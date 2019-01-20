@@ -46,7 +46,8 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .QueryWithDeviceId("12B89FFB-A053-47E5-BAE1-81644DCEA79F", version: "1.0")
+                .QueryWithDeviceId(Constants.SeedDevice2Id.ToString(), version: "1.0")
+                //.QueryWithDeviceId("12B89FFB-A053-47E5-BAE1-81644DCEA79F", version: "1.0")
                 //.WithTenantId("e7e73238-662f-4da2-b3a5-89f4abb87969")
                 .WithTenantId(Constants.Tenant2Guid)
                 .Get();
@@ -61,7 +62,7 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .QueryWithDeviceIdAsync("12B89FFB-A053-47E5-BAE1-81644DCEA79F", version: "1.0")
+                .QueryWithDeviceIdAsync(Constants.SeedDevice1Id.ToString(), version: "1.0")
                 //.WithTenantId("e7e73238-662f-4da2-b3a5-89f4abb87969")
                 .WithTenantId(Constants.Tenant2Guid)
                 .Get();

@@ -120,4 +120,7 @@
   <data name="Hello" xml:space="preserve">
     <value>Hallo</value>
   </data>
+  <data name="ShouldNotBeEmpty" xml:space="preserve">
+    <value>{0} sollte nicht leer sein</value>
+  </data>
 </root>

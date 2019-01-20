@@ -5,5 +5,9 @@
     /// </summary>
     public class SharedResource
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ShouldNotBeEmpty = nameof(ShouldNotBeEmpty);
     }
 }
