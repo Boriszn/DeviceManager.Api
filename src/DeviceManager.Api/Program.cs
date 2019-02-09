@@ -1,10 +1,13 @@
-﻿using System.IO;
+﻿using DeviceManager.Api.Helpers;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace DeviceManager.Api
 {
     /// <summary>
     /// Starting or hosting class of the applcation 
+    /// To change the Environment change the ASPNETCORE_ENVIRONMENT value of the profile in launchSettings.json file.
     /// </summary>
     public class Program
     {
@@ -24,11 +27,20 @@ namespace DeviceManager.Api
         /// <returns></returns>
         public static IWebHost BuildWebHost(string[] args) =>
             new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .UseApplicationInsights()
-                .Build();
+            .UseContentRoot(Directory.GetCurrentDirectory())
+            .UseIISIntegration()
+            .ConfigureAppConfiguration((hostingContext, config) =>
+            {
+                // Moved configuration here because Kestel was not able to access the configuration settings
+
+                config.AddJsonFile(Constants.AppSettingsFileName, optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            })
+            .UseStartup<Startup>()
+            // Currently Kestrel uses HTTPS in Production environment
+            // To know more about Kestrel configuration visit  https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel
+            .UseKestrel((context, options) => options.Configure(context.Configuration.GetSection(Constants.Kestrel)))
+            .UseApplicationInsights().Build();
     }
 }

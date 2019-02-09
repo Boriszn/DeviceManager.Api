@@ -8,3 +8,4 @@ test/DeviceManager.Api.UnitTests/bin/
 test/DeviceManager.Api.UnitTests/obj/
 .vs/
 /src/DeviceManager.Api/Logs
+src/DeviceManagerApi/Logs/

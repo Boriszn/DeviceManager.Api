@@ -22,7 +22,7 @@ namespace DeviceManager.Api.Data.Management
 
         private readonly HttpContext httpContext;
 
-        private readonly IOptions<ConnectionSettings> connectionOptions;
+        private readonly ConnectionSettings connectionOptions;
 
         private readonly IDataBaseManager dataBaseManager;
 
@@ -39,7 +39,7 @@ namespace DeviceManager.Api.Data.Management
         /// <param name="databaseType">Type of the database</param>
         /// <param name="dataSeeder">Data seeder</param>
         public ContextFactory(IHttpContextAccessor httpContentAccessor,
-            IOptions<ConnectionSettings> connectionOptions,
+            ConnectionSettings connectionOptions,
             IDataBaseManager dataBaseManager,
             IDatabaseType databaseType, IDataSeeder dataSeeder)
         {
@@ -83,7 +83,7 @@ namespace DeviceManager.Api.Data.Management
             ValidateDefaultConnection();
 
             // 1. Create Connection String Builder using Default connection string
-            var connectionBuilder = databaseType.GetConnectionBuilder(connectionOptions.Value.DefaultConnection);
+            var connectionBuilder = databaseType.GetConnectionBuilder(connectionOptions.DefaultConnection);
 
             // 2. Remove old Database Name from connection string
             connectionBuilder.Remove(DatabaseFieldKeyword);
@@ -101,9 +101,9 @@ namespace DeviceManager.Api.Data.Management
 
         private void ValidateDefaultConnection()
         {
-            if (string.IsNullOrEmpty(this.connectionOptions.Value.DefaultConnection))
+            if (string.IsNullOrEmpty(this.connectionOptions.DefaultConnection))
             {
-                throw new ArgumentNullException(nameof(this.connectionOptions.Value.DefaultConnection));
+                throw new ArgumentNullException(nameof(this.connectionOptions.DefaultConnection));
             }
         }
 

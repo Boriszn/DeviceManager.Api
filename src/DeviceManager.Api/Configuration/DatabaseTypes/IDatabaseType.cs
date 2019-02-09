@@ -17,7 +17,7 @@ namespace DeviceManager.Api.Configuration.DatabaseTypes
         /// <param name="services"></param>
         /// <param name="connectionOptions"></param>
         /// <returns></returns>
-        IServiceCollection EnableDatabase(IServiceCollection services, IOptions<ConnectionSettings> connectionOptions);
+        IServiceCollection EnableDatabase(IServiceCollection services, ConnectionSettings connectionOptions);
 
         /// <summary>
         /// Based on the database context builder instance is created
@@ -26,7 +26,7 @@ namespace DeviceManager.Api.Configuration.DatabaseTypes
         /// <param name="connectionOptions">Configured connection settings</param>
         /// <param name="connectionString"></param>
         /// <returns></returns>
-        DbContextOptionsBuilder GetContextBuilder(DbContextOptionsBuilder optionsBuilder, IOptions<ConnectionSettings> connectionOptions, string connectionString);
+        DbContextOptionsBuilder GetContextBuilder(DbContextOptionsBuilder optionsBuilder, ConnectionSettings connectionOptions, string connectionString);
 
         /// <summary>
         /// Based on the database type and tenant id connection object is built

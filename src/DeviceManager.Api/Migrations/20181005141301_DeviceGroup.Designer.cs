@@ -11,11 +11,12 @@ namespace DeviceManager.Api.Migrations
 {
     [DbContext(typeof(DeviceContext))]
     [Migration("20181005141301_DeviceGroup")]
+
+#pragma warning disable CS1591, 612, 618 // Missing XML comment for publicly visible type or member
     partial class DeviceGroup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
@@ -58,7 +59,7 @@ namespace DeviceManager.Api.Migrations
                         .HasForeignKey("DeviceGroupId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
-#pragma warning restore 612, 618
+#pragma warning restore CS1591, 612, 618
         }
     }
 }

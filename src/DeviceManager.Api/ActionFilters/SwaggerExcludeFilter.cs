@@ -11,7 +11,7 @@ namespace DeviceManager.Api.ActionFilters
     /// </summary>
     public class SwaggerExcludeFilter : ISchemaFilter
     {
-
+        /// <inherit/>
         public void Apply(Schema model, SchemaFilterContext context)
         {
             var excludeProperties = context.SystemType?.GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(SwaggerExcludeAttribute)));

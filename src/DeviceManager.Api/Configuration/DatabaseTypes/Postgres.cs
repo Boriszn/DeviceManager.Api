@@ -10,7 +10,7 @@ namespace DeviceManager.Api.Configuration.DatabaseTypes
     public class Postgres : IDatabaseType
     {
         /// <inherit/>
-        public IServiceCollection EnableDatabase(IServiceCollection services, IOptions<ConnectionSettings> connectionOptions)
+        public IServiceCollection EnableDatabase(IServiceCollection services, ConnectionSettings connectionOptions)
         {
             services.AddEntityFrameworkNpgsql();
             return services;
@@ -23,7 +23,7 @@ namespace DeviceManager.Api.Configuration.DatabaseTypes
         }
 
         /// <inherit/>
-        public DbContextOptionsBuilder GetContextBuilder(DbContextOptionsBuilder optionsBuilder, IOptions<ConnectionSettings> connectionOptions, string connectionString)
+        public DbContextOptionsBuilder GetContextBuilder(DbContextOptionsBuilder optionsBuilder, ConnectionSettings connectionOptions, string connectionString)
         {
             return optionsBuilder.UseNpgsql(connectionString, b => EntityFrameworkConfiguration.GetMigrationInformation(b));
         }

@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace DeviceManager.Api.Migrations
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public partial class DeviceGroup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -57,5 +58,7 @@ namespace DeviceManager.Api.Migrations
                 name: "DeviceGroupId",
                 table: "Devices");
         }
+
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

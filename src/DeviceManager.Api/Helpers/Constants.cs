@@ -8,6 +8,11 @@ namespace DeviceManager.Api.Helpers
     public static class Constants
     {
         /// <summary>
+        /// Name of the settings file name
+        /// </summary>
+        public const string AppSettingsFileName = "appsettings.json";
+
+        /// <summary>
         /// Name of the connection string
         /// </summary>
         public const string DefaultConnection = nameof(DefaultConnection);
@@ -16,6 +21,11 @@ namespace DeviceManager.Api.Helpers
         /// Connection string section
         /// </summary>
         public const string ConnectionStrings = nameof(ConnectionStrings);
+
+        /// <summary>
+        /// Kerstel configuration section
+        /// </summary>
+        public const string Kestrel = nameof(Kestrel);
 
         /// <summary>
         /// Name of the settings section
@@ -63,7 +73,7 @@ namespace DeviceManager.Api.Helpers
         public const string Logging = nameof(Logging);
 
         /// <summary>
-        /// 
+        /// Hello string
         /// </summary>
         public const string Hello = nameof(Hello);
 

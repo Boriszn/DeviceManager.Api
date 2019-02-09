@@ -11,6 +11,12 @@ namespace DeviceManager.Api.Helpers
     /// </summary>
     public static class GenericHelper
     {
+        static readonly HashSet<string> _allCultureCodes;
+
+        static GenericHelper()
+        {
+            _allCultureCodes = new HashSet<string>(CultureInfo.GetCultures(CultureTypes.AllCultures).Select(culture => culture.Name));
+        }
         /// <summary>
         /// Gets list of culture instances based on the culture code
         /// </summary>
@@ -50,5 +56,12 @@ namespace DeviceManager.Api.Helpers
                 return null;
             }
         }
+
+        /// <summary>
+        /// Checks whether culture present in generic list of cultures
+        /// </summary>
+        /// <param name="culture">User entered culture</param>
+        /// <returns>true if culture found else false</returns>
+        public static bool IsGenericCulture(string culture) => _allCultureCodes.Contains(culture);
     }
 }
