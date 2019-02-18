@@ -1,5 +1,6 @@
 ﻿using DeviceManager.Api.Data.DataSeed;
 using DeviceManager.Api.Data.Model;
+using DeviceManager.Api.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeviceManager.Api.Data
@@ -22,7 +23,7 @@ namespace DeviceManager.Api.Data
             this.dataSeeder = dataSeeder;
             // TODO: Comment below this if you are running migrations commands
             // TODO: uncomment below line of you are running the application for the first time
-            //this.Database.EnsureCreated();
+            // this.Database.EnsureCreated();
         }
 
         /// <summary>
@@ -46,13 +47,13 @@ namespace DeviceManager.Api.Data
 
             // No need to define the relation explicitly as long as conventions are followed.
 
-            //modelBuilder.Entity<Device>()
-            //    .HasOne(device => device.DeviceGroup)
-            //    .WithMany(group => group.Devices)
-            //    .HasForeignKey(device => device.DeviceGroupId);
+            modelBuilder.Entity<Device>()
+                .HasOne(device => device.DeviceGroup)
+                .WithMany(group => group.Devices)
+                .HasForeignKey(device => device.DeviceGroupId);
 
             // Call Data seeder
-            this.dataSeeder.SeedData(modelBuilder);
+            this.dataSeeder.SeedData(modelBuilder); 
         }
     }
 }

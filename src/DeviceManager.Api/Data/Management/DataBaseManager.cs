@@ -10,14 +10,16 @@ namespace DeviceManager.Api.Data.Management
     public class DataBaseManager : IDataBaseManager
     {
         /// <summary>
-        /// IMPORTANT NOTICE: The solution uses simple dictionary for demo purposes.
-        /// The Best "Real-life" solutions would be creating 'RootDataBase' with 
-        /// all Tenants Parameters/Options like: TenantName, DatabaseName, other configuration.
+        /// IMPORTANT NOTICE: Tenant Configuration was implemented as Dictionary for demo purposes only 
+        /// In a production application I would recommend following options:
+        /// - create SQL root database or table
+        /// - create NoSql root database/collection
+        /// - move the dictionary the Redis cache  
         /// </summary>
         private readonly Dictionary<Guid, string> tenantConfigurationDictionary = new Dictionary<Guid, string>
         {
             {
-                Guid.Parse(Constants.Tenant1Guid), Constants.DeviceDb
+                Guid.Parse(Constants.DefaultTenantGuid), Constants.DefaultTeanantDatabase
             },
             {
                 Guid.Parse(Constants.Tenant2Guid), Constants.DeviceDbTenant2

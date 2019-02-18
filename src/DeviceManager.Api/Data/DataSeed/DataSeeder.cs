@@ -33,7 +33,6 @@ namespace DeviceManager.Api.Data.DataSeed
                 DeviceTitle = Constants.SeedDevice1Title,
                 DeviceGroupId = Constants.SeedDeviceGroupId
             });
-
         }
     }
 }

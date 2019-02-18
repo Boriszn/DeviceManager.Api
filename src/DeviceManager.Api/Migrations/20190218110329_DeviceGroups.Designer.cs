@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeviceManager.Api.Migrations
 {
     [DbContext(typeof(DeviceContext))]
-    [Migration("20181025112219_DeviceCode")]
-    partial class DeviceCode
+    [Migration("20190218110329_DeviceGroups")]
+    partial class DeviceGroups
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,11 @@ namespace DeviceManager.Api.Migrations
                     b.HasIndex("DeviceGroupId");
 
                     b.ToTable("Devices");
+
+                    b.HasData(
+                        new { DeviceId = new Guid("1ee62dd5-d698-4e67-a260-f5a66f86f0df"), DeviceCode = "Surface568", DeviceGroupId = new Guid("843a92af-9174-49a3-a2e7-08f99919d6ca"), DeviceTitle = "Surface Tablet" },
+                        new { DeviceId = new Guid("9b34ae90-f226-43df-8ad0-7cfdce2f16a7"), DeviceCode = "Xbox1234", DeviceGroupId = new Guid("843a92af-9174-49a3-a2e7-08f99919d6ca"), DeviceTitle = "X Box" }
+                    );
                 });
 
             modelBuilder.Entity("DeviceManager.Api.Data.Model.DeviceGroup", b =>
@@ -50,7 +55,11 @@ namespace DeviceManager.Api.Migrations
 
                     b.HasKey("DeviceGroupId");
 
-                    b.ToTable("DeviceGroup");
+                    b.ToTable("DeviceGroups");
+
+                    b.HasData(
+                        new { DeviceGroupId = new Guid("843a92af-9174-49a3-a2e7-08f99919d6ca"), Company = "Microsoft", OperatingSystem = "Windows 10" }
+                    );
                 });
 
             modelBuilder.Entity("DeviceManager.Api.Data.Model.Device", b =>

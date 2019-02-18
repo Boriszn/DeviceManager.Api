@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DeviceManager.Api.UnitTests": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
