@@ -46,10 +46,10 @@ namespace DeviceManager.Api.Data
 
             // No need to define the relation explicitly as long as conventions are followed.
 
-            //modelBuilder.Entity<Device>()
-            //    .HasOne(device => device.DeviceGroup)
-            //    .WithMany(group => group.Devices)
-            //    .HasForeignKey(device => device.DeviceGroupId);
+            modelBuilder.Entity<Device>()
+                .HasOne(device => device.DeviceGroup)
+                .WithMany(group => group.Devices)
+                .HasForeignKey(device => device.DeviceGroupId);
 
             // Call Data seeder
             this.dataSeeder.SeedData(modelBuilder);

@@ -1,7 +1,10 @@
-﻿using System;
-using System.Net.Http;
+﻿using DeviceManager.Api.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
+using System.Net.Http;
 
 namespace DeviceManager.Api.UnitTests.Api.Server
 {
@@ -36,8 +39,15 @@ namespace DeviceManager.Api.UnitTests.Api.Server
         /// </summary>
         private void SetUpClient()
         {
-            server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
+            server = new TestServer(new WebHostBuilder().UseContentRoot(Directory.GetCurrentDirectory())
+                .ConfigureAppConfiguration((hostingContext, config) =>
+            {
+                // Moved configuration here because Kestel was not able to access the configuration settings
+
+                config.AddJsonFile(Constants.AppSettingsFileName, optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            }).UseStartup<Startup>());
 
             Client = server.CreateClient();
         }

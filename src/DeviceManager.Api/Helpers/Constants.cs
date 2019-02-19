@@ -38,9 +38,14 @@ namespace DeviceManager.Api.Helpers
         public const string Database = nameof(Database);
 
         /// <summary>
-        /// 
+        /// Tenant id key
         /// </summary>
         public const string TenantId = "tenantid";
+
+        /// <summary>
+        /// Description for swagger tenant id field
+        /// </summary>
+        public const string TenantIdSwaggerDescription = "Tenant Id, Type: GUID (e.g b0ed668d-7ef2-4a23-a333-94ad278f45d7)";
 
         /// <summary>
         /// Parameter location
@@ -50,7 +55,7 @@ namespace DeviceManager.Api.Helpers
         /// <summary>
         /// Name of the device database tenant 1
         /// </summary>
-        public const string DeviceDb = nameof(DeviceDb);
+        public const string DefaultTeanantDatabase = "DeviceDb";
 
         /// <summary>
         /// Name of the device database tenant 2
@@ -60,7 +65,7 @@ namespace DeviceManager.Api.Helpers
         /// <summary>
         /// Guid of the first tenant
         /// </summary>
-        public const string Tenant1Guid = "b0ed668d-7ef2-4a23-a333-94ad278f45d7";
+        public const string DefaultTenantGuid = "b0ed668d-7ef2-4a23-a333-94ad278f45d7";
 
         /// <summary>
         /// Guid of the first tenant

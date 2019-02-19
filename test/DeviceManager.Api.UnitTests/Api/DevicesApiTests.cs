@@ -21,7 +21,7 @@ namespace DeviceManager.Api.UnitTests.Api
             var devicesApiBuilder = await new DevicesApiBuilder()
                 .QueryWith(page: 1, pageCount: 5, version:"1.0")
                 //.WithTenantId("b0ed668d-7ef2-4a23-a333-94ad278f45d7")
-                .WithTenantId(Constants.Tenant1Guid)
+                .WithTenantId(Constants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -47,9 +47,7 @@ namespace DeviceManager.Api.UnitTests.Api
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
                 .QueryWithDeviceId(Constants.SeedDevice2Id.ToString(), version: "1.0")
-                //.QueryWithDeviceId("12B89FFB-A053-47E5-BAE1-81644DCEA79F", version: "1.0")
-                //.WithTenantId("e7e73238-662f-4da2-b3a5-89f4abb87969")
-                .WithTenantId(Constants.Tenant2Guid)
+                .WithTenantId(Constants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -63,8 +61,7 @@ namespace DeviceManager.Api.UnitTests.Api
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
                 .QueryWithDeviceIdAsync(Constants.SeedDevice1Id.ToString(), version: "1.0")
-                //.WithTenantId("e7e73238-662f-4da2-b3a5-89f4abb87969")
-                .WithTenantId(Constants.Tenant2Guid)
+                .WithTenantId(Constants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -80,8 +77,7 @@ namespace DeviceManager.Api.UnitTests.Api
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
                 .QueryWithTitle("RF123GH", version: "1.0")
-                //.WithTenantId("e7e73238-662f-4da2-b3a5-89f4abb87969")
-                .WithTenantId(Constants.Tenant2Guid)
+                .WithTenantId(Constants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -101,8 +97,7 @@ namespace DeviceManager.Api.UnitTests.Api
                 {
                     DeviceCode = "DFGRRO12", Title = "RO Controller"
                 })
-                //.WithTenantId("e7e73238-662f-4da2-b3a5-89f4abb87969")
-                .WithTenantId(Constants.Tenant2Guid)
+                .WithTenantId(Constants.DefaultTenantGuid)
                 .Post();
 
             // Assert

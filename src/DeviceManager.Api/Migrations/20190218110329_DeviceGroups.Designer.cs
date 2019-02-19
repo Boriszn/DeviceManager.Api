@@ -3,29 +3,30 @@ using System;
 using DeviceManager.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DeviceManager.Api.Migrations
 {
     [DbContext(typeof(DeviceContext))]
-    [Migration("20181005141301_DeviceGroup")]
-
-#pragma warning disable CS1591, 612, 618 // Missing XML comment for publicly visible type or member
-    partial class DeviceGroup
+    [Migration("20190218110329_DeviceGroups")]
+    partial class DeviceGroups
     {
+#pragma warning disable CS1591, 612, 618
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DeviceManager.Api.Data.Model.Device", b =>
                 {
                     b.Property<Guid>("DeviceId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DeviceCode");
 
                     b.Property<Guid>("DeviceGroupId");
 
@@ -36,6 +37,11 @@ namespace DeviceManager.Api.Migrations
                     b.HasIndex("DeviceGroupId");
 
                     b.ToTable("Devices");
+
+                    b.HasData(
+                        new { DeviceId = new Guid("1ee62dd5-d698-4e67-a260-f5a66f86f0df"), DeviceCode = "Surface568", DeviceGroupId = new Guid("843a92af-9174-49a3-a2e7-08f99919d6ca"), DeviceTitle = "Surface Tablet" },
+                        new { DeviceId = new Guid("9b34ae90-f226-43df-8ad0-7cfdce2f16a7"), DeviceCode = "Xbox1234", DeviceGroupId = new Guid("843a92af-9174-49a3-a2e7-08f99919d6ca"), DeviceTitle = "X Box" }
+                    );
                 });
 
             modelBuilder.Entity("DeviceManager.Api.Data.Model.DeviceGroup", b =>
@@ -49,7 +55,11 @@ namespace DeviceManager.Api.Migrations
 
                     b.HasKey("DeviceGroupId");
 
-                    b.ToTable("DeviceGroup");
+                    b.ToTable("DeviceGroups");
+
+                    b.HasData(
+                        new { DeviceGroupId = new Guid("843a92af-9174-49a3-a2e7-08f99919d6ca"), Company = "Microsoft", OperatingSystem = "Windows 10" }
+                    );
                 });
 
             modelBuilder.Entity("DeviceManager.Api.Data.Model.Device", b =>

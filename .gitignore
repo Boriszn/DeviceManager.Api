@@ -9,3 +9,6 @@ test/DeviceManager.Api.UnitTests/obj/
 .vs/
 /src/DeviceManager.Api/Logs
 src/DeviceManagerApi/Logs/
+bin/
+obj/
+src/DeviceManager.Api/Properties/PublishProfiles/
