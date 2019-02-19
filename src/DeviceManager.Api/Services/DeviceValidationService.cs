@@ -1,7 +1,9 @@
 ﻿using System;
 using DeviceManager.Api.Model;
+using DeviceManager.Api.Resources;
 using DeviceManager.Api.Validation;
 using FluentValidation;
+using Microsoft.Extensions.Localization;
 
 namespace DeviceManager.Api.Services
 {
@@ -10,14 +12,18 @@ namespace DeviceManager.Api.Services
     {
         private readonly IDeviceViewModelValidationRules deviceViewModelValidationRules;
 
+        private readonly IStringLocalizer<SharedResource> sharedLocalizer;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DeviceValidationService"/> class.
         /// </summary>
         /// <param name="deviceViewModelValidationRules">The device view model validation rules.</param>
+        /// <param name="sharedLocalizer"></param>
         public DeviceValidationService(
-            IDeviceViewModelValidationRules deviceViewModelValidationRules)
+            IDeviceViewModelValidationRules deviceViewModelValidationRules, IStringLocalizer<SharedResource> sharedLocalizer)
         {
             this.deviceViewModelValidationRules = deviceViewModelValidationRules;
+            this.sharedLocalizer = sharedLocalizer;
         }
 
         /// <summary>
@@ -48,7 +54,7 @@ namespace DeviceManager.Api.Services
         {
             if (deviceId == Guid.Empty)
             {
-                throw new ValidationException("Should not be empty");
+                throw new ValidationException(string.Format(sharedLocalizer[SharedResource.ShouldNotBeEmpty], "Device"));
             }
 
             return this;

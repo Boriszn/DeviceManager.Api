@@ -33,6 +33,22 @@ The value of `DatabaseType` should come from `DatabaseType` enum (src\DeviceMana
 
 To add a new database type, just add a class implementing `IDatabaseType` and add the same name inside `DatabaseType` and change connection string in the `DefaultConnection` property and `DatabaseType` to new database type.
 
+## Localization Support
+Application supports localization support though resource files. Currently, shared resource file is used to support support for `English` and `German` languages. 
+According to ([Microsoft docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-2.1)), to use a UI culture pass it as a query parameter (ui-culture=de-DE).
+All the resource values for each UI culture should be added to a resource file under [Resources](src/DeviceManager.Api/Resources) folder. The file name should include culture code. 
+Text values from resource files based on the UI culture is obtained from using the instance of `IStringLocalizer<SharedResource> sharedLocalizer` which is injected via constructor. Then use this object to get resource values using `sharedLocalizer["ResourceKey"].Value`.
+Check `Ping` action in [BaseController](src/DeviceManager.Api/Controllers/BaseController.cs). 
+
+**Note:** If only one of `culture` or `ui-culture` is sent in the query parameter then `dotnetcore` uses same value for the other one.
+
+## Data Seeding
+To seed database with initial data update `SeedData` method in [DataSeeder](src/DeviceManager.Api/Data/DataSeed/DataSeeder.cs) class. 
+
+There can be multiple data seeding classes. To create a new data seeding class
+1. Create a new data seeding class in the same folder inheriting from [IDataSeeder](src/DeviceManager.Api/Data/DataSeed/IDataSeeder.cs) interface.
+2. Register new class in the [IocContainerConfiguration](src/DeviceManager.Api/Configuration/IocContainerConfiguration.cs) class by replacing `DataSeeder` with new class name.
+
 ## Contributing
 
 1. Fork it!

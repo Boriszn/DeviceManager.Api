@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using DeviceManager.Api.ActionFilters;
 using DeviceManager.Api.Model;
+using DeviceManager.Api.Resources;
 using DeviceManager.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DeviceManager.Api.Controllers
@@ -21,7 +23,9 @@ namespace DeviceManager.Api.Controllers
         /// Initializes a new instance of the <see cref="DevicesController"/> class.
         /// </summary>
         /// <param name="deviceService">The device service.</param>
-        public DevicesController(IDeviceService deviceService)
+        /// <param name="sharedLocalizer">Global resource file</param>
+        public DevicesController(IDeviceService deviceService, IStringLocalizer<SharedResource> sharedLocalizer) 
+            : base(sharedLocalizer)
         {
             this.deviceService = deviceService;
         }

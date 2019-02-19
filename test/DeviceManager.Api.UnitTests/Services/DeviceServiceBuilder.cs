@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
-using DeviceManager.Api.Services;
 using DeviceManager.Api.Data.Management;
 using DeviceManager.Api.Data.Model;
 using DeviceManager.Api.Mappings;
 using DeviceManager.Api.Model;
+using DeviceManager.Api.Resources;
+using DeviceManager.Api.Services;
 using DeviceManager.Api.Validation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Moq;
 
 namespace DeviceManager.Api.UnitTests.Services
@@ -20,6 +22,7 @@ namespace DeviceManager.Api.UnitTests.Services
         private readonly Mock<IUnitOfWork> mockUnitOfWork;
         private readonly MapperConfiguration mapperConfiguration;
         private readonly Mapper mapper;
+        private readonly IStringLocalizer<SharedResource> sharedLocalizer;
         private Mock<IDeviceValidationService> mockDeviceValidationService;
 
         public DeviceServiceBuilder()
@@ -34,6 +37,8 @@ namespace DeviceManager.Api.UnitTests.Services
             // Default automapper configuration
             mapperConfiguration = new MapperConfiguration(new MapsProfile());
             mapper = new Mapper(mapperConfiguration);
+
+            this.sharedLocalizer = mockRepositoryObjet.Create<IStringLocalizer<SharedResource>>().Object;
         }
 
         /// <summary>
@@ -47,8 +52,26 @@ namespace DeviceManager.Api.UnitTests.Services
             // 'GetAll' repository mock
             this.mockRepository.Setup(x => x.GetAll(1, 1)).Returns(devicesList.AsQueryable);
 
+            // 'GetAll' repository mock
+            this.mockRepository.Setup(x => x.GetAll(1, 1, It.IsAny<Expression<Func<Device, DeviceGroup>>>())).Returns(devicesList.AsQueryable);
+
             // 'Get' repository mock
             this.mockRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(device);
+
+            // 'Get' repository mock
+            this.mockRepository.Setup(x => x.Get(It.IsAny<Guid>(), It.IsAny<Expression<Func<Device, DeviceGroup>>>())).Returns(device);
+
+            // 'Get' repository mock
+            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).Returns(async () =>
+            {
+                return device;
+            });
+
+            // 'Get' repository mock
+            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>(), It.IsAny<Expression<Func<Device, DeviceGroup>>>())).Returns(async () =>
+            {
+                return device;
+            });
 
             // 'Update' repository mock
             this.mockRepository.Setup(x => x.Update(It.IsAny<Device>())).Returns(It.IsAny<EntityState>());
@@ -58,7 +81,7 @@ namespace DeviceManager.Api.UnitTests.Services
 
             // 'FindBy' repository mock
             this.mockRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Device, bool>>>()))
-                .Returns(() => 
+                .Returns(() =>
                     devicesList.AsQueryable());
 
             return this;
@@ -120,7 +143,7 @@ namespace DeviceManager.Api.UnitTests.Services
         {
             this.mockDeviceValidationService
                 .Setup(x => x.Validate(It.IsAny<DeviceViewModel>()))
-                .Returns(new DeviceValidationService(new DeviceViewModelValidationRules()));
+                .Returns(new DeviceValidationService(new DeviceViewModelValidationRules(), sharedLocalizer));
 
             return this;
         }

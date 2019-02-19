@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace DeviceManager.Api.Configuration
 {
     /// <summary>
-    /// 
+    /// Registers all the settings from configuration file in the IOC container
     /// </summary>
     public static class ConfigurationOptions
     {
@@ -18,6 +18,7 @@ namespace DeviceManager.Api.Configuration
         public static void ConfigureService(IServiceCollection services, IConfigurationRoot configuration)
         {
             services.Configure<ConnectionSettings>(configuration.GetSection(Constants.ConnectionStrings));
+            services.Configure<AppSettings>(configuration.GetSection(Constants.AppSettings));
         }
     }
 }

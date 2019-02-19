@@ -42,6 +42,8 @@ namespace DeviceManager.Api.Configuration
                     }
                 });
                 c.OperationFilter<TenantHeaderOperationFilter>();
+                c.OperationFilter<LocalizationQueryOperationFilter>();
+                c.SchemaFilter<SwaggerExcludeFilter>();
                 var xmlFile = $"{typeof(BaseController<>).Assembly.GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);

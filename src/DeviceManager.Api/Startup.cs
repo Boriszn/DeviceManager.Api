@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using DeviceManager.Api.ActionFilters;
 using DeviceManager.Api.Configuration;
+using DeviceManager.Api.Helpers;
 using DeviceManager.Api.Middlewares;
-using DeviceManager.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,7 +29,7 @@ namespace DeviceManager.Api
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-        
+
         /// <summary>
         /// Instance of application configuration
         /// </summary>
@@ -54,6 +54,9 @@ namespace DeviceManager.Api
             // if the assembly of the API Controllers is different than project which contains Startup class 
             //.AddApplicationPart(typeof(BaseController<>).Assembly);
 
+            // Localization support
+            LocalizationConfiguration.ConfigureService(services);
+
             Mapper.Reset();
             // https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection/issues/28
             services.AddAutoMapper(typeof(Startup));
@@ -75,9 +78,14 @@ namespace DeviceManager.Api
         /// <param name="loggerFactory">The logger factory.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(Configuration.GetSection(Constants.Logging));
             loggerFactory.AddDebug();
-            // loggerFactory.AddFile(Configuration.GetSection("Logging"));
+#if RELEASE
+
+            loggerFactory.AddFile(Configuration.GetSection("Logging"));
+#endif
+            // Localization support
+            LocalizationConfiguration.Configure(app);
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
