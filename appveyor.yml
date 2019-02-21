@@ -2,6 +2,10 @@ version: 1.0.{build}
 image: Previous Visual Studio 2017
 before_build:
 - cmd: dotnet restore
+
+build_script:
+  - docker build -t boriszn/devicemanagerapi.
+
 build:
   project: DeviceManagerApi.sln
   verbosity: minimal
