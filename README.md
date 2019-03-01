@@ -68,7 +68,7 @@ You can run docker using following options:
 
 You can access the the Web API locally via URL: http://localhost:8080
 
-**To run/build project without docker switch from `Docker` to `DeviceManagerApi` (specified in `launchSettings.json`)**
+**To run/build project without docker, switch from `Docker` to `DeviceManagerApi` (specified in `launchSettings.json`)**
 
 ## Known issues
 
