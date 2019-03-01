@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
 ## Unreleased
 
-- Update/fix meedle-ware to work with proper JSON answer.
+## 1.0.4
+
+- [RD-11] Add entity framework seed
+- dockerizing existing apps and add Docker support
+- Update/fix meddle-ware to work with proper JSON answer.
 
 ## 1.0.3
 
