@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## Unreleased
+
+## 1.0.4
+
+- [RD-11] Add entity framework seed
+- dockerizing existing apps and add Docker support
+- Update/fix meddle-ware to work with proper JSON answer.
+
+## 1.0.3
+
+- Migrate to .NET core 2
+- [RD-7] Update Swagger (swashbuckle .net core)
+- [RD-5] Add logging to files/console
+- [RD-11] Add entity framework seed
+- [RD-9] Add `ValidationActionFilter` to validate ModelState for each action in one entry.
+
 ## 1.0.2
 
 - [RD-6] Add Fluent API integration tests

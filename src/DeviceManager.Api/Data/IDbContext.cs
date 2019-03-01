@@ -1,6 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DeviceManager.Api.Data
 {
@@ -97,5 +99,15 @@ namespace DeviceManager.Api.Data
         /// <returns> A set for the given entity type. </returns>
         DbSet<TEntity> Set<TEntity>()
             where TEntity : class;
+
+        /// <summary>
+        ///  Gets an Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry`1 for the given 
+        ///  entity. The entry provides access to change tracking information and operations
+        ///  for the entity.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="entity">The entity to get the entry for.</param>
+        /// <returns></returns>
+        EntityEntry<TEntity> Entry<TEntity>([NotNullAttribute] TEntity entity) where TEntity : class;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using DeviceManager.Api.Constants;
 using DeviceManager.Api.Helpers;
 using DeviceManager.Api.Model;
 using DeviceManager.Api.UnitTests.Builders;
@@ -21,7 +22,7 @@ namespace DeviceManager.Api.UnitTests.Api
             var devicesApiBuilder = await new DevicesApiBuilder()
                 .QueryWith(page: 1, pageCount: 5, version:"1.0")
                 //.WithTenantId("b0ed668d-7ef2-4a23-a333-94ad278f45d7")
-                .WithTenantId(Constants.Tenant1Guid)
+                .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -46,9 +47,8 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .QueryWithDeviceId("12B89FFB-A053-47E5-BAE1-81644DCEA79F", version: "1.0")
-                //.WithTenantId("e7e73238-662f-4da2-b3a5-89f4abb87969")
-                .WithTenantId(Constants.Tenant2Guid)
+                .QueryWithDeviceId(DataSeedingDefaultConstants.SeedDevice2Id.ToString(), version: "1.0")
+                .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -61,9 +61,8 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .QueryWithDeviceIdAsync("12B89FFB-A053-47E5-BAE1-81644DCEA79F", version: "1.0")
-                //.WithTenantId("e7e73238-662f-4da2-b3a5-89f4abb87969")
-                .WithTenantId(Constants.Tenant2Guid)
+                .QueryWithDeviceIdAsync(DataSeedingDefaultConstants.SeedDevice1Id.ToString(), version: "1.0")
+                .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -79,8 +78,7 @@ namespace DeviceManager.Api.UnitTests.Api
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
                 .QueryWithTitle("RF123GH", version: "1.0")
-                //.WithTenantId("e7e73238-662f-4da2-b3a5-89f4abb87969")
-                .WithTenantId(Constants.Tenant2Guid)
+                .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -89,7 +87,7 @@ namespace DeviceManager.Api.UnitTests.Api
         }
 
         [Fact ( 
-            Skip = "The tests will add a new item to real DB, thus should be run manualy"
+            Skip = "The tests will add a new item to real DB, thus should be run manually"
             )]
         public async Task PostDevice_WithDeviceModel_ReturnsOkResult()
         {
@@ -100,8 +98,7 @@ namespace DeviceManager.Api.UnitTests.Api
                 {
                     DeviceCode = "DFGRRO12", Title = "RO Controller"
                 })
-                //.WithTenantId("e7e73238-662f-4da2-b3a5-89f4abb87969")
-                .WithTenantId(Constants.Tenant2Guid)
+                .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Post();
 
             // Assert

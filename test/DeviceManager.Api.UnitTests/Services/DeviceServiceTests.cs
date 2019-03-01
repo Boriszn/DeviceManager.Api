@@ -40,7 +40,7 @@ namespace DeviceManager.Api.UnitTests.Services
         }
 
         [Fact]
-        public void CreateDevie_WithValidParameters_SholdNotTrowAnyExceptions()
+        public void CreateDevice_WithValidParameters_SholdNotTrowAnyExceptions()
         {
             // Arrange
             var deviceViewModel = new DeviceViewModel
@@ -74,7 +74,7 @@ namespace DeviceManager.Api.UnitTests.Services
             // Arrange
 
             // Act
-            List<Device> devices = service.GetDevices(1,1);
+            List<DeviceViewModel> devices = service.GetDevices(1,1);
 
             // Assert
             devices.Should().NotBeNull();
@@ -91,12 +91,12 @@ namespace DeviceManager.Api.UnitTests.Services
                 .Build();
 
             // Act
-            Device device = service.GetDeviceById(deviceArrange.DeviceId);
+            DeviceViewModel device = service.GetDeviceById(deviceArrange.DeviceId);
 
             // Assert
             device.Should().NotBeNull();
-            device.DeviceId.Should().Be(deviceArrange.DeviceId);
-            device.DeviceTitle.Should().Be(deviceArrange.DeviceTitle);
+            device.Id.Should().Be(deviceArrange.DeviceId);
+            device.Title.Should().Be(deviceArrange.DeviceTitle);
         }
 
         [Fact]

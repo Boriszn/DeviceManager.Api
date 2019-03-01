@@ -1,7 +1,8 @@
 ﻿using System;
 using DeviceManager.Api.Configuration.DatabaseTypes;
 using DeviceManager.Api.Configuration.Settings;
-using DeviceManager.Api.Helpers;
+using DeviceManager.Api.Constants;
+using DeviceManager.Api.Data.DataSeed;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -15,16 +16,13 @@ namespace DeviceManager.Api.Data.Management
     /// <seealso cref="IContextFactory"/>
     public class ContextFactory : IContextFactory
     {
-        private const string TenantIdFieldName = Constants.TenantId;
-        private const string DatabaseFieldKeyword = Constants.Database;
-
+        private const string TenantIdFieldName = DefaultConstants.TenantId;
+        private const string DatabaseFieldKeyword = DefaultConstants.Database;
         private readonly HttpContext httpContext;
-
         private readonly IOptions<ConnectionSettings> connectionOptions;
-
         private readonly IDataBaseManager dataBaseManager;
-
         private readonly IDatabaseType databaseType;
+        private readonly IDataSeeder dataSeeder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContextFactory"/> class.
@@ -32,22 +30,22 @@ namespace DeviceManager.Api.Data.Management
         /// <param name="httpContentAccessor">The HTTP content accessor.</param>
         /// <param name="connectionOptions">The connection options.</param>
         /// <param name="dataBaseManager">The data base manager.</param>
-        /// <param name="databaseType"></param>
-        public ContextFactory(
-            IHttpContextAccessor httpContentAccessor,
+        /// <param name="databaseType">Type of the database</param>
+        /// <param name="dataSeeder">Data seeder</param>
+        public ContextFactory(IHttpContextAccessor httpContentAccessor,
             IOptions<ConnectionSettings> connectionOptions,
             IDataBaseManager dataBaseManager,
-            IDatabaseType databaseType
-            )
+            IDatabaseType databaseType, IDataSeeder dataSeeder)
         {
             this.httpContext = httpContentAccessor.HttpContext;
             this.connectionOptions = connectionOptions;
             this.dataBaseManager = dataBaseManager;
             this.databaseType = databaseType;
+            this.dataSeeder = dataSeeder;
         }
 
         /// <inheritdoc />
-        public IDbContext DbContext => new DeviceContext(ChangeDatabaseNameInConnectionString(this.TenantId).Options);
+        public IDbContext DbContext => new DeviceContext(ChangeDatabaseNameInConnectionString(this.TenantId).Options, this.dataSeeder);
 
         /// <summary>
         /// Gets tenant id from HTTP header
@@ -89,7 +87,7 @@ namespace DeviceManager.Api.Data.Management
 
             // 4. Create DbContextOptionsBuilder with new Database name
             var contextOptionsBuilder = new DbContextOptionsBuilder<DeviceContext>();
-            
+
             databaseType.SetConnectionString(contextOptionsBuilder, connectionBuilder.ConnectionString);
 
             return contextOptionsBuilder;

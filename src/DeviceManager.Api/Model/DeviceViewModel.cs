@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeviceManager.Api.Helpers;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DeviceManager.Api.Model
@@ -8,6 +9,12 @@ namespace DeviceManager.Api.Model
     /// </summary>
     public class DeviceViewModel
     {
+        /// <summary>
+        /// Device id
+        /// </summary>
+        [SwaggerExclude]
+        public Guid Id { get; set; }
+
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
@@ -24,5 +31,15 @@ namespace DeviceManager.Api.Model
         /// The device code.
         /// </value>
         public string DeviceCode { get; set; }
+
+        /// <summary>
+        /// Optional details
+        /// </summary>
+        public string Company { get; set; }
+
+        /// <summary>
+        /// Operating system of the device
+        /// </summary>
+        public string OperatingSystem { get; set; }
     }
 }

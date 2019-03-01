@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DeviceManager.Api.Data.Model;
 using DeviceManager.Api.Model;
 
 namespace DeviceManager.Api.Services
@@ -17,26 +16,26 @@ namespace DeviceManager.Api.Services
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        List<Device> GetDevices(int page, int pageSize);
+        List<DeviceViewModel> GetDevices(int page, int pageSize);
 
         /// <summary>
         /// Gets the device by identifier.
         /// </summary>
         /// <param name="deviceId">The device identifier.</param>
-        Device GetDeviceById(Guid deviceId);
+        DeviceViewModel GetDeviceById(Guid deviceId);
 
         /// <summary>
         /// Gets the device by identifier.
         /// </summary>
         /// <param name="deviceId">The device identifier.</param>
-        Task<Device> GetDeviceByIdAsync(Guid deviceId);
+        Task<DeviceViewModel> GetDeviceByIdAsync(Guid deviceId);
 
         /// <summary>
         /// Gets the device by title.
         /// </summary>
         /// <param name="deviceTitle">The device title.</param>
         /// <returns></returns>
-        Device GetDeviceByTitle(string deviceTitle);
+        DeviceViewModel GetDeviceByTitle(string deviceTitle);
 
         /// <summary>
         /// Creates the device.
