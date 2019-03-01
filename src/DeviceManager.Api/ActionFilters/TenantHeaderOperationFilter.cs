@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DeviceManager.Api.Helpers;
+using DeviceManager.Api.Constants;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -25,12 +25,12 @@ namespace DeviceManager.Api.ActionFilters
 
             operation.Parameters.Add(new NonBodyParameter
             {
-                Name = Constants.TenantId,
+                Name = DefaultConstants.TenantId,
                 Default = "b0ed668d-7ef2-4a23-a333-94ad278f45d7",
-                In = Constants.Header,
-                Description = Constants.TenantIdSwaggerDescription,
+                In = DefaultConstants.Header,
+                Description = DefaultConstants.TenantIdSwaggerDescription,
                 Required = true,
-                Type = Constants.StringInText
+                Type = DefaultConstants.StringInText
             });
         }
     }

@@ -1,4 +1,4 @@
-﻿using DeviceManager.Api.Helpers;
+﻿using DeviceManager.Api.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.IO;
@@ -33,14 +33,14 @@ namespace DeviceManager.Api
             {
                 // Moved configuration here because Kestel was not able to access the configuration settings
 
-                config.AddJsonFile(Constants.AppSettingsFileName, optional: false, reloadOnChange: true)
+                config.AddJsonFile(DefaultConstants.AppSettingsFileName, optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             })
             .UseStartup<Startup>()
             // Currently Kestrel uses HTTPS in Production environment
             // To know more about Kestrel configuration visit  https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel
-            .UseKestrel((context, options) => options.Configure(context.Configuration.GetSection(Constants.Kestrel)))
+            .UseKestrel((context, options) => options.Configure(context.Configuration.GetSection(DefaultConstants.Kestrel)))
             .UseApplicationInsights().Build();
     }
 }

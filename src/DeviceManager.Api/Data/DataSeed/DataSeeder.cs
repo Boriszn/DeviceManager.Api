@@ -1,5 +1,5 @@
-﻿using DeviceManager.Api.Data.Model;
-using DeviceManager.Api.Helpers;
+﻿using DeviceManager.Api.Constants;
+using DeviceManager.Api.Data.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeviceManager.Api.Data.DataSeed
@@ -13,25 +13,25 @@ namespace DeviceManager.Api.Data.DataSeed
             // Add a new device group and add devices to the same
             modelBuilder.Entity<DeviceGroup>().HasData(new DeviceGroup
             {
-                DeviceGroupId = Constants.SeedDeviceGroupId,
-                Company = Constants.SeedDeviceGroupCompany,
-                OperatingSystem = Constants.SeedDeviceGroupOS
+                DeviceGroupId = DataSeedingDefaultConstants.SeedDeviceGroupId,
+                Company = DataSeedingDefaultConstants.SeedDeviceGroupCompany,
+                OperatingSystem = DataSeedingDefaultConstants.SeedDeviceGroupOs
             });
 
             // Devices can be added using Device group also
             modelBuilder.Entity<Device>().HasData(new Device
             {
-                DeviceId = Constants.SeedDevice2Id,
-                DeviceCode = Constants.SeedDevice2Code,
-                DeviceTitle = Constants.SeedDevice2Title,
-                DeviceGroupId = Constants.SeedDeviceGroupId
+                DeviceId = DataSeedingDefaultConstants.SeedDevice2Id,
+                DeviceCode = DataSeedingDefaultConstants.SeedDevice2Code,
+                DeviceTitle = DataSeedingDefaultConstants.SeedDevice2Title,
+                DeviceGroupId = DataSeedingDefaultConstants.SeedDeviceGroupId
             }, new Device
             {
 
-                DeviceId = Constants.SeedDevice1Id,
-                DeviceCode = Constants.SeedDevice1Code,
-                DeviceTitle = Constants.SeedDevice1Title,
-                DeviceGroupId = Constants.SeedDeviceGroupId
+                DeviceId = DataSeedingDefaultConstants.SeedDevice1Id,
+                DeviceCode = DataSeedingDefaultConstants.SeedDevice1Code,
+                DeviceTitle = DataSeedingDefaultConstants.SeedDevice1Title,
+                DeviceGroupId = DataSeedingDefaultConstants.SeedDeviceGroupId
             });
         }
     }

@@ -1,4 +1,4 @@
-﻿using DeviceManager.Api.Helpers;
+﻿using DeviceManager.Api.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -44,7 +44,7 @@ namespace DeviceManager.Api.UnitTests.Api.Server
             {
                 // Moved configuration here because Kestel was not able to access the configuration settings
 
-                config.AddJsonFile(Constants.AppSettingsFileName, optional: false, reloadOnChange: true)
+                config.AddJsonFile(DefaultConstants.AppSettingsFileName, optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             }).UseStartup<Startup>());

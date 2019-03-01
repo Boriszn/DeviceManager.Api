@@ -5,6 +5,8 @@
     <AssemblyName>DeviceManager.Api</AssemblyName>
     <RootNamespace>DeviceManager.Api</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DockerTargetOS>Windows</DockerTargetOS>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -38,6 +40,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1.1" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.5.0" />

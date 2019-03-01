@@ -2,8 +2,8 @@
 using System.Linq;
 using DeviceManager.Api.Configuration.DatabaseTypes;
 using DeviceManager.Api.Configuration.Settings;
+using DeviceManager.Api.Constants;
 using DeviceManager.Api.Data;
-using DeviceManager.Api.Helpers;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +23,7 @@ namespace DeviceManager.Api.Configuration
         /// <param name="configuration">The configuration.</param>
         public static void ConfigureService(IServiceCollection services, IConfiguration configuration)
         {
-            string connectionString = configuration.GetConnectionString(Constants.DefaultConnection);
+            string connectionString = configuration.GetConnectionString(DefaultConstants.DefaultConnection);
 
             // Database connection settings
             var connectionOptions = services.BuildServiceProvider().GetRequiredService<ConnectionSettings>();

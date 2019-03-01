@@ -1,7 +1,6 @@
-﻿using DeviceManager.Api.Helpers;
-using Swashbuckle.AspNetCore.Swagger;
+﻿using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
+using DeviceManager.Api.Constants;
 
 namespace DeviceManager.Api.ActionFilters
 {
@@ -15,21 +14,21 @@ namespace DeviceManager.Api.ActionFilters
         {
             operation.Parameters.Add(new NonBodyParameter
             {
-                Name = Constants.UiCulture,
-                In = Constants.Query,
-                Description = Constants.UiCulture,
+                Name = DefaultConstants.UiCulture,
+                In = DefaultConstants.Query,
+                Description = DefaultConstants.UiCulture,
                 Required = false,
-                Type = Constants.StringInText
+                Type = DefaultConstants.StringInText
             });
 
             operation.Parameters.Add(new NonBodyParameter
             {
-                Name = Constants.Culture,
-                In = Constants.Query,
-                Description = Constants.Culture,
-                Default = Constants.EnglishCulture,
+                Name = DefaultConstants.Culture,
+                In = DefaultConstants.Query,
+                Description = DefaultConstants.Culture,
+                Default = DefaultConstants.EnglishCulture,
                 Required = false,
-                Type = Constants.StringInText
+                Type = DefaultConstants.StringInText
             });
         }
     }

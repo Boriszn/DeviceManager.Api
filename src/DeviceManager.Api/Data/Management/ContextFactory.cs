@@ -1,8 +1,8 @@
 ﻿using System;
 using DeviceManager.Api.Configuration.DatabaseTypes;
 using DeviceManager.Api.Configuration.Settings;
+using DeviceManager.Api.Constants;
 using DeviceManager.Api.Data.DataSeed;
-using DeviceManager.Api.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -16,18 +16,14 @@ namespace DeviceManager.Api.Data.Management
     /// <seealso cref="IContextFactory"/>
     public class ContextFactory : IContextFactory
     {
-        private const string TenantIdFieldName = Constants.TenantId;
-
-        private const string DatabaseFieldKeyword = Constants.Database;
-
+        private const string TenantIdFieldName = DefaultConstants.TenantId;
+        private const string DatabaseFieldKeyword = DefaultConstants.Database;
         private readonly HttpContext httpContext;
 
         private readonly ConnectionSettings connectionOptions;
 
         private readonly IDataBaseManager dataBaseManager;
-
         private readonly IDatabaseType databaseType;
-
         private readonly IDataSeeder dataSeeder;
 
         /// <summary>

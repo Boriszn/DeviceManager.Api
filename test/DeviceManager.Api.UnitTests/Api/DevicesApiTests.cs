@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using DeviceManager.Api.Helpers;
+using DeviceManager.Api.Constants;
 using DeviceManager.Api.Model;
 using DeviceManager.Api.UnitTests.Builders;
 using FluentAssertions;
@@ -21,7 +21,7 @@ namespace DeviceManager.Api.UnitTests.Api
             var devicesApiBuilder = await new DevicesApiBuilder()
                 .QueryWith(page: 1, pageCount: 5, version:"1.0")
                 //.WithTenantId("b0ed668d-7ef2-4a23-a333-94ad278f45d7")
-                .WithTenantId(Constants.DefaultTenantGuid)
+                .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -46,8 +46,8 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .QueryWithDeviceId(Constants.SeedDevice2Id.ToString(), version: "1.0")
-                .WithTenantId(Constants.DefaultTenantGuid)
+                .QueryWithDeviceId(DataSeedingDefaultConstants.SeedDevice2Id.ToString(), version: "1.0")
+                .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -60,8 +60,8 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .QueryWithDeviceIdAsync(Constants.SeedDevice1Id.ToString(), version: "1.0")
-                .WithTenantId(Constants.DefaultTenantGuid)
+                .QueryWithDeviceIdAsync(DataSeedingDefaultConstants.SeedDevice1Id.ToString(), version: "1.0")
+                .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -77,7 +77,7 @@ namespace DeviceManager.Api.UnitTests.Api
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
                 .QueryWithTitle("RF123GH", version: "1.0")
-                .WithTenantId(Constants.DefaultTenantGuid)
+                .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
 
             // Assert
@@ -86,7 +86,7 @@ namespace DeviceManager.Api.UnitTests.Api
         }
 
         [Fact ( 
-            Skip = "The tests will add a new item to real DB, thus should be run manualy"
+            Skip = "The tests will add a new item to real DB, thus should be run manually"
             )]
         public async Task PostDevice_WithDeviceModel_ReturnsOkResult()
         {
@@ -97,7 +97,7 @@ namespace DeviceManager.Api.UnitTests.Api
                 {
                     DeviceCode = "DFGRRO12", Title = "RO Controller"
                 })
-                .WithTenantId(Constants.DefaultTenantGuid)
+                .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Post();
 
             // Assert

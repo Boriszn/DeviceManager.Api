@@ -2,6 +2,7 @@
 using DeviceManager.Api.Configuration.Settings;
 using DeviceManager.Api.Helpers;
 using Microsoft.AspNetCore.Hosting;
+using DeviceManager.Api.Constants;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -22,8 +23,8 @@ namespace DeviceManager.Api.Configuration
         {
             services.AddTransient<IStartupFilter, SettingValidationStartupFilter>();
 
-            services.Configure<ConnectionSettings>(configuration.GetSection(Constants.ConnectionStrings));
-            services.Configure<AppSettings>(configuration.GetSection(Constants.AppSettings));
+            services.Configure<ConnectionSettings>(configuration.GetSection(DefaultConstants.ConnectionStrings));
+            services.Configure<AppSettings>(configuration.GetSection(DefaultConstants.AppSettings));
 
             // Explicitly register the settings object so IOptions not required (optional)
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<ConnectionSettings>>().Value);

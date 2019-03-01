@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DeviceManager.Api.ActionFilters;
 using DeviceManager.Api.Configuration;
-using DeviceManager.Api.Helpers;
+using DeviceManager.Api.Constants;
 using DeviceManager.Api.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -91,7 +91,7 @@ namespace DeviceManager.Api
             loggerFactory.AddDebug();
             if (_env.IsProduction())
             {
-                loggerFactory.AddFile(Configuration.GetSection(Constants.Logging));
+                loggerFactory.AddFile(Configuration.GetSection(DefaultConstants.Logging));
                 app.UseHsts();
                 app.UseHttpsRedirection();
             }
