@@ -25,9 +25,9 @@
       "applicationUrl": "http://localhost:52217"
     },
     "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}/swagger"
+        "commandName": "Docker",
+        "launchBrowser": true,
+        "launchUrl": "{Scheme}://{ServiceHost}/swagger"
     }
   }
 }
