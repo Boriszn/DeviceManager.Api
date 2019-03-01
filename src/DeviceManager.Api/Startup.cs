@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DeviceManager.Api.ActionFilters;
 using DeviceManager.Api.Configuration;
+using DeviceManager.Api.Constants;
 using DeviceManager.Api.Helpers;
 using DeviceManager.Api.Middlewares;
 using Microsoft.AspNetCore.Builder;
@@ -78,7 +79,7 @@ namespace DeviceManager.Api
         /// <param name="loggerFactory">The logger factory.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection(Constants.Logging));
+            loggerFactory.AddConsole(Configuration.GetSection(DefaultConstants.Logging));
             loggerFactory.AddDebug();
 #if RELEASE
 

@@ -1,6 +1,7 @@
 using DeviceManager.Api.Helpers;
 using System;
 using System.Collections.Generic;
+using DeviceManager.Api.Constants;
 
 namespace DeviceManager.Api.Data.Management
 {
@@ -19,10 +20,10 @@ namespace DeviceManager.Api.Data.Management
         private readonly Dictionary<Guid, string> tenantConfigurationDictionary = new Dictionary<Guid, string>
         {
             {
-                Guid.Parse(Constants.DefaultTenantGuid), Constants.DefaultTeanantDatabase
+                Guid.Parse(DefaultConstants.DefaultTenantGuid), DefaultConstants.DefaultTeanantDatabase
             },
             {
-                Guid.Parse(Constants.Tenant2Guid), Constants.DeviceDbTenant2
+                Guid.Parse(DefaultConstants.Tenant2Guid), DefaultConstants.DeviceDbTenant2
             }
         };
 

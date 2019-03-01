@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  devicemanager.api:
+    image: ${DOCKER_REGISTRY}devicemanagerapi
+    build:
+      context: .
+      dockerfile: src\DeviceManager.Api\Dockerfile

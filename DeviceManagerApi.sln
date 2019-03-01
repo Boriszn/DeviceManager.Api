@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceManager.Api", "src\DeviceManager.Api\DeviceManager.Api.csproj", "{3580C09D-2A45-4898-BDEB-1207E06DD9D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceManager.Api.UnitTests", "test\DeviceManager.Api.UnitTests\DeviceManager.Api.UnitTests.csproj", "{006A6BEB-0CAD-40C9-8643-CACD71DA32EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceManager.Api.UnitTests", "test\DeviceManager.Api.UnitTests\DeviceManager.Api.UnitTests.csproj", "{006A6BEB-0CAD-40C9-8643-CACD71DA32EF}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F5857C77-5F3D-4D66-8E56-8B16245E9F4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{006A6BEB-0CAD-40C9-8643-CACD71DA32EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{006A6BEB-0CAD-40C9-8643-CACD71DA32EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{006A6BEB-0CAD-40C9-8643-CACD71DA32EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5857C77-5F3D-4D66-8E56-8B16245E9F4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5857C77-5F3D-4D66-8E56-8B16245E9F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5857C77-5F3D-4D66-8E56-8B16245E9F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5857C77-5F3D-4D66-8E56-8B16245E9F4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6451191-1C7E-43DA-9673-9E02A9C653F8}
 	EndGlobalSection
 EndGlobal
