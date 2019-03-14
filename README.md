@@ -56,11 +56,14 @@ There can be multiple data seeding classes. To create a new data seeding class:
 
 ## Docker support
 
-App image available in Docker Hub Registry: https://hub.docker.com/r/boriszn/devicemanagerapi/
+App images available in Docker Hub Registry: https://hub.docker.com/r/boriszn/devicemanagerapi/ (**LINUX and Windows images are available**)
 
-You can pull image: `docker pull boriszn/devicemanagerapi`
+You can pull image:
+- Linux: `docker pull boriszn/devicemanagerapi:1.0.4`
+- Windows `docker pull boriszn/devicemanagerapi:latest`
 
 The solution was migrated to the docker container and support docker compose orchestration.
+
 You can run docker using following options:
 
 - Visual Studio 2017 Debug mode. Run VS (`F5`) will run docker container.
@@ -68,7 +71,29 @@ You can run docker using following options:
 
 You can access the the Web API locally via URL: http://localhost:8080
 
+You can also **Build** container from solution. To do so run `docker build -t  boriszn/devicemanagerapi:1.0.4 .` or run it in VS.
+
+**IMPORTANT. To debug solution in Visual Studio replace file `Dockerfile` with `Dockerfile-VsDebug` file (or replace content of `Dockerfile` from `Dockerfile-VsDebug`) This is temporary work around to be able to run containers in command line and in Visual Studio.  It will fixed (consolidated in one docker file) in upcoming PRs**
+
 **To run/build project without docker, switch from `Docker` to `DeviceManagerApi` (specified in `launchSettings.json`)**
+
+## Kubernates (minikube cluster) setup
+
+- Setup minikube (tested on `v0.34.1`) ([This article should help](https://medium.com/containers-101/local-kubernetes-for-windows-minikube-vs-docker-desktop-25a1c6d3b766))
+- Start minikube (for example: `minikube start --vm-driver=hyperv --hyperv-virtual-switch=testCluster`. My setup used Windows 10 Pro + Hyper-V Hypervisor)
+- To create deployments run `kubectl create -f ks-deployment.yaml`
+- Check if deployments created successfully, run `kubectl get deployments`
+- Create service to expose app, run `kubectl expose deployment devicemanagerapi --type=NodePort` (as minikube doesn't contain ingress/load balancer)
+- To receive URL run `minikube service devicemanagerapi --url` 
+- Finally you can test all setup, run minikube dashboard `minikube dashboard`. Dashboard is displayed on image below.
+
+![minikube-dashboard](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/docker-ks/minikube-dashboard.png)
+
+Or you can use [This plugin](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)for VS Code to manage/monitor minikube cluster
+
+![minikube-dashboard](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/docker-ks/vs-code-plugin.png)
+
+*IMPORTANT: Ensure that you are switched to LINUX docker container. Because minikube support only LINUX based containers (at least `v0.34.1`. In future it can be changed)*
 
 ## Known issues
 

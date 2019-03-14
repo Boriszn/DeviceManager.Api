@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: devicemanagerapi
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: devicemanagerapi
+    spec:
+      containers:
+      - name: devicemanagerapi
+        image: boriszn/devicemanagerapi:1.0.4
+        ports:
+        - containerPort: 80
