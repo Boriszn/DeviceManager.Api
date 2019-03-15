@@ -84,16 +84,16 @@ You can also **Build** container from solution. To do so run `docker build -t  b
 - To create deployments run `kubectl create -f ks-deployment.yaml`
 - Check if deployments created successfully, run `kubectl get deployments`
 - Create service to expose app, run `kubectl expose deployment devicemanagerapi --type=NodePort` (as minikube doesn't contain ingress/load balancer)
-- To receive URL run `minikube service devicemanagerapi --url` 
+- To receive URL run `minikube service devicemanagerapi --url`
 - Finally you can test all setup, run minikube dashboard `minikube dashboard`. Dashboard is displayed on image below.
 
-![minikube-dashboard](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/docker-ks/minikube-dashboard.png)
+![minikube-dashboard](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/minikube-dashboard.png)
 
-Or you can use [This plugin](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)for VS Code to manage/monitor minikube cluster
+Or you can use [This plugin](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) for VS Code to manage/monitor minikube cluster
 
-![minikube-dashboard](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/docker-ks/vs-code-plugin.png)
+![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/vs-code-plugin.png)
 
-*IMPORTANT: Ensure that you are switched to LINUX docker container. Because minikube support only LINUX based containers (at least `v0.34.1`. In future it can be changed)*
+**IMPORTANT: Ensure that you are switched to LINUX docker container. Because minikube support only LINUX based containers (at least `v0.34.1`. In future it can be changed)**
 
 ## Known issues
 
