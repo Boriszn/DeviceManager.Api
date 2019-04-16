@@ -1,0 +1,21 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: devicemanager-api-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: devicemanager-api-service-app
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: devicemanager-api-service-app
+    spec:
+      containers:
+      - name: devicemanagerapi-container
+        image: devicemanagerreg.azurecr.io/boriszn/devicemanagerapi:1.0.4
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
