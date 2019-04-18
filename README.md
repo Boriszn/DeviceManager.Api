@@ -95,6 +95,56 @@ Or you can use [This plugin](https://marketplace.visualstudio.com/items?itemName
 
 **IMPORTANT: Ensure that you are switched to LINUX docker container. Because minikube support only LINUX based containers (at least `v0.34.1`. In future it can be changed)**
 
+## Azure Kubernetes Services setup
+
+You can Setup Azure Container Registry or use docker hub.
+
+### Azure Container Registry (ACR) setup _(optional)_
+
+- Create ACR registry. I used this registry name `devicemanagerreg`
+- Tag your image, in case of moving to ACR. Example: `docker tag [image-id] devicemanagerreg.azurecr.io/boriszn/devicemanagerapi:1.0.4`
+- Push your image to ACR, example: `docker push devicemanagerreg.azurecr.io/boriszn/devicemanagerapi:1.0.4`
+
+### Create AKS Cluster via Azure Portal
+
+#### Set up connection between ACR and AKS
+
+1. Create Secret in the Kubernates, to access Docker Images from Azure Container Registries. (For ACR you can obtain secretes from Azure Portal simply open _Acess keys_ in the ACR blade).
+Run `kubectl create secret docker-registry devicemanagerreg-connection --docker-server=devicemanagerreg.azurecr.io --docker-username=devicemanagerreg --docker-password=[ACR-Registry-Password] --docker-email=email@gmail.com`
+2. Obtain `ServiceAccount.yaml` from Kubernetes.
+Run: `kubectl get serviceaccounts default -o yaml > ./serviceaccount.yaml`.
+Than add `imagePullSecrets` line to the end of service account file:
+
+```
+....
+imagePullSecrets:
+- name: devicemanagerreg-connection
+....
+```
+
+3. Replace service account, Run: `kubectl replace serviceaccount default -f ./serviceaccount.yaml`
+
+#### Setup NGINX Ingress load balancer
+
+1. Install [Helm package manager](https://github.com/helm/helm/releases)
+2. Sign-in with azure CLI. (User command from azure portal: `az aks get-credentials –resource-group [your-resource-group] –name [your-cluster-name]`).
+3. Run: `helm init`
+4. Install NGINX-Ingress. Runs `helm install stable/nginx-ingress –name devicemanagerreg-nginx –set rbac.create=false`
+5. Receive ingress config, public IP etc. Run: `kubectl get service -l app=nginx-ingress --namespace default`
+
+#### Setup Configuration for Ingress, Ingress-Service, Service, Deployment
+
+1. Setup Ingress `kubectl apply -f aks-deployment/ingress.yaml`.
+2. Setup Ingress Service: `kubectl apply -f aks-deployment/ingress-service.yaml`
+3. Setup Service `kubectl apply -f aks-deployment/devicemanager-api-service.yaml`
+4. Setup Deployment `kubectl apply -f aks-deployment/aks-deployment.yaml`
+5. Done. ;) You can obtain statistic using Kubernetes Dashboard or using VS code plugin.
+
+![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/aks-dashboard.png)
+![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/vs-code-aks.png)
+
+API should be accessible via public ingress IP.
+
 ## Known issues
 
 - **In case of running from Docker** Connection string should be changed to use IP addresses or real server domain names for `Server` parameter. Also `User Id` and `Password` should be added.
