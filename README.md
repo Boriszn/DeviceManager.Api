@@ -7,6 +7,8 @@ Web API Solution demonstrates mutliteantcy architecture, using Entity Framework,
 
 ![arh-diagram](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/arhitecture-diag.png)
 
+![logos](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/tech-stack-logos.png)
+
 ## Project
 
 Todo list, accomplished tasks, can be [found Here.](https://github.com/Boriszn/DeviceManager.Api/projects/1)
@@ -109,7 +111,7 @@ You can Setup Azure Container Registry or use docker hub.
 
 #### Set up connection between ACR and AKS
 
-1. Create Secret in the Kubernates, to access Docker Images from Azure Container Registries. (For ACR you can obtain secretes from Azure Portal simply open _Acess keys_ in the ACR blade).
+1. Create Secret in the Kubernetes, to access Docker Images from Azure Container Registries. (For ACR you can obtain secretes from Azure Portal simply open _Acess keys_ in the ACR blade).
 Run `kubectl create secret docker-registry devicemanagerreg-connection --docker-server=devicemanagerreg.azurecr.io --docker-username=devicemanagerreg --docker-password=[ACR-Registry-Password] --docker-email=email@gmail.com`
 2. Obtain `ServiceAccount.yaml` from Kubernetes.
 Run: `kubectl get serviceaccounts default -o yaml > ./serviceaccount.yaml`.
@@ -143,7 +145,13 @@ imagePullSecrets:
 ![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/aks-dashboard.png)
 ![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/vs-code-aks.png)
 
-API should be accessible via public ingress IP.
+DeviceManager API should be accessible via public IP or with DNS name (FQDN).
+
+![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/devicemanager-api-public-ip-swagger.png)
+
+#### Run AKS through HTTPS
+
+[Step by step instruction here](https://docs.microsoft.com/en-us/azure/aks/ingress-tls)
 
 ## Known issues
 
