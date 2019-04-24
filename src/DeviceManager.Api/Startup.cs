@@ -65,6 +65,9 @@ namespace DeviceManager.Api
             // Localization support
             LocalizationConfiguration.ConfigureService(services);
 
+            // Authentication using IdentityServer4
+            AuthenticationConfiguration.Configure(services);
+
             Mapper.Reset();
             // https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection/issues/28
             services.AddAutoMapper(typeof(Startup));
@@ -86,18 +89,24 @@ namespace DeviceManager.Api
         /// <param name="loggerFactory">The logger factory.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //loggerFactory.AddConsole(Configuration.GetSection(Constants.Logging));
-            loggerFactory.AddConsole();
-            loggerFactory.AddDebug();
             if (_env.IsProduction())
             {
                 loggerFactory.AddFile(Configuration.GetSection(DefaultConstants.Logging));
                 app.UseHsts();
                 app.UseHttpsRedirection();
             }
+            else
+            {
+                // Log in console only in development
+                loggerFactory.AddConsole();
+                loggerFactory.AddDebug();
+            }
 
             // Localization support
             LocalizationConfiguration.Configure(app);
+
+            // Authentication
+            app.UseAuthentication();
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 

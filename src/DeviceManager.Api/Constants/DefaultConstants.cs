@@ -26,14 +26,44 @@
         public const string Kestrel = nameof(Kestrel);
 
         /// <summary>
-        /// Name of the settings section
+        /// Name of the AppSettings section
         /// </summary>
         public const string AppSettings = nameof(DefaultConstants.AppSettings);
+
+        /// <summary>
+        /// Name of the Authentication settings section
+        /// </summary>
+        public const string AuthenticationSettings = nameof(DefaultConstants.AuthenticationSettings);
 
         /// <summary>
         /// 
         /// </summary>
         public const string Database = nameof(DefaultConstants.Database);
+
+        /// <summary>
+        /// Address where identity server is running
+        /// </summary>
+        public const string AuthenticationAuthority = "AUTHENTICATION_AUTHORITY";
+
+        /// <summary>
+        /// Address of the swagger client
+        /// </summary>
+        public const string SwaggerClient = "SWAGGER_CLIENT";
+
+        /// <summary>
+        /// Used to display api name in the swagger UI screen
+        /// </summary>
+        public const string ApiDisplayName = "Device Manager Api";
+
+        /// <summary>
+        /// Used to display description of api access needed
+        /// </summary>
+        public const string ApiDescription = "Device Manager Api - full access";
+
+        /// <summary>
+        /// Used for passing oauth2
+        /// </summary>
+        public const string OAuth2 = "oauth2";
 
         /// <summary>
         /// Tenant id key
@@ -104,5 +134,6 @@
         /// Name of the culture property in the header
         /// </summary>
         public const string StringInText = "string";
+
     }
 }

@@ -3,7 +3,8 @@
     "DeviceManager.Api.UnitTests": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AUTHENTICATION_AUTHORITY": "http://localhost:5000/"
       }
     }
   }

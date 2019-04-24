@@ -9,26 +9,28 @@
   },
   "profiles": {
     "IIS Express": {
-        "commandName": "IISExpress",
-        "launchBrowser": true,
-        "launchUrl": "swagger",
-        "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        }
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AUTHENTICATION_AUTHORITY": "http://localhost:5000/"
+      }
     },
     "DeviceManagerApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AUTHENTICATION_AUTHORITY": "http://localhost:5000/"
       },
       "applicationUrl": "http://localhost:52217"
     },
     "Docker": {
-        "commandName": "Docker",
-        "launchBrowser": true,
-        "launchUrl": "{Scheme}://{ServiceHost}/swagger"
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}/swagger"
     }
   }
 }

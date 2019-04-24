@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceManager.Api.UnitTests
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F5857C77-5F3D-4D66-8E56-8B16245E9F4F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceManager.IdentityServer", "src\DeviceManager.IdentityServer\DeviceManager.IdentityServer.csproj", "{3853BC99-E044-46BF-A53C-EEE26A13DD88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F5857C77-5F3D-4D66-8E56-8B16245E9F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5857C77-5F3D-4D66-8E56-8B16245E9F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5857C77-5F3D-4D66-8E56-8B16245E9F4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3853BC99-E044-46BF-A53C-EEE26A13DD88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3853BC99-E044-46BF-A53C-EEE26A13DD88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3853BC99-E044-46BF-A53C-EEE26A13DD88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3853BC99-E044-46BF-A53C-EEE26A13DD88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
