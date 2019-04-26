@@ -7,7 +7,7 @@ Web API Solution demonstrates mutliteantcy architecture, using Entity Framework,
 
 ![arh-diagram](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/arhitecture-diag.png)
 
-![tech-logo](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/tech-stack-logos.png)
+![tech-logo](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/tech-stack-logos.png)
 
 ## Project
 
