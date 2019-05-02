@@ -3,7 +3,7 @@
 
 Web API Solution demonstrates mutliteantcy architecture, using Entity Framework, UnitOfWork,Repository patterns
 
-![tech-logo](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/tech-stack-logos.png)
+![tech-logo](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/tech-stack-logos.png)
 
 # [![Build status](https://ci.appveyor.com/api/projects/status/x1whwie6v68l8200?svg=true)](https://ci.appveyor.com/project/Boriszn/devicemanager-api) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/DeviceManager-Api/) [![Build status](https://img.shields.io/docker/pulls/boriszn/devicemanagerapi.svg)](https://hub.docker.com/r/boriszn/devicemanagerapi/)
 
@@ -89,11 +89,11 @@ You can also **Build** container from solution. To do so run `docker build -t  b
 - To receive URL run `minikube service devicemanagerapi --url`
 - Finally you can test all setup, run minikube dashboard `minikube dashboard`. Dashboard is displayed on image below.
 
-![minikube-dashboard](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/minikube-dashboard.png)
+![minikube-dashboard](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/docker-ks/minikube-dashboard.png)
 
 Or you can use [This plugin](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) for VS Code to manage/monitor minikube cluster
 
-![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/vs-code-plugin.png)
+![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/docker-ks/vs-code-plugin.png)
 
 **IMPORTANT: Ensure that you are switched to LINUX docker container. Because minikube support only LINUX based containers (at least `v0.34.1`. In future it can be changed)**
 
@@ -142,12 +142,12 @@ imagePullSecrets:
 4. Setup Deployment `kubectl apply -f aks-deployment/aks-deployment.yaml`
 5. Done. ;) You can obtain statistic using Kubernetes Dashboard or using VS code plugin.
 
-![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/aks-dashboard.png)
-![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/vs-code-aks.png)
+![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/docker-ks/aks-dashboard.png)
+![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/docker-ks/vs-code-aks.png)
 
 DeviceManager API should be accessible via public IP or with DNS name (FQDN).
 
-![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/feature/kubernates-integration/assets/docker-ks/devicemanager-api-public-ip-swagger.png)
+![vs-code-plugin](https://raw.githubusercontent.com/Boriszn/DeviceManager.Api/develop/assets/docker-ks/devicemanager-api-public-ip-swagger.png)
 
 #### Run AKS through HTTPS
 
