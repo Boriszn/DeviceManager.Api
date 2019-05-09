@@ -2,22 +2,41 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Serilog;
-using Serilog.Events;
-using Serilog.Sinks.SystemConsole.Themes;
 using System;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
+using Microsoft.AspNetCore;
+using Serilog.Events;
+using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
-namespace IdentityServer
+namespace DeviceManager.IdentityServer
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            Console.Title = "IdentityServer4";
+            Console.Title = "IdentityServer4.EntityFramework";
 
-            CreateWebHostBuilder(args).Build().Run();
+            var seed = args.Contains("/seed");
+            if (seed)
+            {
+                args = args.Except(new[] { "/seed" }).ToArray();
+            }
+
+            var host = CreateWebHostBuilder(args).Build();
+
+            if (seed)
+            {
+                var config = host.Services.GetRequiredService<IConfiguration>();
+                var connectionString = config.GetConnectionString("DefaultConnection");
+                SeedData.EnsureSeedData(connectionString);
+                return;
+            }
+
+            host.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)

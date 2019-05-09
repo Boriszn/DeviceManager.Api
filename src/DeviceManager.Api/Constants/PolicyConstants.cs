@@ -11,11 +11,11 @@ namespace DeviceManager.Api.Constants
         /// <summary>
         /// Admin policy
         /// </summary>
-        public const string Admin = nameof(Admin);
+        public const string Admin = "admin";
 
         /// <summary>
         /// Manager policy
         /// </summary>
-        public const string Manager = nameof(Manager);
+        public const string Manager = "manager";
     }
 }

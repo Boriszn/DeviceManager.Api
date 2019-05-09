@@ -11,7 +11,9 @@ namespace DeviceManager.Api.Controllers
     /// Base api controller all api controllers should inherit from this controller
     /// </summary>
     /// <typeparam name="TViewModel">Type of the view model</typeparam>
+#if UseAuthentication
     [Authorize]
+#endif
     public abstract class BaseController<TViewModel> : Controller where TViewModel : class
     {
         /// <summary>

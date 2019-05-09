@@ -12,22 +12,22 @@
       "commandName": "IISExpress",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "SWAGGER_CLIENT": "http://localhost:52217"
+        "SWAGGER_CLIENT": "http://devicemanager.api:5001"
       },
-      "applicationUrl": "http://localhost:5000"
+      "applicationUrl": "http://devicemanager.identityserver:5000"
     },
     "IdentityServer": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "SWAGGER_CLIENT": "http://localhost:52217"
+        "SWAGGER_CLIENT": "http://devicemanager.api:5001"
       },
-      "applicationUrl": "http://localhost:5000"
+      "applicationUrl": "http://devicemanager.identityserver:5000"
     },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}"
+      "launchUrl": "http://devicemanager.identityserver:5000"
     }
   }
 }

@@ -14,8 +14,9 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AUTHENTICATION_AUTHORITY": "http://localhost:5000/"
-      }
+        "AUTHENTICATION_AUTHORITY": "http://devicemanager.identityserver:5000/"
+      },
+      "applicationUrl": "http://devicemanager.api:5001"
     },
     "DeviceManagerApi": {
       "commandName": "Project",
@@ -23,14 +24,14 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AUTHENTICATION_AUTHORITY": "http://localhost:5000/"
+        "AUTHENTICATION_AUTHORITY": "http://devicemanager.identityserver:5000/"
       },
-      "applicationUrl": "http://localhost:52217"
+      "applicationUrl": "http://devicemanager.api:5001"
     },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}/swagger"
+      "launchUrl": "http://devicemanager.api:5001/swagger"
     }
   }
 }

@@ -23,7 +23,7 @@ namespace DeviceManager.Api.UnitTests.Services
         private readonly MapperConfiguration mapperConfiguration;
         private readonly Mapper mapper;
         private readonly IStringLocalizer<SharedResource> sharedLocalizer;
-        private Mock<IDeviceValidationService> mockDeviceValidationService;
+        private readonly Mock<IDeviceValidationService> mockDeviceValidationService;
 
         public DeviceServiceBuilder()
         {

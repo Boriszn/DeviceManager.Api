@@ -4,30 +4,14 @@ services:
   devicemanager.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - AUTHENTICATION_AUTHORITY=http://172.16.238.10
-      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - AUTHENTICATION_AUTHORITY=http://devicemanager.identityserver:5000
+      - ASPNETCORE_URLS=http://0.0.0.0:5001
     ports:
-      - "5001:80"
-    networks:
-      app_net:
-        ipv4_address: 172.16.238.11
-        ipv6_address: 2001:3984:3989::11
+      - "5001:5001"
   devicemanager.identityserver:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80
-      - SWAGGER_CLIENT=http://172.16.238.11
+      - ASPNETCORE_URLS=http://0.0.0.0:5000
+      - SWAGGER_CLIENT=http://devicemanager.api:5001
     ports:
-      - "5000:80"
-    networks:
-      app_net:
-        ipv4_address: 172.16.238.10
-        ipv6_address: 2001:3984:3989::10
-
-networks:
-  app_net:
-    ipam:
-      driver: default
-      config:
-        - subnet: "172.16.238.0/24"
-        - subnet: "2001:3984:3989::/64"
+      - "5000:5000"

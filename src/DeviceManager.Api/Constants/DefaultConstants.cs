@@ -135,5 +135,11 @@
         /// </summary>
         public const string StringInText = "string";
 
+
+        /// <summary>
+        /// claim name to store tenant id in the database
+        /// </summary>
+        public const string TenantClaim = "tenant_id";
+
     }
 }

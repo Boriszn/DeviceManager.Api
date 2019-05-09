@@ -13,3 +13,4 @@ services:
     build:
       context: .
       dockerfile: src\DeviceManager.IdentityServer\Dockerfile
+

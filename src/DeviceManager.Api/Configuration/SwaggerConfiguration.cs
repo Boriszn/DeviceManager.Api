@@ -69,7 +69,7 @@ namespace DeviceManager.Api.Configuration
                 c.AddSecurityDefinition(DefaultConstants.OAuth2, new OAuth2Scheme
                 {
                     Flow = IdentityModel.OidcConstants.GrantTypes.Implicit,
-                    AuthorizationUrl = authorizationUri.ToString(), 
+                    AuthorizationUrl = authorizationUri.ToString(),
                     Scopes = new Dictionary<string, string> { { authenticationSettings.Scope, DefaultConstants.ApiDescription } }
                 });
                 #endregion

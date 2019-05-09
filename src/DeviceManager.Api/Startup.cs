@@ -64,10 +64,10 @@ namespace DeviceManager.Api
             }
             // Localization support
             LocalizationConfiguration.ConfigureService(services);
-
+# if UseAuthentication
             // Authentication using IdentityServer4
             AuthenticationConfiguration.Configure(services);
-
+#endif
             Mapper.Reset();
             // https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection/issues/28
             services.AddAutoMapper(typeof(Startup));
@@ -79,6 +79,16 @@ namespace DeviceManager.Api
             EntityFrameworkConfiguration.ConfigureService(services, Configuration);
             IocContainerConfiguration.ConfigureService(services, Configuration);
             ApiVersioningConfiguration.ConfigureService(services);
+
+            services.AddCors(setup =>
+            {
+                setup.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.AllowAnyOrigin();
+                });
+            });
         }
 
         /// <summary>
@@ -105,9 +115,10 @@ namespace DeviceManager.Api
             // Localization support
             LocalizationConfiguration.Configure(app);
 
+# if UseAuthentication
             // Authentication
             app.UseAuthentication();
-
+#endif
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseStaticFiles();

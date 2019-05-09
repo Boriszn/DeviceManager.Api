@@ -13,7 +13,9 @@ namespace DeviceManager.Api.Controllers
     /// This is validated in <see cref="AuthenticationConfiguration.Configure"/> method
     /// </summary>
     [Route("api/v{version:apiVersion}/Admin")]
+# if UseAuthentication
     [Authorize(PolicyConstants.Admin)]
+#endif
     public class AdminController
     {
         /// <summary>

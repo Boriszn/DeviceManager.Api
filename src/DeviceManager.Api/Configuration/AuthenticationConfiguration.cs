@@ -3,6 +3,7 @@ using DeviceManager.Api.Constants;
 using DeviceManager.Api.Helpers;
 using IdentityModel;
 using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -44,6 +45,23 @@ namespace DeviceManager.Api.Configuration
                     // Allowed only if the role of the logged in user is manager
                     policy.RequireClaim(JwtClaimTypes.Role, PolicyConstants.Manager);
                 });
+
+                var defaultPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser();
+
+                defaultPolicy.RequireAssertion(c =>
+                {
+                    var mvcContext = c.Resource as Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext;
+                    if (c.User.HasClaim(JwtClaimTypes.Role, PolicyConstants.Admin))
+                        return true;
+
+                    // Now the user needs to have tenant id
+                    if (c.User.HasClaim(DefaultConstants.TenantClaim, mvcContext.HttpContext.Request.Headers[DefaultConstants.TenantId].ToString()))
+                        return true;
+
+                    return false;
+                });
+
+                options.DefaultPolicy = defaultPolicy.Build();
             });
         }
     }
