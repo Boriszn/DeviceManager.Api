@@ -21,12 +21,12 @@ namespace DeviceManager.Api.Configuration
         /// </summary>
         /// <param name="services">The services.</param>
         /// <param name="configuration">The configuration.</param>
-        public static void ConfigureService(IServiceCollection services, IConfigurationRoot configuration)
+        public static void ConfigureService(IServiceCollection services, IConfiguration configuration)
         {
             string connectionString = configuration.GetConnectionString(DefaultConstants.DefaultConnection);
 
             // Database connection settings
-            var connectionOptions = services.BuildServiceProvider().GetRequiredService<IOptions<ConnectionSettings>>();
+            var connectionOptions = services.BuildServiceProvider().GetRequiredService<ConnectionSettings>();
 
             RegisterDatabaseType(services, connectionOptions);
 
@@ -63,10 +63,10 @@ namespace DeviceManager.Api.Configuration
         /// </summary>
         /// <param name="services"></param>
         /// <param name="connectionOptions"></param>
-        private static void RegisterDatabaseType(IServiceCollection services, IOptions<ConnectionSettings> connectionOptions)
+        private static void RegisterDatabaseType(IServiceCollection services, ConnectionSettings connectionOptions)
         {
             var databaseInterfaceType = typeof(IDatabaseType);
-            var instanceType = connectionOptions.Value.DatabaseType.ToString();
+            var instanceType = connectionOptions.DatabaseType.ToString();
             var instance = databaseInterfaceType.Assembly.GetTypes().FirstOrDefault(x =>
              databaseInterfaceType.IsAssignableFrom(x)
              &&

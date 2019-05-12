@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using DeviceManager.Api.Constants;
-using DeviceManager.Api.Helpers;
 using DeviceManager.Api.Model;
 using DeviceManager.Api.UnitTests.Builders;
 using FluentAssertions;

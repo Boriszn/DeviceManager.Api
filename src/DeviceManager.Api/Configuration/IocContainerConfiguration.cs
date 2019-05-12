@@ -18,7 +18,7 @@ namespace DeviceManager.Api.Configuration
         /// </summary>
         /// <param name="services">The services.</param>
         /// <param name="configuration">The configuration.</param>
-        public static void ConfigureService(IServiceCollection services, IConfigurationRoot configuration)
+        public static void ConfigureService(IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

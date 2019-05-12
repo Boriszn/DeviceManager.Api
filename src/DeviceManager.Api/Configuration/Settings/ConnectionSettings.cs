@@ -1,9 +1,12 @@
-﻿namespace DeviceManager.Api.Configuration.Settings
+﻿using DeviceManager.Api.ActionFilters.Settings;
+using System.ComponentModel.DataAnnotations;
+
+namespace DeviceManager.Api.Configuration.Settings
 {
     /// <summary>
     /// Connection configuration options
     /// </summary>
-    public class ConnectionSettings
+    public class ConnectionSettings : IValidatable
     {
         /// <summary>
         /// Gets or sets the database type (No sql or MsSql)
@@ -16,6 +19,13 @@
         /// <value>
         /// The default connection.
         /// </value>
+        [Required]
         public string DefaultConnection { get; set; }
+
+        /// <inherit/>
+        public void Validate()
+        {
+            Validator.ValidateObject(this, new ValidationContext(this), true);
+        }
     }
 }

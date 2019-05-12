@@ -6,6 +6,11 @@
     public static class DefaultConstants
     {
         /// <summary>
+        /// Name of the settings file name
+        /// </summary>
+        public const string AppSettingsFileName = "appsettings.json";
+
+        /// <summary>
         /// Name of the connection string
         /// </summary>
         public const string DefaultConnection = nameof(DefaultConstants.DefaultConnection);
@@ -14,6 +19,11 @@
         /// Connection string section
         /// </summary>
         public const string ConnectionStrings = nameof(DefaultConstants.ConnectionStrings);
+
+        /// <summary>
+        /// Kerstel configuration section
+        /// </summary>
+        public const string Kestrel = nameof(Kestrel);
 
         /// <summary>
         /// Name of the settings section

@@ -62,13 +62,13 @@ namespace DeviceManager.Api.UnitTests.Services
             this.mockRepository.Setup(x => x.Get(It.IsAny<Guid>(), It.IsAny<Expression<Func<Device, DeviceGroup>>>())).Returns(device);
 
             // 'Get' repository mock
-            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).Returns(async () =>
+            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(() => 
             {
                 return device;
             });
 
             // 'Get' repository mock
-            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>(), It.IsAny<Expression<Func<Device, DeviceGroup>>>())).Returns(async () =>
+            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>(), It.IsAny<Expression<Func<Device, DeviceGroup>>>())).ReturnsAsync(() =>
             {
                 return device;
             });

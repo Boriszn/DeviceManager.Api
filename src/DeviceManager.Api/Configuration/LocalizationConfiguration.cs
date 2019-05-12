@@ -3,12 +3,11 @@ using DeviceManager.Api.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace DeviceManager.Api.Configuration
 {
     /// <summary>
-    /// 
+    /// Configures localization settings in the application
     /// </summary>
     public static class LocalizationConfiguration
     {
@@ -30,15 +29,16 @@ namespace DeviceManager.Api.Configuration
         /// <param name="app"></param>
         public static void Configure(IApplicationBuilder app)
         {
-            var appSettings = app.ApplicationServices.GetService<IOptions<AppSettings>>();
+            // As AppSettings is already registered as singelton. Get the same instance
+            var appSettings = app.ApplicationServices.GetService<AppSettings>();
             if (appSettings == null) return;
 
             // Set default culture and supported cultures
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
-                DefaultRequestCulture = new RequestCulture(appSettings.Value.DefaultCulture),
-                SupportedCultures = GenericHelper.GetCultureInfos(appSettings.Value.SupportedCultures),
-                SupportedUICultures = GenericHelper.GetCultureInfos(appSettings.Value.SupportedUiCultures)
+                DefaultRequestCulture = new RequestCulture(appSettings.DefaultCulture),
+                SupportedCultures = GenericHelper.GetCultureInfos(appSettings.SupportedCultures),
+                SupportedUICultures = GenericHelper.GetCultureInfos(appSettings.SupportedUiCultures)
             });
         }
     }
