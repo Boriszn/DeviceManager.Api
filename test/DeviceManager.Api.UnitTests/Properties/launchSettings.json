@@ -1,10 +1,10 @@
 {
   "profiles": {
     "DeviceManager.Api.UnitTests": {
-      "commandName": "Project",
+      "commandName": "Executable",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "AUTHENTICATION_AUTHORITY": "http://localhost:5000/"
+        "AUTHENTICATION_AUTHORITY": "http://devicemanager.identityserver:5000/",
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }

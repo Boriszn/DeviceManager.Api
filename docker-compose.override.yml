@@ -15,3 +15,7 @@ services:
       - SWAGGER_CLIENT=http://devicemanager.api:5001
     ports:
       - "5000:5000"
+networks:
+  default:
+    external:
+      name: nat

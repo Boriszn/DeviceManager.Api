@@ -19,7 +19,9 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .QueryWith(page: 1, pageCount: 5, version:"1.0")
+                .WithClientCredentials();
+
+            devicesApiBuilder = await devicesApiBuilder.QueryWith(page: 1, pageCount: 5, version:"1.0")
                 //.WithTenantId("b0ed668d-7ef2-4a23-a333-94ad278f45d7")
                 .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
@@ -33,7 +35,9 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .QueryWith(page: 1, pageCount: 5, version: "1.0")
+                .WithClientCredentials();
+
+            devicesApiBuilder = await devicesApiBuilder.QueryWith(page: 1, pageCount: 5, version: "1.0")
                 .Get();
 
             // Assert
@@ -46,7 +50,9 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .QueryWithDeviceId(DataSeedingDefaultConstants.SeedDevice2Id.ToString(), version: "1.0")
+                .WithClientCredentials();
+
+            devicesApiBuilder = await devicesApiBuilder.QueryWithDeviceId(DataSeedingDefaultConstants.SeedDevice2Id.ToString(), version: "1.0")
                 .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
 
@@ -60,7 +66,9 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .QueryWithDeviceIdAsync(DataSeedingDefaultConstants.SeedDevice1Id.ToString(), version: "1.0")
+                .WithClientCredentials();
+
+            devicesApiBuilder = await devicesApiBuilder.QueryWithDeviceIdAsync(DataSeedingDefaultConstants.SeedDevice1Id.ToString(), version: "1.0")
                 .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
 
@@ -76,7 +84,9 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .QueryWithTitle("RF123GH", version: "1.0")
+                .WithClientCredentials();
+
+            devicesApiBuilder = await devicesApiBuilder.QueryWithTitle("RF123GH", version: "1.0")
                 .WithTenantId(DefaultConstants.DefaultTenantGuid)
                 .Get();
 
@@ -92,7 +102,9 @@ namespace DeviceManager.Api.UnitTests.Api
         {
             // Arrange and Act
             var devicesApiBuilder = await new DevicesApiBuilder()
-                .DefaultQuery(version: "1.0")
+                .WithClientCredentials();
+
+            devicesApiBuilder = await devicesApiBuilder.DefaultQuery(version: "1.0")
                 .WithDeviceViewModelData(new DeviceViewModel()
                 {
                     DeviceCode = "DFGRRO12", Title = "RO Controller"

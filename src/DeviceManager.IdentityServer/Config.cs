@@ -55,6 +55,18 @@ namespace DeviceManager.IdentityServer
                     AllowedScopes = { "DeviceManagerApi"},
                     AlwaysSendClientClaims = true,
                     ClientClaimsPrefix = ""
+                },
+
+                new Client
+                {
+                    ClientId = "DeviceManagerApi_UnitTest",
+                    ClientName = "Device Manager Unit Test",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = { "DeviceManagerApi"},
+                    ClientSecrets  =
+                    {
+                        new Secret("secret".Sha256())
+                    }
                 }
             };
         }

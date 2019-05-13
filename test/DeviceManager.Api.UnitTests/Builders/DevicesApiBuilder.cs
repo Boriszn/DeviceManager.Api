@@ -1,9 +1,13 @@
-﻿using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DeviceManager.Api.Constants;
+using DeviceManager.Api.Helpers;
 using DeviceManager.Api.Model;
 using DeviceManager.Api.UnitTests.Api.Server;
+using IdentityModel.Client;
 using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace DeviceManager.Api.UnitTests.Builders
 {
@@ -69,6 +73,44 @@ namespace DeviceManager.Api.UnitTests.Builders
         {
             query = $"api/v{version}/devices/title/{deviceTitle}";
 
+            return this;
+        }
+
+        public async Task<DevicesApiBuilder> WithClientCredentials()
+        {
+            using (var identityClient = new HttpClient())
+            {
+
+                var discoveryDocument = new DiscoveryDocumentRequest
+                {
+                    Address = GenericHelper.GetUriFromEnvironmentVariable(DefaultConstants.AuthenticationAuthority).ToString()
+                };
+                discoveryDocument.Policy.RequireHttps = false;
+                var discoveryResponse = await identityClient.GetDiscoveryDocumentAsync(discoveryDocument);
+                if (discoveryResponse.IsError)
+                {
+                    Assert.True(false, discoveryResponse.Error);
+                    return this;
+                }
+
+
+                // request token
+                var tokenResponse = await identityClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+                {
+                    Address = discoveryResponse.TokenEndpoint,
+                    ClientId = "DeviceManagerApi_UnitTest",
+                    ClientSecret = "secret",
+                    Scope = "DeviceManagerApi"
+                });
+                if (tokenResponse.IsError)
+                {
+                    Assert.True(false, tokenResponse.Error);
+                    return this;
+                }
+
+                testContextFactory.Client.SetBearerToken(tokenResponse.AccessToken);
+
+            }
             return this;
         }
 
