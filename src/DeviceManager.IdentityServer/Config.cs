@@ -5,14 +5,12 @@
 using IdentityModel;
 using IdentityServer4.Models;
 using System.Collections.Generic;
-using IdentityServer4.Quickstart.UI;
-using DeviceManager.IdentityServer.Quickstart;
+using DeviceManager.IdentityServer.Helpers;
 
 namespace DeviceManager.IdentityServer
 {
     public static class Config
     {
-        public const string SwaggerClient = "SWAGGER_CLIENT";
 
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
@@ -28,7 +26,7 @@ namespace DeviceManager.IdentityServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("DeviceManagerApi", "Device Manager API", new [] { JwtClaimTypes.Name, JwtClaimTypes.WebSite, JwtClaimTypes.Role, ApplicationConstants.TenantClaim })
+                new ApiResource(ApplicationConstants.DeviceManagerApi, "Device Manager API", new [] { JwtClaimTypes.Name, JwtClaimTypes.WebSite, JwtClaimTypes.Role, ApplicationConstants.TenantClaim })
             };
         }
 
@@ -39,7 +37,7 @@ namespace DeviceManager.IdentityServer
                 // OpenID Connect implicit flow Swagger
                 new Client
                 {
-                    ClientId = "DeviceManagerApi_Swagger",
+                    ClientId = ApplicationConstants.DeviceManagerSwaggerClient,
                     ClientName = "Device Manager Api Swagger Ui",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
@@ -47,25 +45,25 @@ namespace DeviceManager.IdentityServer
                     RedirectUris = {
                         //"http://localhost:52217/swagger/oauth2-redirect.html",
                         //"http://localhost:52217/swagger/o2c.html"
-                        Extensions.GetUriFromEnvironmentAndCombine(SwaggerClient, "/swagger/oauth2-redirect.html").ToString(),
-                        Extensions.GetUriFromEnvironmentAndCombine(SwaggerClient, "/swagger/o2c.html").ToString(),
+                        GenericHelper.GetUriFromEnvironmentAndCombine(ApplicationConstants.SwaggerClient, "/swagger/oauth2-redirect.html").ToString(),
+                        GenericHelper.GetUriFromEnvironmentAndCombine(ApplicationConstants.SwaggerClient, "/swagger/o2c.html").ToString(),
 
                     },
 
-                    AllowedScopes = { "DeviceManagerApi"},
+                    AllowedScopes = { ApplicationConstants.DeviceManagerApi},
                     AlwaysSendClientClaims = true,
                     ClientClaimsPrefix = ""
                 },
 
                 new Client
                 {
-                    ClientId = "DeviceManagerApi_UnitTest",
+                    ClientId = ApplicationConstants.DeviceManagerTestClient,
                     ClientName = "Device Manager Unit Test",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = { "DeviceManagerApi"},
+                    AllowedScopes = { ApplicationConstants.DeviceManagerApi},
                     ClientSecrets  =
                     {
-                        new Secret("secret".Sha256())
+                        new Secret(ApplicationConstants.DeviceManagerTestClientSecret.Sha256())
                     }
                 }
             };

@@ -51,6 +51,16 @@
         public const string SwaggerClient = "SWAGGER_CLIENT";
 
         /// <summary>
+        /// Name of the API
+        /// </summary>
+        public const string ApiName = "DeviceManagerApi";
+
+        /// <summary>
+        /// Id of the swagger client
+        /// </summary>
+        public const string SwaggerClientId = "DeviceManagerApi_Swagger";
+
+        /// <summary>
         /// Used to display api name in the swagger UI screen
         /// </summary>
         public const string ApiDisplayName = "Device Manager Api";

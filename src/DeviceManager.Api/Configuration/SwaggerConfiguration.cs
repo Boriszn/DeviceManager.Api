@@ -93,7 +93,7 @@ namespace DeviceManager.Api.Configuration
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Device Api v1.0");
-                c.OAuthClientId("DeviceManagerApi_Swagger");
+                c.OAuthClientId(DefaultConstants.SwaggerClientId);
                 c.OAuthAppName("Device Api Swagger Ui");
             });
         }

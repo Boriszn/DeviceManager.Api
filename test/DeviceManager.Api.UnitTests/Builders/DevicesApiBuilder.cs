@@ -2,6 +2,7 @@
 using DeviceManager.Api.Helpers;
 using DeviceManager.Api.Model;
 using DeviceManager.Api.UnitTests.Api.Server;
+using DeviceManager.Api.UnitTests.Constants;
 using IdentityModel.Client;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -78,6 +79,7 @@ namespace DeviceManager.Api.UnitTests.Builders
 
         public async Task<DevicesApiBuilder> WithClientCredentials()
         {
+#if UseAuthentication
             using (var identityClient = new HttpClient())
             {
 
@@ -98,9 +100,9 @@ namespace DeviceManager.Api.UnitTests.Builders
                 var tokenResponse = await identityClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
                 {
                     Address = discoveryResponse.TokenEndpoint,
-                    ClientId = "DeviceManagerApi_UnitTest",
-                    ClientSecret = "secret",
-                    Scope = "DeviceManagerApi"
+                    ClientId = TestConstants.DeviceManagerTestClient,
+                    ClientSecret = TestConstants.DeviceManagerTestClientSecret,
+                    Scope = DefaultConstants.ApiName
                 });
                 if (tokenResponse.IsError)
                 {
@@ -111,6 +113,7 @@ namespace DeviceManager.Api.UnitTests.Builders
                 testContextFactory.Client.SetBearerToken(tokenResponse.AccessToken);
 
             }
+#endif
             return this;
         }
 
@@ -121,7 +124,7 @@ namespace DeviceManager.Api.UnitTests.Builders
         /// <returns></returns>
         public DevicesApiBuilder WithTenantId(string tenantId)
         {
-            testContextFactory.Client.DefaultRequestHeaders.Add("tenantid", tenantId);
+            testContextFactory.Client.DefaultRequestHeaders.Add(DefaultConstants.TenantId, tenantId);
 
             return this;
         }
