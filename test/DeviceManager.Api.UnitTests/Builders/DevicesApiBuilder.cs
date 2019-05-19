@@ -100,7 +100,7 @@ namespace DeviceManager.Api.UnitTests.Builders
                 var tokenResponse = await identityClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
                 {
                     Address = discoveryResponse.TokenEndpoint,
-                    ClientId = TestConstants.DeviceManagerTestClient,
+                    ClientId = DefaultConstants.DeviceManagerTestClient,
                     ClientSecret = TestConstants.DeviceManagerTestClientSecret,
                     Scope = DefaultConstants.ApiName
                 });

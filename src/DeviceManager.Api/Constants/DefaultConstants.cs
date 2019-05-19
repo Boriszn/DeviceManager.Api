@@ -61,6 +61,11 @@
         public const string SwaggerClientId = "DeviceManagerApi_Swagger";
 
         /// <summary>
+        /// Name of the test client
+        /// </summary>
+        public const string DeviceManagerTestClient = "DeviceManagerApi_UnitTest";
+
+        /// <summary>
         /// Used to display api name in the swagger UI screen
         /// </summary>
         public const string ApiDisplayName = "Device Manager Api";

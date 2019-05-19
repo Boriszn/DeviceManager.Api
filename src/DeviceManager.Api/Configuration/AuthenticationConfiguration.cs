@@ -50,7 +50,7 @@ namespace DeviceManager.Api.Configuration
 
                 defaultPolicy.RequireAssertion(c =>
                 {
-                    if (c.User.HasClaim(JwtClaimTypes.ClientId, "DeviceManagerApi_UnitTest"))
+                    if (c.User.HasClaim(JwtClaimTypes.ClientId, DefaultConstants.DeviceManagerTestClient))
                         return true;
 
                     var mvcContext = c.Resource as Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext;

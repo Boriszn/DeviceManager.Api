@@ -14,3 +14,4 @@ bin/
 src/DeviceManager.Api/Properties/PublishProfiles/registry.hub.docker.com_boriszn.pubxml
 src/DeviceManager.Api/Properties/PublishProfiles/registry.hub.docker.com_boriszn.pubxml.user
 /src/DeviceManager.IdentityServer/IdentityServer.db
+/src/DeviceManager.Api/Dockerfile-VsDebug

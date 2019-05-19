@@ -79,6 +79,48 @@ You can also **Build** container from solution. To do so run `docker build -t  b
 
 **To run/build project without docker, switch from `Docker` to `DeviceManagerApi` (specified in `launchSettings.json`)**
 
+## Authentication and Authorization using IdentityServer4
+
+Bearer Authentication using IdentityServer4 is added to the application. The feature is enabled by default and can be turned off by removing the compiler switch `UseAuthentication` under `Build` tab in the project properties of bother `DeviceManager.Api` and `DeviceManager.Api.UnitTests`.
+
+To use the authentication following two lines must be added to your `hosts` file situated under `c:\Windows\System32\Drivers\etc\` folder.
+
+```
+127.0.0.1 devicemanager.api
+127.0.0.1 devicemanager.identityserver
+```
+**IMPORTANT: Reason for adding the names to the hosts file is to use `IdentityServer` authentication with or without `docker-compose`**
+
+Currently, a basic `IdentityServer` with pre defined `Clients, Users, ApiResourses` is added. 
+[Config](src/DeviceManager.IdentityServer/Config.cs) file defines two clients
+ 
+    Swagger Ui Client - Used to access the API resources using Swagger Ui
+
+    Test Client - Used to test the API end point by setting up Test Client. 
+
+[TestUsers](src/DeviceManager.IdentityServer/Quickstart/TestUsers.cs) file contains two test users with predefined roles and tenants in claims.
+
+### User Roles and Tenant Authorization
+The claims defined in the [TestUsers](src/DeviceManager.IdentityServer/Quickstart/TestUsers.cs) file are used in the [AuthenticationConfiguration](src/DeviceManager.Api/Configuration/AuthenticationConfiguration.cs) file to grant access to the Api Resource.
+
+` services.AddAuthentication` handles the authentication and logic inside `options.AddPolicy` handles the authorization part. There are 3 policies currently defined.
+
+  - DefaultPolicy
+    
+    This policy is executed when the `controller` or `action` contains `[Authorize]` attribute like [BaseController](src/DeviceManager.Api/Controllers/BaseController.cs). 
+
+    If the requesting user is having `admin` role or the client is `Test Client` from unit test then access to any resources beloging to any tenant is allowed.
+
+    But, if the user is neither of the above then access to only the `Tenant` defined in the [TenantClaim](src/DeviceManager.IdentityServer/Quickstart/TestUsers.cs) property is allowed.
+
+- Admin
+  
+  This policy is executed when the `controller` or `action` is decorated with `[Authorize(PolicyConstants.Admin)]`. So `GetData` action in (AdminController)[src/DeviceManager.Api/Controllers/AdminController.cs] is accessed by users having `admin` or `manager` defined in their `role` claims. In our predfined users only `alice` can access the `GetData` resource.
+
+- Manager
+  
+  This policy is excuted when the `controller` or `action` is decorated with `[Authorize(PolicyConstants.Manager)]`. Users with `manager` in their `role` claims.
+
 ## Kubernates (minikube cluster) setup
 
 - Setup minikube (tested on `v0.34.1`) ([This article should help](https://medium.com/containers-101/local-kubernetes-for-windows-minikube-vs-docker-desktop-25a1c6d3b766))
