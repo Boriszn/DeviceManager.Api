@@ -63,5 +63,39 @@ namespace DeviceManager.Api.Helpers
         /// <param name="culture">User entered culture</param>
         /// <returns>true if culture found else false</returns>
         public static bool IsGenericCulture(string culture) => _allCultureCodes.Contains(culture);
+
+        /// <summary>
+        /// Get the value from environment variable and converts it to a uri
+        /// </summary>
+        /// <returns>Uri object</returns>
+        public static Uri GetUriFromEnvironmentVariable(string environmentVariable)
+        {
+            var address = Environment.GetEnvironmentVariable(environmentVariable);
+
+            if (string.IsNullOrWhiteSpace(address))
+                throw new FluentValidation.ValidationException("Variable not found");
+
+            if(Uri.TryCreate(address,UriKind.Absolute, out Uri uri))
+            {
+                return uri;
+            }
+
+            throw new FluentValidation.ValidationException("Invalid uri in the environment variable");
+        }
+
+        /// <summary>
+        /// Combines path to base uri
+        /// </summary>
+        /// <param name="baseUri">base uri</param>
+        /// <param name="path">path to be combined</param>
+        /// <returns></returns>
+        public static Uri CombineUri(Uri baseUri, string path)
+        {
+            if(Uri.TryCreate(baseUri, path, out Uri uri))
+            {
+                return uri;
+            }
+            throw new FluentValidation.ValidationException("Invalid path");
+        }
     }
 }

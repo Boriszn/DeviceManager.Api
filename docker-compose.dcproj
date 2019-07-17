@@ -5,7 +5,7 @@
     <DockerTargetOS>Windows</DockerTargetOS>
     <ProjectGuid>f5857c77-5f3d-4d66-8e56-8b16245e9f4f</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://{ServiceIPAddress}{ServicePort}/swagger</DockerServiceUrl>
+    <DockerServiceUrl>http://devicemanager.api:5001/swagger</DockerServiceUrl>
     <DockerServiceName>devicemanager.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

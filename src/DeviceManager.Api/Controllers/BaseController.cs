@@ -1,6 +1,6 @@
 using DeviceManager.Api.Constants;
-using DeviceManager.Api.Helpers;
 using DeviceManager.Api.Resources;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -11,6 +11,9 @@ namespace DeviceManager.Api.Controllers
     /// Base api controller all api controllers should inherit from this controller
     /// </summary>
     /// <typeparam name="TViewModel">Type of the view model</typeparam>
+#if UseAuthentication
+    [Authorize]
+#endif
     public abstract class BaseController<TViewModel> : Controller where TViewModel : class
     {
         /// <summary>

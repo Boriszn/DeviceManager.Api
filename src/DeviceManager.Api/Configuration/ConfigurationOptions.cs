@@ -25,16 +25,21 @@ namespace DeviceManager.Api.Configuration
 
             services.Configure<ConnectionSettings>(configuration.GetSection(DefaultConstants.ConnectionStrings));
             services.Configure<AppSettings>(configuration.GetSection(DefaultConstants.AppSettings));
+            services.Configure<AuthenticationSettings>(configuration.GetSection(DefaultConstants.AuthenticationSettings));
 
             // Explicitly register the settings object so IOptions not required (optional)
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<ConnectionSettings>>().Value);
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AppSettings>>().Value);
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AuthenticationSettings>>().Value);
 
             // Register as an IValidatable
             services.AddSingleton<IValidatable>(resolver =>
                 resolver.GetRequiredService<IOptions<ConnectionSettings>>().Value);
             services.AddSingleton<IValidatable>(resolver =>
                 resolver.GetRequiredService<IOptions<AppSettings>>().Value);
+
+            services.AddSingleton<IValidatable>(resolver =>
+                resolver.GetRequiredService<IOptions<AuthenticationSettings>>().Value);
         }
     }
 }
