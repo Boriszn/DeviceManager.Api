@@ -5,9 +5,8 @@ using System.Data;
 namespace DeviceManager.Api.Data.Management.Dapper
 {
     /// <summary>
-    /// 
+    /// Dapper Unit of work for maintaining the transaction
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class DapperUnitOfWork : IDapperUnitOfWork, IDisposable
     {
         private IDbConnection connection;

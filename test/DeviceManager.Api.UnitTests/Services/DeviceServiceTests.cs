@@ -15,8 +15,6 @@ namespace DeviceManager.Api.UnitTests.Services
     {
         private readonly IDeviceService service;
 
-        private readonly IDeviceService serviceUsingDapper;
-
         public DeviceServiceTests()
         {
             // Build Device 
@@ -34,13 +32,6 @@ namespace DeviceManager.Api.UnitTests.Services
                 .WithValidationMock()
                 .WithUnitOfWorkSetup()
                 .Build();
-
-            // Build device service with dapper UOW
-            serviceUsingDapper = new DeviceServiceBuilder()
-                .WithDapperRepositoryMock(devicesList, device)
-                .WithValidationMock()
-                .WithDapperUnitOfWorkSetup()
-                .Build();
         }
 
         public void Dispose()
@@ -49,8 +40,6 @@ namespace DeviceManager.Api.UnitTests.Services
             // this.mockRepository.VerifyAll();
         }
         
-        #region Entity Framework Core
-
         [Fact]
         public void CreateDevice_WithValidParameters_SholdNotTrowAnyExceptions()
         {
@@ -131,53 +120,5 @@ namespace DeviceManager.Api.UnitTests.Services
             // Assert
             action.Should().NotThrow();
         }
-
-        #endregion
-
-        #region Dapper
-
-        [Fact]
-        public void CreateDevice_WithDapper_WithValidParameters_SholdNotThrowAnyExceptions()
-        {
-            // Arrange
-            var deviceViewModel = new DeviceViewModel
-            {
-                Title = String.Empty,
-                DeviceCode = String.Empty,
-            };
-
-            // Act
-            Func<Task> comparison = async () => { await serviceUsingDapper.CreateDeviceUsingDapperAsync(deviceViewModel); };
-
-            // Assert
-            comparison.Should().NotThrow();
-        }
-
-        [Fact]
-        public void GetDevices_WithDapper_WithValidParameters_SholdNotThrowAnyExceptions()
-        {
-            // Arrange
-
-            // Act
-            Func<Task> comparison = async () => { await serviceUsingDapper.GetDevicesUsingDapper(1, 1); };
-
-            // Assert
-            comparison.Should().NotThrow();
-        }
-
-        [Fact]
-        public async void GetDevices_WithDapper_WithValidParameters_ShouldHaveOneElement()
-        {
-            // Arrange
-
-            // Act
-            IList<DeviceViewModel> devices = await serviceUsingDapper.GetDevicesUsingDapper(1, 1);
-
-            // Assert
-            devices.Should().NotBeNull();
-            devices.Should().HaveCount(1);
-        }
-
-        #endregion
     }
 }
