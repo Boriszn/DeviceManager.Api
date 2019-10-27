@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeviceManager.Api.Attributes.Dapper;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DeviceManager.Api.Data.Model
@@ -15,6 +16,7 @@ namespace DeviceManager.Api.Data.Model
         /// The device identifier.
         /// </value>
         [Key()]
+        [DapperInsert]
         public Guid DeviceId { get; set; }
 
         /// <summary>
@@ -23,16 +25,19 @@ namespace DeviceManager.Api.Data.Model
         /// <value>
         /// The device title.
         /// </value>
+        [DapperInsert]
         public string DeviceTitle { get; set; }
 
         /// <summary>
         /// Device code
         /// </summary>
+        [DapperInsert]
         public string DeviceCode { get; set; }
 
         /// <summary>
         /// Device group id
         /// </summary>
+        [DapperInsert]
         public Guid DeviceGroupId { get; set; }
 
         /// <summary>

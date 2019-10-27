@@ -42,6 +42,13 @@ namespace DeviceManager.Api.UnitTests.Builders
             return this;
         }
 
+        public DevicesApiBuilder DefaultDapperQuery(string version)
+        {
+            query = $"api/v{version}/devices/dapper";
+
+            return this;
+        }
+
         /// <summary>
         /// Queries with parameters.
         /// </summary>
@@ -52,6 +59,13 @@ namespace DeviceManager.Api.UnitTests.Builders
         public DevicesApiBuilder QueryWith(int page, int pageCount, string version)
         {
             query = $"api/v{version}/devices?page={page}&pageSize={pageCount}";
+
+            return this;
+        }
+
+        public DevicesApiBuilder QueryWithDapper(int page, int pageCount, string version)
+        {
+            query = $"api/v{version}/devices/dapper?page={page}&pageSize={pageCount}";
 
             return this;
         }
@@ -151,6 +165,18 @@ namespace DeviceManager.Api.UnitTests.Builders
         /// </summary>
         /// <returns></returns>
         public async Task<DevicesApiBuilder> Post()
+        {
+            // Build Post data context from json string
+            var stringContent = new StringContent(
+                deviceViewModelData,
+                Encoding.UTF8,
+                "application/json");
+
+            HttpResponseMessage = await testContextFactory.Client.PostAsync(query, stringContent);
+            return this;
+        }
+
+        public async Task<DevicesApiBuilder> PostUsingDapper()
         {
             // Build Post data context from json string
             var stringContent = new StringContent(

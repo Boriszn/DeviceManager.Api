@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DeviceManager.Api.Attributes.Dapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +16,8 @@ namespace DeviceManager.Api.Data.Model
         /// Primary key
         /// No need to decorate with <see cref="KeyAttribute"/> for the Id property as long as conventions are followed. <see href="https://docs.microsoft.com/en-us/ef/core/modeling/keys#conventions"/>
         /// </summary>
+        [Key]
+        [DapperInsert]
         public Guid DeviceGroupId { get; set; }
 
         /// <summary>
@@ -26,11 +29,13 @@ namespace DeviceManager.Api.Data.Model
         /// <summary>
         /// Manufactured company
         /// </summary>
+        [DapperInsert]
         public string Company { get; set; }
 
         /// <summary>
         /// Operating system of the device
         /// </summary>
+        [DapperInsert]
         public string OperatingSystem { get; set; }
     }
 }

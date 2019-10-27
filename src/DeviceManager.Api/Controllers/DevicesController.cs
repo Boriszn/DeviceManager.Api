@@ -30,6 +30,8 @@ namespace DeviceManager.Api.Controllers
             this.deviceService = deviceService;
         }
 
+        #region Entity Framework Core
+
         /// <summary>
         /// Gets the specified page.
         /// </summary>
@@ -112,5 +114,54 @@ namespace DeviceManager.Api.Controllers
 
             return new OkResult();
         }
+
+        #endregion
+
+        #region Dapper
+
+        /// <summary>
+        /// Gets all records using dapper.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [HttpGet("dapper")]
+        [SwaggerOperation("GetAllDevicesUsingDapper")]
+        [ValidateActionParameters]
+        public async Task<IActionResult> GetAllUsingDapper([FromQuery, Required]int page, [FromQuery, Required]int pageSize)
+        {
+            return new ObjectResult(await deviceService.GetDevicesUsingDapper(page, pageSize));
+        }
+
+        /// <summary>
+        /// Gets the specified device identifier in async await pattern using dapper.
+        /// </summary>
+        /// <param name="deviceId">The device identifier.</param>
+        /// <returns></returns>
+        [HttpGet("dapper/async/{deviceId}")]
+        [SwaggerOperation(nameof(GetDeviceByIdAsync))]
+        [ValidateActionParameters]
+        public async Task<IActionResult> GetDeviceByIdUsingDapperAsync([FromRoute][Required]string deviceId)
+        {
+            return new ObjectResult(await deviceService.GetDeviceByIdUsingDapperAsync(Guid.Parse(deviceId)));
+        }
+
+        /// <summary>
+        /// Posts the specified device view model and executeds query using dapper.
+        /// </summary>
+        /// <param name="deviceViewModel">The device view model.</param>
+        /// <returns></returns>
+        [HttpPost("dapper")]
+        [SwaggerOperation("CreateDeviceUsingDapper")]
+        [SwaggerResponse(204, null, "Device was saved successfuly")]
+        [SwaggerResponse(400, null, "Error in saving the Device")]
+        public async Task<IActionResult> PostUsingDapepr([FromBody]DeviceViewModel deviceViewModel)
+        {
+            await deviceService.CreateDeviceUsingDapperAsync(deviceViewModel);
+
+            return new OkResult();
+        }
+
+        #endregion
     }
 }

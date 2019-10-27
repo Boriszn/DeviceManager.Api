@@ -1,7 +1,7 @@
-﻿using System;
+﻿using DeviceManager.Api.Model;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DeviceManager.Api.Model;
 
 namespace DeviceManager.Api.Services
 {
@@ -10,6 +10,8 @@ namespace DeviceManager.Api.Services
     /// </summary>
     public interface IDeviceService
     {
+        #region Entity Framework Core
+
         /// <summary>
         /// Gets the list of devices.
         /// </summary>
@@ -49,5 +51,34 @@ namespace DeviceManager.Api.Services
         /// <param name="deviceId">The device identifier.</param>
         /// <param name="deviceViewModel">The device view model.</param>
         void UpdateDevice(Guid deviceId, DeviceViewModel deviceViewModel);
+
+        #endregion
+
+        #region Dapper
+
+        /// <summary>
+        /// Gets all devices in the database using dapper.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns>Task to await</returns>
+        Task<IList<DeviceViewModel>> GetDevicesUsingDapper(int page, int pageSize);
+
+        /// <summary>
+        /// Gets the device by identifier using dapper.
+        /// </summary>
+        /// <param name="deviceId">The device identifier.</param>
+        /// <returns>Task to await</returns>
+        Task<DeviceViewModel> GetDeviceByIdUsingDapperAsync(Guid deviceId);
+
+        /// <summary>
+        /// Creates new device in the database using dapper.
+        /// </summary>
+        /// <param name="deviceViewModel">New device data</param>
+        /// <returns>Task to await device creation</returns>
+        Task CreateDeviceUsingDapperAsync(DeviceViewModel deviceViewModel);
+
+        #endregion
+
     }
 }

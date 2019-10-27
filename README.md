@@ -56,6 +56,16 @@ There can be multiple data seeding classes. To create a new data seeding class:
 1. Create a new data seeding class in the same folder inheriting from [IDataSeeder](src/DeviceManager.Api/Data/DataSeed/IDataSeeder.cs) interface.
 2. Register new class in the [IocContainerConfiguration](src/DeviceManager.Api/Configuration/IocContainerConfiguration.cs) class by replacing `DataSeeder` with new class name.
 
+## Dapper support
+
+Dapper is incorporated into the application. [DapperUnitOfWork](src/DeviceManager.Api/Data/Management/Dapper/DapperUnitOfWork.cs) handles all the begin and commit transaction. The instance of Dapper Unit of work can be obtained by requesting instance of [IDapperUnitOfWork](src/DeviceManager.Api/Data/Management/Dapper/IDapperUnitOfWork.cs).
+
+[DeviceService](src/DeviceManager.Api/Services/DeviceService.cs) is using [DapperUnitOfWork](src/DeviceManager.Api/Data/Management/Dapper/DapperUnitOfWork.cs) to fetch and create records in the database through [DapperRepository](src/DeviceManager.Api/Data/Management/Dapper/DapperRepository.cs). [DapperRepository](src/DeviceManager.Api/Data/Management/Dapper/DapperRepository.cs) is a generic repository with built in methods for fetching and adding records into the database based on [DapperInsert](src/DeviceManager.Api/Attributes/Dapper/DapperInsertAttribute.cs) and [DapperUpdate](src/DeviceManager.Api/Attributes/Dapper/DapperUpdateAttribute.cs) attributes defined on the Model. In the future update and delete will be implemented. 
+
+The [DapperRepository](src/DeviceManager.Api/Data/Management/Dapper/DapperRepository.cs) builds generic `insert` and `fetch` using [QueryBuilderHelper](src/DeviceManager.Api/Helpers/Dapper/QueryBuilderHelper.cs) class based on the attributes defined on the model. For example [Device](src/DeviceManager.Api/Data/Model/Device.cs) model defines `DapperInsert` on few properties. Only these property names will be considered while building `insert query`.
+
+The `Dapper` region in the [DeviceController](src/DeviceManager.Api/Controllers/DevicesController.cs) uses Dapper to fetch and create records in the database.
+
 ## Docker support
 
 App images available in Docker Hub Registry: https://hub.docker.com/r/boriszn/devicemanagerapi/ (**LINUX and Windows images are available**)

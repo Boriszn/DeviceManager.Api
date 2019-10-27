@@ -1,11 +1,12 @@
-﻿using System;
+﻿using AutoMapper;
+using DeviceManager.Api.Data.Management;
+using DeviceManager.Api.Data.Management.Dapper;
+using DeviceManager.Api.Data.Model;
+using DeviceManager.Api.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using DeviceManager.Api.Data.Management;
-using DeviceManager.Api.Data.Model;
-using DeviceManager.Api.Model;
 
 namespace DeviceManager.Api.Services
 {
@@ -15,17 +16,22 @@ namespace DeviceManager.Api.Services
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly IDeviceValidationService deviceValidationService;
+        private readonly IDapperUnitOfWork dapperUnitOfWork;
 
         /// <inheritdoc />
         public DeviceService(
             IUnitOfWork unitOfWork,
+            IDapperUnitOfWork dapperUnitOfWork,
             IDeviceValidationService deviceValidationService,
             IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.dapperUnitOfWork = dapperUnitOfWork;
             this.deviceValidationService = deviceValidationService;
             this.mapper = mapper;
         }
+
+        #region Entity Framework Core
 
         /// <inheritdoc />
         public List<DeviceViewModel> GetDevices(int page, int pageSize)
@@ -104,5 +110,61 @@ namespace DeviceManager.Api.Services
             // Commit changes
             unitOfWork.Commit();
         }
+
+        #endregion
+
+        #region Dapper
+
+        /// <inheritdoc />
+        public async Task<IList<DeviceViewModel>> GetDevicesUsingDapper(int page, int pageSize)
+        {
+            dapperUnitOfWork.BeginTransaction();
+            var deviceRepository = dapperUnitOfWork.GetRepository<Device>();
+            var devices = await deviceRepository.AllAsync(page, pageSize);
+            return mapper.Map<List<DeviceViewModel>>(devices);
+        }
+
+
+        /// <inheritdoc />
+        public async Task<DeviceViewModel> GetDeviceByIdUsingDapperAsync(Guid deviceId)
+        {
+            dapperUnitOfWork.BeginTransaction();
+            var deviceRepository = dapperUnitOfWork.GetRepository<Device>();
+
+            var deviceData = await deviceRepository.FindAsync(deviceId);
+
+            return mapper.Map<DeviceViewModel>(deviceData);
+        }
+
+        /// <inheritdoc />
+        public async Task CreateDeviceUsingDapperAsync(DeviceViewModel deviceViewModel)
+        {
+            // Validate input
+            deviceValidationService
+                .Validate(deviceViewModel);
+
+
+            var device = mapper.Map<DeviceViewModel, Device>(deviceViewModel);
+
+            dapperUnitOfWork.BeginTransaction();
+
+            if (device.DeviceGroupId.Equals(Guid.Empty))
+            {
+                var deviceGroupRepository = dapperUnitOfWork.GetRepository<DeviceGroup>();
+                device.DeviceGroupId = device.DeviceGroup.DeviceGroupId;
+                await deviceGroupRepository.AddAsync(device.DeviceGroup);
+            }
+            
+            var deviceRepository = dapperUnitOfWork.GetRepository<Device>();
+            device.DeviceId = Guid.NewGuid();
+            await deviceRepository.AddAsync(device);
+
+            // Commit changes
+            dapperUnitOfWork.Commit();
+        }
+
+
+        #endregion
+
     }
 }
