@@ -55,12 +55,12 @@ namespace DeviceManager.Api
 
             if (_env.IsProduction())
             {
-                services.AddHsts(options =>
-                {
-                    options.Preload = true;
-                    options.IncludeSubDomains = true;
-                    options.MaxAge = TimeSpan.FromDays(60);
-                });
+                //services.AddHsts(options =>
+                //{
+                //    options.Preload = true;
+                //    options.IncludeSubDomains = true;
+                //    options.MaxAge = TimeSpan.FromDays(60);
+                //});
             }
             // Localization support
             LocalizationConfiguration.ConfigureService(services);
@@ -102,8 +102,8 @@ namespace DeviceManager.Api
             if (_env.IsProduction())
             {
                 loggerFactory.AddFile(Configuration.GetSection(DefaultConstants.Logging));
-                app.UseHsts();
-                app.UseHttpsRedirection();
+                //app.UseHsts();
+                //app.UseHttpsRedirection();
             }
             else
             {
