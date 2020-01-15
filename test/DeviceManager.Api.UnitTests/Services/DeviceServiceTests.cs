@@ -7,12 +7,13 @@ using DeviceManager.Api.UnitTests.Builders;
 using DeviceManager.Api.UnitTests.Utils;
 using FluentAssertions;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace DeviceManager.Api.UnitTests.Services
 {
     public class DeviceServiceTests : IDisposable
     {
-        private readonly DeviceService service;
+        private readonly IDeviceService service;
 
         public DeviceServiceTests()
         {
@@ -25,7 +26,7 @@ namespace DeviceManager.Api.UnitTests.Services
             // Build Device list
             List<Device> devicesList = new List<Device>{ device };
 
-            // Build device service
+            // Build device service with ef core UOW
             service = new DeviceServiceBuilder()
                 .WithRepositoryMock(devicesList, device)
                 .WithValidationMock()
@@ -38,7 +39,7 @@ namespace DeviceManager.Api.UnitTests.Services
             // TODO: Correct verification 
             // this.mockRepository.VerifyAll();
         }
-
+        
         [Fact]
         public void CreateDevice_WithValidParameters_SholdNotTrowAnyExceptions()
         {

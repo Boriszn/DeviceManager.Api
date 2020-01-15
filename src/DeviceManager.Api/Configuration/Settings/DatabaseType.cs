@@ -20,6 +20,6 @@ namespace DeviceManager.Api.Configuration.Settings
         /// <summary>
         /// Mongodb database type
         /// </summary>
-        // MongoDb = 2
+        //MongoDb = 2
     }
 }

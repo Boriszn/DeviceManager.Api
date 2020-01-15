@@ -1,7 +1,10 @@
-﻿using System;
-using System.Net.Http;
+﻿using DeviceManager.Api.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
+using System.Net.Http;
 
 namespace DeviceManager.Api.UnitTests.Api.Server
 {
@@ -36,8 +39,18 @@ namespace DeviceManager.Api.UnitTests.Api.Server
         /// </summary>
         private void SetUpClient()
         {
-            server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
+            var server = new TestServer(new WebHostBuilder().UseContentRoot(Directory.GetCurrentDirectory())
+                .UseEnvironment("Development")
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    // Moved configuration here because Kestel was not able to access the configuration settings
+                    Environment.SetEnvironmentVariable("AUTHENTICATION_AUTHORITY", "http://devicemanager.identityserver:5000/");
+                    config.AddJsonFile(DefaultConstants.AppSettingsFileName, optional: false, reloadOnChange: true)
+                    .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true)
+                    .AddEnvironmentVariables();
+
+                }).UseStartup<Startup>());
+
 
             Client = server.CreateClient();
         }

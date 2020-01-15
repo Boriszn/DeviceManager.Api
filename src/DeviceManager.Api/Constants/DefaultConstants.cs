@@ -6,6 +6,11 @@
     public static class DefaultConstants
     {
         /// <summary>
+        /// Name of the settings file name
+        /// </summary>
+        public const string AppSettingsFileName = "appsettings.json";
+
+        /// <summary>
         /// Name of the connection string
         /// </summary>
         public const string DefaultConnection = nameof(DefaultConstants.DefaultConnection);
@@ -16,14 +21,64 @@
         public const string ConnectionStrings = nameof(DefaultConstants.ConnectionStrings);
 
         /// <summary>
-        /// Name of the settings section
+        /// Kerstel configuration section
+        /// </summary>
+        public const string Kestrel = nameof(Kestrel);
+
+        /// <summary>
+        /// Name of the AppSettings section
         /// </summary>
         public const string AppSettings = nameof(DefaultConstants.AppSettings);
+
+        /// <summary>
+        /// Name of the Authentication settings section
+        /// </summary>
+        public const string AuthenticationSettings = nameof(DefaultConstants.AuthenticationSettings);
 
         /// <summary>
         /// 
         /// </summary>
         public const string Database = nameof(DefaultConstants.Database);
+
+        /// <summary>
+        /// Address where identity server is running
+        /// </summary>
+        public const string AuthenticationAuthority = "AUTHENTICATION_AUTHORITY";
+
+        /// <summary>
+        /// Address of the swagger client
+        /// </summary>
+        public const string SwaggerClient = "SWAGGER_CLIENT";
+
+        /// <summary>
+        /// Name of the API
+        /// </summary>
+        public const string ApiName = "DeviceManagerApi";
+
+        /// <summary>
+        /// Id of the swagger client
+        /// </summary>
+        public const string SwaggerClientId = "DeviceManagerApi_Swagger";
+
+        /// <summary>
+        /// Name of the test client
+        /// </summary>
+        public const string DeviceManagerTestClient = "DeviceManagerApi_UnitTest";
+
+        /// <summary>
+        /// Used to display api name in the swagger UI screen
+        /// </summary>
+        public const string ApiDisplayName = "Device Manager Api";
+
+        /// <summary>
+        /// Used to display description of api access needed
+        /// </summary>
+        public const string ApiDescription = "Device Manager Api - full access";
+
+        /// <summary>
+        /// Used for passing oauth2
+        /// </summary>
+        public const string OAuth2 = "oauth2";
 
         /// <summary>
         /// Tenant id key
@@ -94,5 +149,12 @@
         /// Name of the culture property in the header
         /// </summary>
         public const string StringInText = "string";
+
+
+        /// <summary>
+        /// claim name to store tenant id in the database
+        /// </summary>
+        public const string TenantClaim = "tenant_id";
+
     }
 }

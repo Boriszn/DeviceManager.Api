@@ -13,9 +13,9 @@ namespace DeviceManager.Api.Migrations
     [Migration("20190218110329_DeviceGroups")]
     partial class DeviceGroups
     {
+#pragma warning disable CS1591, 612, 618
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
@@ -69,7 +69,7 @@ namespace DeviceManager.Api.Migrations
                         .HasForeignKey("DeviceGroupId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
-#pragma warning restore 612, 618
+#pragma warning restore CS1591, 612, 618
         }
     }
 }

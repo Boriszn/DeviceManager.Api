@@ -4,9 +4,17 @@ services:
   devicemanager.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - AUTHENTICATION_AUTHORITY=http://devicemanager.identityserver:5000
+      - ASPNETCORE_URLS=http://0.0.0.0:5001
     ports:
-      - "80"
-
+      - "5001:5001"
+  devicemanager.identityserver:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:5000
+      - SWAGGER_CLIENT=http://devicemanager.api:5001
+    ports:
+      - "5000:5000"
 networks:
   default:
     external:

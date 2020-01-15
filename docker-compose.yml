@@ -3,6 +3,14 @@ version: '3.4'
 services:
   devicemanager.api:
     image: ${DOCKER_REGISTRY}devicemanagerapi
+    depends_on: 
+      - devicemanager.identityserver    
     build:
       context: .
       dockerfile: src\DeviceManager.Api\Dockerfile
+  devicemanager.identityserver:
+    image: ${DOCKER_REGISTRY}devicemanageridentityserver
+    build:
+      context: .
+      dockerfile: src\DeviceManager.IdentityServer\Dockerfile
+

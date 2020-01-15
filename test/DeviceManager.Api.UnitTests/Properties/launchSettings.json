@@ -1,8 +1,9 @@
 {
   "profiles": {
     "DeviceManager.Api.UnitTests": {
-      "commandName": "Project",
+      "commandName": "Executable",
       "environmentVariables": {
+        "AUTHENTICATION_AUTHORITY": "http://devicemanager.identityserver:5000/",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }

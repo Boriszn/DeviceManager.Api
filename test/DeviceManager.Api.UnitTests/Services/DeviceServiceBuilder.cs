@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using DeviceManager.Api.Data.Management;
+using DeviceManager.Api.Data.Management.Dapper;
 using DeviceManager.Api.Data.Model;
 using DeviceManager.Api.Mappings;
 using DeviceManager.Api.Model;
@@ -20,10 +21,15 @@ namespace DeviceManager.Api.UnitTests.Services
     {
         private readonly Mock<IRepository<Device>> mockRepository;
         private readonly Mock<IUnitOfWork> mockUnitOfWork;
+
+        private readonly Mock<IDapperUnitOfWork> mockDapperUnitOfWork;
+        private readonly Mock<IDapperRepository<Device>> mockDapperDeviceRepository;
+        private readonly Mock<IDapperRepository<DeviceGroup>> mockDapperDeviceGroupRepository;
+
         private readonly MapperConfiguration mapperConfiguration;
         private readonly Mapper mapper;
         private readonly IStringLocalizer<SharedResource> sharedLocalizer;
-        private Mock<IDeviceValidationService> mockDeviceValidationService;
+        private readonly Mock<IDeviceValidationService> mockDeviceValidationService;
 
         public DeviceServiceBuilder()
         {
@@ -33,6 +39,10 @@ namespace DeviceManager.Api.UnitTests.Services
 
             mockUnitOfWork = mockRepositoryObjet.Create<IUnitOfWork>();
             mockRepository = mockRepositoryObjet.Create<IRepository<Device>>();
+
+            mockDapperUnitOfWork = mockRepositoryObjet.Create<IDapperUnitOfWork>();
+            mockDapperDeviceRepository = mockRepositoryObjet.Create<IDapperRepository<Device>>();
+            mockDapperDeviceGroupRepository = mockRepositoryObjet.Create<IDapperRepository<DeviceGroup>>();
 
             // Default automapper configuration
             mapperConfiguration = new MapperConfiguration(new MapsProfile());
@@ -62,13 +72,13 @@ namespace DeviceManager.Api.UnitTests.Services
             this.mockRepository.Setup(x => x.Get(It.IsAny<Guid>(), It.IsAny<Expression<Func<Device, DeviceGroup>>>())).Returns(device);
 
             // 'Get' repository mock
-            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).Returns(async () =>
+            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(() => 
             {
                 return device;
             });
 
             // 'Get' repository mock
-            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>(), It.IsAny<Expression<Func<Device, DeviceGroup>>>())).Returns(async () =>
+            this.mockRepository.Setup(x => x.GetAsync(It.IsAny<Guid>(), It.IsAny<Expression<Func<Device, DeviceGroup>>>())).ReturnsAsync(() =>
             {
                 return device;
             });
@@ -83,6 +93,41 @@ namespace DeviceManager.Api.UnitTests.Services
             this.mockRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Device, bool>>>()))
                 .Returns(() =>
                     devicesList.AsQueryable());
+
+            return this;
+        }
+
+        /// <summary>
+        /// With the dapper repository methods mock.
+        /// </summary>
+        /// <param name="devicesList">The devices list.</param>
+        /// <param name="device">The device.</param>
+        /// <returns></returns>
+        public DeviceServiceBuilder WithDapperRepositoryMock(List<Device> devicesList, Device device)
+        {
+            // 'GetAll' repository mock
+            this.mockDapperDeviceRepository.Setup(x => x.AllAsync(1, 1)).ReturnsAsync(devicesList);
+
+            // 'GetAll' repository mock
+            this.mockDapperDeviceRepository.Setup(x => x.AddAsync(It.IsAny<Device>())).ReturnsAsync(Guid.NewGuid());
+
+            // 'Get' repository mock
+            this.mockDapperDeviceRepository.Setup(x => x.FindAsync(It.IsAny<Guid>())).ReturnsAsync(device);
+
+            // 'Get' repository mock
+            this.mockDapperDeviceRepository.Setup(x => x.RemoveAsync(It.IsAny<Device>())).Callback(() =>
+            {
+
+            });
+
+            // 'Get' repository mock
+            this.mockDapperDeviceRepository.Setup(x => x.UpdateAsync(It.IsAny<Device>())).Callback(() =>
+            {
+
+            });
+
+
+            this.mockDapperDeviceGroupRepository.Setup(x => x.AddAsync(It.IsAny<DeviceGroup>())).ReturnsAsync(Guid.NewGuid());
 
             return this;
         }
@@ -119,7 +164,7 @@ namespace DeviceManager.Api.UnitTests.Services
         /// With the repository Get mock.
         /// </summary>
         /// <param name="device">The device.</param>
-        /// <returns></returns>
+        /// <returns>Service builder instance with repository mockup</returns>
         public DeviceServiceBuilder WithRepositoryGetMock(Device device)
         {
             // 'Get' repository mock
@@ -131,7 +176,7 @@ namespace DeviceManager.Api.UnitTests.Services
         /// <summary>
         /// With the unit of work setup.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Service builder with EF core UOW mockup</returns>
         public DeviceServiceBuilder WithUnitOfWorkSetup()
         {
             this.mockUnitOfWork.Setup(x => x.Commit()).Returns(1);
@@ -139,6 +184,23 @@ namespace DeviceManager.Api.UnitTests.Services
             return this;
         }
 
+        /// <summary>
+        /// With the dapper unit of work setup.
+        /// </summary>
+        /// <returns>Service builder with dapper UOW mockup</returns>
+        public DeviceServiceBuilder WithDapperUnitOfWorkSetup()
+        {
+            this.mockDapperUnitOfWork.Setup(x => x.BeginTransaction()); //.Callback(() => { });
+            this.mockDapperUnitOfWork.Setup(x => x.Commit()); //.Callback(()=> { });
+            this.mockDapperUnitOfWork.Setup(u => u.GetRepository<Device>()).Returns(this.mockDapperDeviceRepository.Object);
+            this.mockDapperUnitOfWork.Setup(u => u.GetRepository<DeviceGroup>()).Returns(this.mockDapperDeviceGroupRepository.Object);
+            return this;
+        }
+
+        /// <summary>
+        /// Creates mockup instance of validation service
+        /// </summary>
+        /// <returns>Service builder with Validation service mockup</returns>
         public DeviceServiceBuilder WithValidationMock()
         {
             this.mockDeviceValidationService
@@ -151,11 +213,12 @@ namespace DeviceManager.Api.UnitTests.Services
         /// <summary>
         /// Builds this instance.
         /// </summary>
-        /// <returns></returns>
-        public DeviceService Build()
+        /// <returns>Instance of Device Service with mocked instances of unit of work</returns>
+        public IDeviceService Build()
         {
             return new DeviceService(
                 this.mockUnitOfWork.Object,
+                this.mockDapperUnitOfWork.Object,
                 this.mockDeviceValidationService.Object,
                 mapper);
         }
