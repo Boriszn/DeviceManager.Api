@@ -12,7 +12,7 @@ metadata:
   selfLink: /api/v1/namespaces/default/services/devicemanager-nginx-nginx-ingress-controller
 spec:
   externalTrafficPolicy: Local
-  loadBalancerIP: 40.114.245.179
+  loadBalancerIP: 13.80.141.109
   ports:
   - name: http
     nodePort: 30781
