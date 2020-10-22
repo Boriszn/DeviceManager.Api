@@ -40,7 +40,15 @@ namespace DeviceManager.Api
             .UseStartup<Startup>()
             // Currently Kestrel uses HTTPS in Production environment
             // To know more about Kestrel configuration visit  https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel
-            .UseKestrel((context, options) => options.Configure(context.Configuration.GetSection(DefaultConstants.Kestrel)))
+
+
+            .UseKestrel(
+
+#if DEBUG
+                (context, options) => options.Configure(context.Configuration.GetSection(DefaultConstants.Kestrel))
+
+#endif       
+                )
             .UseApplicationInsights().Build();
     }
 }

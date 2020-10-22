@@ -1,11 +1,11 @@
-﻿using System;
-using DeviceManager.Api.Configuration.DatabaseTypes;
+﻿using DeviceManager.Api.Configuration.DatabaseTypes;
 using DeviceManager.Api.Configuration.Settings;
 using DeviceManager.Api.Constants;
 using DeviceManager.Api.Data.DataSeed;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace DeviceManager.Api.Data.Management
 {
@@ -25,6 +25,7 @@ namespace DeviceManager.Api.Data.Management
         private readonly IDataBaseManager dataBaseManager;
         private readonly IDatabaseType databaseType;
         private readonly IDataSeeder dataSeeder;
+        private readonly ILoggerFactory loggerFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContextFactory"/> class.
@@ -34,20 +35,26 @@ namespace DeviceManager.Api.Data.Management
         /// <param name="dataBaseManager">The data base manager.</param>
         /// <param name="databaseType">Type of the database</param>
         /// <param name="dataSeeder">Data seeder</param>
+        /// <param name="loggerFactory"></param>
         public ContextFactory(IHttpContextAccessor httpContentAccessor,
             ConnectionSettings connectionOptions,
             IDataBaseManager dataBaseManager,
-            IDatabaseType databaseType, IDataSeeder dataSeeder)
+            IDatabaseType databaseType, IDataSeeder dataSeeder,
+            ILoggerFactory loggerFactory)
         {
             this.httpContext = httpContentAccessor.HttpContext;
             this.connectionOptions = connectionOptions;
             this.dataBaseManager = dataBaseManager;
             this.databaseType = databaseType;
             this.dataSeeder = dataSeeder;
+            this.loggerFactory = loggerFactory;
         }
 
         /// <inheritdoc />
-        public IDbContext DbContext => new DeviceContext(ChangeDatabaseNameInConnectionString(this.TenantId).Options, this.dataSeeder);
+        public IDbContext DbContext => new DeviceContext(
+            ChangeDatabaseNameInConnectionString(this.TenantId).Options,
+            this.dataSeeder,
+            this.loggerFactory);
 
         /// <summary>
         /// Gets tenant id from HTTP header
